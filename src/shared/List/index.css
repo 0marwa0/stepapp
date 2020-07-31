@@ -1,3 +1,5 @@
+/** @format */
+
 .List_Wrapper {
   width: 100%;
 }
@@ -12,7 +14,7 @@
 .List_filter .filter_holder {
   display: grid;
   align-items: center;
-  grid-template-columns: 255px 2fr auto;
+  grid-template-columns: 360px 2fr auto auto;
 }
 .btn_holder {
   display: flex;
@@ -20,13 +22,12 @@
   justify-content: center;
 }
 .List_filter .List_btn {
-  width: 45px !important;
+  width: 60px !important;
   display: flex;
   background-color: var(--blue);
   color: white;
-  padding: 5px 5px !important;
-  font-size: 10px;
-
+  padding: 6px 8px !important;
+  font-size: 13px;
   border-radius: 5px;
 }
 .plus_icon {
@@ -35,9 +36,9 @@
 }
 .Filter_ctrl {
   color: black;
-  width: 55px;
-  height: 20px;
-  font-size: 11px;
+  width: 60px;
+  height: 27px;
+  font-size: 13px;
   border-radius: 5px;
   color: var(--gray);
   display: flex;
@@ -52,17 +53,23 @@
 .filterIcon {
   color: var(--light-gray);
 }
+
+.btn_delete {
+  background-color: var(--red) !important;
+  padding: 6px 10px !important;
+  margin-right: 10px;
+}
 .List_head {
   background-color: var(--lighter-gray);
   border-radius: 7px 7px 0 0;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .List_head,
 .List_item {
   width: 100%;
   display: grid;
-  padding: 8px 0;
+  padding: 15px 0;
 
   grid-template-columns: 0.4fr 0.4fr 3fr 40px 1.5fr 1.5fr 1.5fr 0.9fr;
 
@@ -71,7 +78,7 @@
 .List_item {
   color: var(--gray);
   background-color: white;
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .List_head :nth-of-type(2) {

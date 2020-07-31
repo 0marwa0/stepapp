@@ -1,0 +1,13 @@
+/** @format */
+.DeleteModal p {
+  color: var(--gray);
+}
+.DeleteModal div {
+  margin-bottom: 30px;
+}
+.alert_text {
+  color: var(--red) !important;
+}
+.DeleteModal span {
+  color: black;
+}

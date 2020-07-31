@@ -1,4 +1,6 @@
-import React from "react";
+/** @format */
+
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ListItem = ({
@@ -10,19 +12,27 @@ const ListItem = ({
   mostOrder,
   orderValue,
   ratingRate,
+  checked,
+  showModal,
 }) => {
   let id = `test${itemNumber}`;
+  useEffect(() => {
+    return () => {};
+  });
   return (
-    <div className="List_item">
+    <div className='List_item'>
       <div>
-        <input type="checkbox" id={id} />
+        <input type='checkbox' id={id} onChange={checked} />
         <label for={id}></label>
       </div>
       <div>{itemNumber}</div>
 
       <div>{itemName}</div>
-      {/* <FontAwesomeIcon icon={icon} /> */}
-      <img src={require(`../../shared/Icon/${icon}`)} height="15px" />
+      <img
+        src={require(`../../shared/Icon/${icon}`)}
+        height='15px'
+        onClick={showModal}
+      />
       <span>{type}</span>
 
       <div>{mostOrder}</div>
@@ -30,9 +40,9 @@ const ListItem = ({
         {orderValue}
       </div>
       {listName == "product" ? (
-        <div className="order_ctrl">{ratingRate}</div>
+        <div className='order_ctrl'>{ratingRate}</div>
       ) : (
-        <div className="rate_ctrl">{ratingRate}</div>
+        <div className='rate_ctrl'>{ratingRate}</div>
       )}
     </div>
   );

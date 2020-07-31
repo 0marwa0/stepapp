@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { Component } from "react";
 import ListFilter from "../../shared/List/List_filter";
 import { useState } from "react";
@@ -10,17 +12,16 @@ function ProductFilter() {
   };
   return (
     <div>
-      <ListFilter showModal={() => DisplayModel(true)} ListName="Stuff" />
+      <ListFilter showModal={() => DisplayModel(true)} ListName='Stuff' />
 
       {showModel ? (
         <Modal
-          modalButton="Create New Item "
-          modalPurpose="From here you can create new accounts"
-          modalTitle="Add new team member"
-          width="60%"
-          height="70%"
-          onCLose={() => DisplayModel(false)}
-        >
+          modalButton='Create New Item '
+          modalPurpose='From here you can create new accounts'
+          modalTitle='Add new team member'
+          width='60%'
+          height='70%'
+          onCLose={() => DisplayModel(false)}>
           <CreateStuff />
         </Modal>
       ) : null}

@@ -1,3 +1,5 @@
+/** @format */
+
 .Modal {
   position: absolute;
   top: 20%;
@@ -8,19 +10,24 @@
   z-index: 199999999999;
   border-radius: 4px 4px 0 0;
   overflow-y: auto;
-
+  height: auto;
   overflow-x: hidden;
+}
+
+.DeleteModal {
 }
 .Modal_inner {
   position: relative;
-  height: 100%;
+  height: auto;
   background-color: white;
-  width: auto;
+  width: 100%;
+  height: 100% !important;
 }
 .Modal_contaner {
   margin: 20px 30px;
 }
-.Modal_header {
+.Modal_header,
+.DeleteModal_header {
   width: 100%;
   background-color: var(--lighter-gray);
   height: 40px;
@@ -31,7 +38,8 @@
   grid-template-columns: 3fr auto;
   border-radius: 4px 4px 0 0;
 }
-.Modal_header span {
+.Modal_header span,
+.DeleteModal_header span {
   padding-left: 20px;
 }
 .Overlay {
@@ -63,6 +71,12 @@
   border: 1px solid var(--lighter-gray);
   justify-content: space-between;
   border-bottom: none;
+}
+.DeleteModal_btn {
+  background-color: var(--red) !important;
+}
+.DeleteModal_header {
+  color: var(--red) !important;
 }
 .btn {
   border: none;

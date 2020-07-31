@@ -1,4 +1,6 @@
-import React from "react";
+/** @format */
+
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus,
@@ -6,24 +8,28 @@ import {
   faSortDown,
 } from "@fortawesome/fontawesome-free-solid";
 import { RiFilter2Line } from "react-icons/ri";
+
 import { FaSortDown } from "react-icons/fa";
 
-const ListFilter = ({ showModal, ListName }) => {
+function ListFilter({ showModal, ListName, isChecked, DeleteModal, props }) {
+  useEffect(() => {
+    console.log("it changing here ", isChecked);
+  }, [isChecked]);
   return (
     <div>
-      <div className="List_filter">
-        <span className="filter_holder">
-          <div className="input_wrapper">
+      <div className='List_filter'>
+        <span className='filter_holder'>
+          <div className='input_wrapper'>
             <div>
-              <input type="text" placeholder="Search for something ..." />
+              <input type='text' placeholder='Search for something ...' />
               <img
                 src={require("../../shared/Icon/searchIcon.png")}
-                height="9px"
+                height='9px'
                 // className="searchIcon"
               />
             </div>
           </div>
-          <div className="Filter_ctrl">
+          <div className='Filter_ctrl'>
             <RiFilter2Line
               style={{
                 fontSize: "11px",
@@ -37,22 +43,28 @@ const ListFilter = ({ showModal, ListName }) => {
                 color: "var(--light-gray)",
               }}
             />
-          </div>
-          <div className="btn_holder">
-            <button className="List_btn btn" onClick={showModal}>
+          </div>{" "}
+          {isChecked ? (
+            <button className='btn btn_delete' onClick={DeleteModal}>
+              Delete
+            </button>
+          ) : null}
+          <div className='btn_holder'>
+            <button className='List_btn btn' onClick={showModal}>
               <span>
-                <FontAwesomeIcon icon={faPlus} className="plus_icon" />
+                <FontAwesomeIcon icon={faPlus} className='plus_icon' />
               </span>
               <span>Add</span>
             </button>
+
             {ListName == "product" ? (
-              <div className="list_type_wrapper">
+              <div className='list_type_wrapper'>
                 <img
-                  className="list_type"
+                  className='list_type'
                   src={require("../../shared/Icon/productIcon1.png")}
                 />
                 <img
-                  className="list_type"
+                  className='list_type'
                   src={require("../../shared/Icon/productIcon2.png")}
                 />
               </div>
@@ -62,6 +74,6 @@ const ListFilter = ({ showModal, ListName }) => {
       </div>
     </div>
   );
-};
+}
 
 export default ListFilter;

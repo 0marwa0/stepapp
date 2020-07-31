@@ -7,11 +7,11 @@
 }
 
 .notification_wrapper {
-  width: 193px;
+  width: 260px;
   height: 55px;
   display: flex;
   padding-left: 10px;
-  margin-right: 15px;
+  margin-right: 20px;
   margin-top: 15px;
   background-color: white;
   flex-direction: row;
