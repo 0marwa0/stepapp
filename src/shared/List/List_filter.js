@@ -10,11 +10,8 @@ import {
 import { RiFilter2Line } from "react-icons/ri";
 
 import { FaSortDown } from "react-icons/fa";
-
+import "../../App.css";
 function ListFilter({ showModal, ListName, isChecked, DeleteModal, props }) {
-  useEffect(() => {
-    console.log("it changing here ", isChecked);
-  }, [isChecked]);
   return (
     <div>
       <div className='List_filter'>
@@ -24,7 +21,7 @@ function ListFilter({ showModal, ListName, isChecked, DeleteModal, props }) {
               <input type='text' placeholder='Search for something ...' />
               <img
                 src={require("../../shared/Icon/searchIcon.png")}
-                height='9px'
+                height='13px'
                 // className="searchIcon"
               />
             </div>

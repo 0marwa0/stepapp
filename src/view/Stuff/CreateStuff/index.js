@@ -2,13 +2,66 @@
 
 import React from "react";
 import "./index.css";
-import { Input } from "semantic-ui-react";
-const CreateStuff = () => {
+import { AiOutlineLock } from "react-icons/ai";
+const index = () => {
   return (
     <div>
-      <Input placeholder='Search...' />y
+      <div className='two_col_flex paddingTop'>
+        <div className='input_wrapper space_wrapper'>
+          <p>Employee name</p>
+          <span className='input_border'>
+            <input type='text' width='100%' placeholder='Hamdon AL-hamdoni' />
+          </span>
+        </div>
+        <div className='input_wrapper space_wrapper'>
+          <p>Phone number</p>
+          <span className='input_border '>
+            <input type='text' width='100%' placeholder='0780123567' />
+          </span>
+        </div>
+      </div>
+      <div className='two_col_flex paddingTop'>
+        <div className='input_wrapper space_wrapper'>
+          <p>E-mail</p>
+          <span className='input_border'>
+            <input type='text' width='200px' placeholder='email' />
+          </span>
+        </div>
+        <div className='input_wrapper space_wrapper'>
+          <p>Team</p>
+          <span className='input_border'>
+            <input type='text' placeholder='lorem' />
+          </span>
+        </div>
+        <div className='input_wrapper space_wrapper'>
+          <p>Birth year </p>
+          <span className='input_border'>
+            <input type='text' placeholder='1999' />
+          </span>
+        </div>{" "}
+        <div className='input_wrapper space_wrapper'>
+          <p>Location</p>
+          <span className='input_border'>
+            <input type='text' placeholder='lorem' />
+          </span>
+        </div>
+      </div>{" "}
+      <div className='two_col_flex paddingTop'>
+        <div className='input_wrapper space_wrapper'>
+          <p>password</p>
+          <span className='input_border'>
+            <input type='password' width='200px' placeholder='******' />
+          </span>
+        </div>
+        <div className='input_wrapper space_wrapper'>
+          <p>Confirm password</p>
+          <span className='input_border'>
+            <input type='text' placeholder='Re-write the same password' />
+          </span>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default CreateStuff;
+export default index;

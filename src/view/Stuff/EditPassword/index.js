@@ -2,6 +2,7 @@
 
 import React from "react";
 import "./index.css";
+import "../../../App.css";
 const EditPassword = () => {
   return (
     <div>
@@ -12,25 +13,17 @@ const EditPassword = () => {
       <p>
         The password could be any combination of letters ,numbers and symbols
       </p>
-      <div className='input_wrapper'>
-        <div>
-          <input type='text' placeholder='password ...' />
-          {/* <img
-            src={require("../../shared/Icon/searchIcon.png")}
-            height='9px'
-            // className="searchIcon"
-          /> */}
-        </div>
-        <div className='input_wrapper'>
-          <div>
-            <input type='text' placeholder='password ...' />
-            {/* <img
-              src={require("../../shared/Icon/searchIcon.png")}
-              height='9px'
-              // className="searchIcon"
-            /> */}
-          </div>
-        </div>
+      <br />
+      <div className='input_wrapper space_wrapper'>
+        <span className='input_border '>
+          <input type='password' width='100%' placeholder='*********' />
+        </span>
+      </div>
+      <br />
+      <div className='input_wrapper space_wrapper'>
+        <span className='input_border '>
+          <input type='password' width='100%' />
+        </span>
       </div>
     </div>
   );

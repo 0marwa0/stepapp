@@ -29,6 +29,7 @@ class index extends Component {
   };
   componentWillReceiveProps(props) {
     this.IsCheck();
+
     return this.state.isChecked;
   }
   render() {

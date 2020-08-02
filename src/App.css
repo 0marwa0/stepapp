@@ -36,7 +36,7 @@ a {
 .input_wrapper > div {
   display: grid;
   align-items: center;
-  border: 1px solid var(--lighter-gray);
+  border: 1px solid var(--light-gray);
   border-radius: 5px;
   padding: 0 2px;
   width: 350px;
@@ -51,28 +51,40 @@ a {
 
   grid-template-columns: auto auto;
 }
+.space_wrapper {
+  padding: 5px;
+  padding-left: none;
+}
 .warp_flex {
   display: grid;
   grid-template-columns: auto auto auto;
 }
-.input_wrapper input[type="text"] {
+.input_wrapper input[type="text"],
+.input_wrapper input[type="password"] {
   padding: 7px;
   font-size: 14px;
-  color: rgb(196, 193, 193);
+  color: #c4c1c1;
   border: none;
+  border-radius: 5px;
 }
 
-input:focus {
-  border: 1px solid red !important;
+button {
+  outline: none !important;
+}
+img {
+  cursor: pointer;
 }
 .input_wrapper .input_border {
   display: grid;
   grid-template-columns: auto;
   border: 1px solid var(--light-gray);
-  border-radius: 3px;
+  border-radius: 5px;
 }
-.input_wrapper input[type="text"]:focus {
-  border: 1px solid var(--light-gray);
+
+.input_wrapper input[type="text"]:focus,
+.input_wrapper input[type="password"]:focus {
+  border: none;
+  outline: none !important;
 }
 .input_wrapper input::placeholder {
   color: #e1e2e2;
@@ -86,6 +98,7 @@ body {
   max-width: 1100px;
   width: 100%;
   margin: 0 auto;
+
   align-items: center;
 }
 @media only screen and (max-width: 1220px) {
@@ -93,15 +106,34 @@ body {
     grid-template-columns: 1fr 1fr;
   }
 }
-@media only screen and (max-width: 420px) {
-  /* .input_wrapper > div {
-    width: 99.8%;
-  }*/
+@media only screen and (max-width: 755px) {
+  .two_col_flex,
+  .warp_flex {
+    grid-template-columns: auto;
+  }
+  .space_wrapper p {
+    font-size: 12px;
+  }
+  .btn {
+    font-size: 9px !important;
+  }
+  .space_wrapper {
+    padding: 0px;
+  }
 }
-@media only screen and (max-width: 380px) {
-  .input_wrapper > div {
-    width: 100%;
+@media only screen and (max-width: 385px) {
+  .input_wrapper input[type="text"],
+  .input_wrapper input[type="password"] {
+    width: 80%;
+    height: 80%;
+
     /* grid-template-columns: 1fr 0.1fr; */
+  }
+  .input_wrapper .input_border {
+    height: 80%;
+  }
+  .input_wrapper > div {
+    width: 70%;
   }
 }
 @media only screen and (max-width: 1200px) {
@@ -111,10 +143,11 @@ body {
   }
 }
 @media screen and (max-width: 298px) {
-  .input_wrapper input[type="text"]:focus {
-    font-size: 7px;
+  .input_wrapper input[type="text"]:focus,
+  .input_wrapper input[type="password"]:focus {
+    font-size: 10px;
   }
   .input_wrapper input::placeholder {
-    font-size: 7px;
+    font-size: 10px;
   }
 }

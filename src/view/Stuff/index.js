@@ -168,7 +168,7 @@ class index extends Component {
               modalPurpose=' '
               modalTitle='Re-new password'
               width='45%'
-              height='auto'
+              height='50%'
               onCLose={() => this.ShowEditModal(false)}>
               <EditPassword />
             </Modal>

@@ -20,7 +20,7 @@ function ProductFilter() {
           modalPurpose='From here you can create new accounts'
           modalTitle='Add new team member'
           width='60%'
-          height='70%'
+          height='75%'
           onCLose={() => DisplayModel(false)}>
           <CreateStuff />
         </Modal>

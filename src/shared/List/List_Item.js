@@ -16,9 +16,7 @@ const ListItem = ({
   showModal,
 }) => {
   let id = `test${itemNumber}`;
-  useEffect(() => {
-    return () => {};
-  });
+
   return (
     <div className='List_item'>
       <div>
