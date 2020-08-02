@@ -14,6 +14,9 @@ function index({
   modalButton,
   modalPurpose,
   modalType,
+  fun,
+  isMulti,
+  onBack,
 }) {
   const style = { height: height, width: width };
   return (
@@ -34,10 +37,22 @@ function index({
           <div className='Modal_contaner'>{children}</div>
           <div className='Modal_footer'>
             <p>{modalPurpose}</p>
-            <button
-              className={modalType == "Delete" ? "btn DeleteModal_btn" : "btn"}>
-              {modalButton}
-            </button>
+            {isMulti ? (
+              <div>
+                <button className='next_btn btn' onClick={onBack}>
+                  back
+                </button>
+              </div>
+            ) : null}
+            <div>
+              <button
+                onClick={fun}
+                className={
+                  modalType == "Delete" ? "btn DeleteModal_btn" : "btn"
+                }>
+                {modalButton}
+              </button>
+            </div>
           </div>
         </div>
       </div>
