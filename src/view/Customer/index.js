@@ -12,7 +12,7 @@ import {
   faLessThan,
   faMap,
 } from "@fortawesome/fontawesome-free-solid";
-
+import { Customers } from "../../Store";
 import ListHead from "../../shared/List//List_head";
 import "../../shared/List/index.css";
 import CustomerFilter from "./CustomerFilter";
@@ -32,7 +32,17 @@ class index extends Component {
 
     return this.state.isChecked;
   }
+  gitItem=(id)=>{
+    let item = Customers.filter(u=>u.id==id)
+    console.log( item,"selected item");
+    return item
+  }
+  checked=(id)=>{
+let item =this.gitItem(id);
+
+  }
   render() {
+    const listName="Customer"
     return (
       <div>
         <Header slug='Customer list' />
@@ -49,116 +59,50 @@ class index extends Component {
                 "Rating rate",
               ]}
             />
-            <ListItem
-              icon='customerIcon.png'
-              itemNumber='1'
-              itemName='Ahmed Saloom'
-              type='Lorem Surgery'
-              mostOrder='Plates and Secrews '
-              orderValue='119$'
-              ratingRate='4/5'
-              checked={this.IsCheck}
-            />{" "}
-            <ListItem
-              icon='customerIcon.png'
-              itemNumber='2'
-              itemName='Mohamed Hamoodi'
-              type='Ipsum Surgery'
-              mostOrder='Nail System '
-              orderValue='230$'
-              ratingRate='4/5'
-              checked={this.IsCheck}
-            />
-            <ListItem
-              icon='customerIcon.png'
-              itemNumber='3'
-              itemName='Ali Ismail'
-              type='Dolor Surgery'
-              mostOrder='On pipe '
-              orderValue='120$'
-              ratingRate='4/5'
-              checked={this.IsCheck}
-            />
-            <ListItem
-              icon='customerIcon.png'
-              itemNumber='4'
-              itemName='Ail Hamandi'
-              type='Sit Surgery'
-              mostOrder='Bone Cement'
-              orderValue='121$'
-              ratingRate='4/5'
-              checked={this.IsCheck}
-            />
-            <ListItem
-              icon='customerIcon.png'
-              itemNumber='5'
-              itemName='Hamdon Mahmood'
-              type='Lorem Surgery'
-              mostOrder='Bone Substiute'
-              orderValue='116$'
-              ratingRate='4/5'
-              checked={this.IsCheck}
-            />
-            <ListItem
-              icon='customerIcon.png'
-              itemNumber='6'
-              itemName="Murtadha Al-ka'bi"
-              type='Ipsum Surgery'
-              mostOrder='Plus Lavage '
-              orderValue='133$'
-              ratingRate='4/5'
-              checked={this.IsCheck}
-            />
-            <ListItem
-              icon='customerIcon.png'
-              itemNumber='7'
-              itemName='Mustafa Talib'
-              type='Dolor Surgery'
-              mostOrder='Knee Spacers'
-              orderValue='133$'
-              ratingRate='4/5'
-              checked={this.IsCheck}
-            />
-            <ListItem
-              icon='customerIcon.png'
-              itemNumber='8'
-              itemName='Bilal Al-Aqidi'
-              type='Sit Surgery'
-              mostOrder='Hip Spacers '
-              orderValue='134$'
-              ratingRate='4/5'
-              checked={this.IsCheck}
-            />
-            <ListItem
-              icon='customerIcon.png'
-              itemNumber='9'
-              itemName='Hassan Al-Hassani'
-              type='Lorem Surgery'
-              mostOrder='etc '
-              orderValue='135$'
-              ratingRate='4/5'
-              checked={this.IsCheck}
-            />
-            <ListItem
-              icon='customerIcon.png'
-              itemNumber='10'
-              itemName='Ahmed Saloom'
-              type='Lorem Surgery'
-              mostOrder='Plates and Secrews '
-              orderValue='119$'
-              ratingRate='4/5'
-              checked={this.IsCheck}
-            />
-            <ListItem
-              icon='customerIcon.png'
-              itemNumber='11'
-              itemName='Mohamed Hamoodi'
-              type='Dolor Surgery'
-              mostOrder='Nail System '
-              orderValue='137$'
-              ratingRate='4/5'
-              checked={this.IsCheck}
-            />
+          {Customers.map((item,i)=>{
+            return( 
+
+
+<div className='List_item'>
+      <div>
+
+        <input type='checkbox' id={`test${i}`} onChange={this.checked(item.id)} />
+        <label for={`test${i}`}></label>
+      </div>
+      <div>{i}</div>
+
+      <div>{item.itemName}</div>
+      <img
+        // src={require(`../../shared/Icon/${icon}`)}
+        height='15px'
+        // onClick={showModal}
+      />
+      <span>{item.type}</span>
+
+      <div>{item.mostOrder}</div>
+      <div className={listName == "product" ? null : "order_ctrl"}>
+        {item.orderValue}
+      </div>
+
+      {listName == "product" ? (
+        <div className='order_ctrl'>{item.ratingRate}</div>
+      ) : (
+        <div className='rate_ctrl'>{item.ratingRate}</div>
+      )}
+    </div>
+
+
+
+
+
+
+
+
+
+
+            )})}
+         
+          
             <div className='List_footer'>
               <p>the results of your search is 500 items out of 10,000 item </p>
               <div>
