@@ -16,9 +16,9 @@ function App() {
       <Navbar />
       <Switch>
         <Route path="/" exact component={Dashboard} />
-        <Route path="/Home/CustomerList" exact component={Customer} />
-        <Route path="/Home/ProductList" exact component={Product} />
-        <Route path="/Home/StuffList" exact component={Stuff} />
+        <Route path="/customerlist" exact component={Customer} />
+        <Route path="/productlist" exact component={Product} />
+        <Route path="/stufflist" exact component={Stuff} />
       </Switch>
     </div>
   );

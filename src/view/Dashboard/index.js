@@ -14,7 +14,7 @@ class index extends Component {
     return (
       <div className='container'>
         <div className='cards_container'>
-          <Link to='/Home/ProductList'>
+          <Link to='/productlist'>
             <Card
               icon='cardIcon1.png'
               cardName='Products list'
@@ -23,7 +23,7 @@ class index extends Component {
               btnName='Add new product'
             />
           </Link>
-          <Link to='/Home/CustomerList'>
+          <Link to='/customerlist'>
             <Card
               icon='cardIcon2.png'
               cardName='Customer list'
@@ -32,7 +32,7 @@ class index extends Component {
               btnName='Add new customer'
             />
           </Link>
-          <Link to='/Home/StuffList'>
+          <Link to='/stufflist'>
             <Card
               icon='cardIcon3.png'
               cardName='Stuff list'
