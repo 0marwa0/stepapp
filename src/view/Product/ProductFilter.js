@@ -16,6 +16,7 @@ import "../../App.css";
 import { FaSortDown } from "react-icons/fa";
 import TabPanel from "./Tabs";
 import "./index.css";
+import UploadImage from "./CreateProduct/UploadImage";
 import { ProductSType_1, ProductSType_2 } from "./Products.js";
 var data = [
   { id: "1", tabTitle: "Tab 1", tabContent: <ProductSType_1 /> },
@@ -26,6 +27,10 @@ function ProductFilter(listType_1, listType_2) {
   const [showModel, setModel] = useState(false);
   const DisplayModel = (show) => {
     setModel(show);
+  };
+  const [showUploadModel, setUploadModel] = useState(false);
+  const DisplayUploadModel = (showUpload) => {
+    setUploadModel(showUpload);
   };
   const _handleTabChange = (index) => {
     console.log("Selected tab index", index);
@@ -86,8 +91,26 @@ function ProductFilter(listType_1, listType_2) {
           modalTitle='Add new Product'
           width='60%'
           height='70%'
+          fun={() => DisplayUploadModel(true)}
           onCLose={() => DisplayModel(false)}>
           <CreateProduct />
+        </Modal>
+      ) : null}
+
+      {showUploadModel ? (
+        <Modal
+          isMulti={true}
+          modalButton='Create New Item'
+          modalPurpose='From here you can add products to your list'
+          modalTitle='Add new Product'
+          width='60%'
+          height='70%'
+          onBack={() => {
+            DisplayModel(true);
+            DisplayUploadModel(false);
+          }}
+          onCLose={() => DisplayUploadModel(false)}>
+          <UploadImage />
         </Modal>
       ) : null}
     </div>
