@@ -23,7 +23,7 @@
   align-items: center;
   cursor: pointer;
 }
-/* @keyframes movTop {
+@keyframes moveTop {
   0% {
     transform: translateY(-30);
   }
@@ -33,7 +33,7 @@
   100% {
     transform: translateY(0);
   } 
-}*/
+}
 .card_text {
   color: var(--gray);
   font-size: 15px;
