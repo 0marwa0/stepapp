@@ -11,7 +11,7 @@ import { RiFilter2Line } from "react-icons/ri";
 
 import { FaSortDown } from "react-icons/fa";
 import "../../App.css";
-function ListFilter({ showModal, ListName, isChecked, DeleteModal, props }) {
+function ListFilter({selectedData, showModal, ListName, isChecked, DeleteModal, props }) {
   return (
     <div>
       <div className='List_filter'>
@@ -41,7 +41,7 @@ function ListFilter({ showModal, ListName, isChecked, DeleteModal, props }) {
               }}
             />
           </div>{" "}
-          {isChecked ? (
+          {selectedData.length!=0 ? (
             <button className='btn btn_delete' onClick={DeleteModal}>
               Delete
             </button>

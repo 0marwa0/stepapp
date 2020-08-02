@@ -20,7 +20,8 @@ import CustomerFilter from "./CustomerFilter";
 class index extends Component {
   constructor(props) {
     super(props);
-    this.state = { isChecked: false, ShowDeleteModal: false };
+    this.state = { isChecked: false, ShowDeleteModal: false,
+   Data:[] };
   }
   IsCheck = () => {
     this.setState({
@@ -32,13 +33,38 @@ class index extends Component {
 
     return this.state.isChecked;
   }
-  gitItem=(id)=>{
-    let item = Customers.filter(u=>u.id==id)
-    console.log( item,"selected item");
-    return item
-  }
-  checked=(id)=>{
-let item =this.gitItem(id);
+  
+  checked=(e,item)=>{
+ if (e.target.checked){
+      //append to array
+      this.setState({
+        Data: this.state.Data.concat([item])
+      })
+    } else {
+      //remove from array
+      this.setState({
+        Data : this.state.Data.filter(function(val) {return val!==item})
+      })
+   }
+
+
+// let data =this.state.Data.concat(item)
+// this.setState({Data:data})
+
+
+   
+   
+// console.log(this.state.Data,"store");
+
+
+//  if(this.state.Data.find(u=>u.id==id)){
+// let m=this.state.Data.filter(u=>u.id==id)
+//     this.setState({Data:m})
+//     console.log(this.state.Data.filter(u=>u.id==id),"wat");
+//     }else{
+
+//     }
+
 
   }
   render() {
@@ -47,7 +73,7 @@ let item =this.gitItem(id);
       <div>
         <Header slug='Customer list' />
         <div className='container'>
-          <CustomerFilter isChecked={this.state.isChecked} />
+          <CustomerFilter selectedData={this.state.Data}/>
 
           <div className='List_Wrapper'>
             <ListHead
@@ -66,7 +92,7 @@ let item =this.gitItem(id);
 <div className='List_item'>
       <div>
 
-        <input type='checkbox' id={`test${i}`} onChange={this.checked(item.id)} />
+        <input type='checkbox' id={`test${i}`} onChange={(e)=>this.checked(e,item)} />
         <label for={`test${i}`}></label>
       </div>
       <div>{i}</div>
