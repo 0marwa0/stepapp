@@ -12,7 +12,7 @@ import {
   faLessThan,
   faMap,
 } from "@fortawesome/fontawesome-free-solid";
-import { Customers } from "../../Store";
+import { Customers } from "../../fakeData";
 import ListHead from "../../shared/List//List_head";
 import "../../shared/List/index.css";
 import CustomerFilter from "./CustomerFilter";
@@ -84,11 +84,6 @@ class index extends Component {
                     <RiRoadMapLine className='Item_Icon' />
                   </div>
 
-                  {/* <img
-                    src={require(`../../shared/Icon/customerIcon.png`)}
-                    height='15px'
-                    // onClick={showModal}
-                  /> */}
                   <span>{item.type}</span>
 
                   <div>{item.mostOrder}</div>

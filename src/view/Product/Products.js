@@ -10,7 +10,7 @@ import {
   faUnlockAlt,
 } from "@fortawesome/fontawesome-free-solid";
 import "./index.css";
-import { Products } from "../../Store/index";
+import { Products } from "../../fakeData/index";
 import ListHead from "../../shared/List//List_head";
 import ListType_item from "./ListType_item";
 export const ProductSType_1 = () => {
@@ -55,66 +55,16 @@ export const ProductSType_2 = () => {
   return (
     <div className=''>
       <div className='ListType_2_wrapper'>
-        <ListType_item
-          title='S type Clavical locking plate -||'
-          head='Humerus'
-          text='lorem sofso \ 3st stage category'
-          price='192$'
-        />
-        <ListType_item
-          title='S type Clavical locking plate -||'
-          head='Humerus'
-          text='lorem sofso \ 3st stage category'
-          price='192$'
-        />
-        <ListType_item
-          title='S type Clavical locking plate -||'
-          head='Humerus'
-          text='lorem sofso \ 3st stage category'
-          price='192$'
-        />
-        <ListType_item
-          title='S type Clavical locking plate -||'
-          head='Humerus'
-          text='lorem sofso \ 3st stage category'
-          price='192$'
-        />
-        <ListType_item
-          title='S type Clavical locking plate -||'
-          head='Humerus'
-          text='lorem sofso \ 3st stage category'
-          price='192$'
-        />{" "}
-        <ListType_item
-          title='S type Clavical locking plate -||'
-          head='Humerus'
-          text='lorem sofso \ 3st stage category'
-          price='192$'
-        />{" "}
-        <ListType_item
-          title='S type Clavical locking plate -||'
-          head='Humerus'
-          text='lorem sofso \ 3st stage category'
-          price='192$'
-        />{" "}
-        <ListType_item
-          title='S type Clavical locking plate -||'
-          head='Humerus'
-          text='lorem sofso \ 3st stage category'
-          price='192$'
-        />{" "}
-        <ListType_item
-          title='S type Clavical locking plate -||'
-          head='Humerus'
-          text='lorem sofso \ 3st stage category'
-          price='192$'
-        />{" "}
-        <ListType_item
-          title='S type Clavical locking plate -||'
-          head='Humerus'
-          text='lorem sofso \ 3st stage category'
-          price='192$'
-        />
+        {Products.map((item, i) => {
+          return (
+            <ListType_item
+              title={item.itemName}
+              head={item.orderValue}
+              text={item.mostOrder}
+              price={item.price}
+            />
+          );
+        })}
       </div>
     </div>
   );

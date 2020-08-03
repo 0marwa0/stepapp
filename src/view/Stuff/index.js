@@ -12,7 +12,7 @@ import {
   faLessThan,
   faUnlockAlt,
 } from "@fortawesome/fontawesome-free-solid";
-
+import { Stuff } from "../../fakeData";
 import ListHead from "../../shared/List//List_head";
 import "../../shared/List/index.css";
 import StuffFilter from "./StuffFilter";
@@ -42,116 +42,20 @@ class index extends Component {
                 "Rating rate",
               ]}
             />
-            <ListItem
-              icon='stuffIcon.png'
-              itemName='Ahmed Saloom'
-              itemNumber='1'
-              type='Lorem '
-              mostOrder='Plates and Secrews '
-              orderValue='119'
-              ratingRate='4/5'
-              showModal={this.ShowEditModal}
-            />
-            <ListItem
-              icon='stuffIcon.png'
-              itemNumber='2'
-              itemName='Mohamed Hamoodi'
-              type='Ipsum'
-              mostOrder='Nail System '
-              orderValue='230'
-              ratingRate='4/5'
-              showModal={this.ShowEditModal}
-            />
-            <ListItem
-              icon='stuffIcon.png'
-              itemNumber='3'
-              itemName='Ali Ismail'
-              type='Dolor '
-              mostOrder='On pipe '
-              orderValue='120'
-              ratingRate='4/5'
-              showModal={this.ShowEditModal}
-            />
-            <ListItem
-              icon='stuffIcon.png'
-              itemNumber='4'
-              itemName='Ail Hamandi'
-              type='Sit '
-              mostOrder='Bone Cement'
-              orderValue='121'
-              ratingRate='4/5'
-              showModal={this.ShowEditModal}
-            />
-            <ListItem
-              icon='stuffIcon.png'
-              itemNumber='5'
-              itemName='Hamdon Mahmood'
-              type='Lorem '
-              mostOrder='Bone Substiute'
-              orderValue='116'
-              ratingRate='4/5'
-              showModal={this.ShowEditModal}
-            />
-            <ListItem
-              icon='stuffIcon.png'
-              itemNumber='6'
-              itemName="Murtadha Al-ka'bi"
-              type='Ipsum '
-              mostOrder='Plus Lavage '
-              orderValue='133'
-              ratingRate='4/5'
-              showModal={this.ShowEditModal}
-            />
-            <ListItem
-              icon='stuffIcon.png'
-              itemNumber='7'
-              itemName='Mustafa Talib'
-              type='Dolor '
-              mostOrder='Knee Spacers'
-              orderValue='133'
-              ratingRate='4/5'
-              showModal={this.ShowEditModal}
-            />
-            <ListItem
-              icon='stuffIcon.png'
-              itemNumber='8'
-              itemName='Bilal Al-Aqidi'
-              type='Sit '
-              mostOrder='Hip Spacers '
-              orderValue='134'
-              ratingRate='4/5'
-              showModal={this.ShowEditModal}
-            />
-            <ListItem
-              icon='stuffIcon.png'
-              itemNumber='9'
-              itemName='Hassan Al-Hassani'
-              type='Lorem '
-              mostOrder='etc '
-              orderValue='135'
-              ratingRate='4/5'
-              showModal={this.ShowEditModal}
-            />
-            <ListItem
-              icon='stuffIcon.png'
-              itemNumber='10'
-              itemName='Ahmed Saloom'
-              type='Lorem'
-              mostOrder='Plates and Secrews '
-              orderValue='119'
-              ratingRate='4/5'
-              showModal={this.ShowEditModal}
-            />
-            <ListItem
-              icon='stuffIcon.png'
-              itemNumber='11'
-              itemName='Mohamed Hamoodi'
-              type='Dolor'
-              mostOrder='Nail System '
-              orderValue='137'
-              ratingRate='4/5'
-              showModal={this.ShowEditModal}
-            />
+            {Stuff.map((item, i) => {
+              return (
+                <ListItem
+                  itemName={item.itemName}
+                  itemNumber={i + 1}
+                  type={item.type}
+                  mostOrder={item.mostOrder}
+                  orderValue={item.orderValue}
+                  ratingRate={item.ratingRate}
+                  showModal={this.ShowEditModal}
+                />
+              );
+            })}
+
             <div className='List_footer'>
               <p>the results of your search is 500 items out of 10,000 item </p>
               <div>

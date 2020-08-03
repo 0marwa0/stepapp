@@ -39,7 +39,7 @@ export const Products = [
     type: "Lorem ",
     mostOrder: "Plates and Secrews ",
     orderValue: "Trauma",
-    ratingRate: "119$",
+    price: "119$",
   },
   {
     listName: "product",
@@ -48,7 +48,7 @@ export const Products = [
     type: "Lorem ",
     mostOrder: "Nail System ",
     orderValue: "Athtoplsty",
-    ratingRate: "119$",
+    price: "119$",
   },
   {
     listName: "product",
@@ -57,7 +57,7 @@ export const Products = [
     type: "Dolor",
     mostOrder: "On pipe ",
     orderValue: "Others",
-    ratingRate: "119$",
+    price: "119$",
   },
   {
     listName: "product",
@@ -66,6 +66,36 @@ export const Products = [
     type: "Dolor",
     mostOrder: "Bone Cement ",
     orderValue: "Others",
-    ratingRate: "119$",
+    price: "119$",
+  },
+];
+export const Stuff = [
+  {
+    itemName: "Ahmed Saloom",
+    type: "Lorem",
+    mostOrder: "Plates and Secrews ",
+    orderValue: "119",
+    ratingRate: "4/5",
+  },
+  {
+    itemName: "Ahmed Saloom",
+    type: "Lorem",
+    mostOrder: "Plates and Secrews ",
+    orderValue: "119",
+    ratingRate: "4/5",
+  },
+  {
+    itemName: "Mohamed Hamoodi",
+    type: "Dolor",
+    mostOrder: "Plates and Secrews ",
+    orderValue: "119",
+    ratingRate: "4/5",
+  },
+  {
+    itemName: "Ahmed Saloom",
+    type: "Lorem",
+    mostOrder: "Plates and Secrews ",
+    orderValue: "119",
+    ratingRate: "4/5",
   },
 ];
