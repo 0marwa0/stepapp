@@ -5,14 +5,18 @@ import ListFilter from "../../shared/List/List_filter";
 import { useState } from "react";
 import CreateStuff from "./CreateStuff";
 import Modal from "../../shared/Modal";
-function ProductFilter() {
+function ProductFilter(selectedData) {
   const [showModel, setModel] = useState(false);
   const DisplayModel = (show) => {
     setModel(show);
   };
   return (
     <div>
-      <ListFilter showModal={() => DisplayModel(true)} ListName='Stuff' />
+      <ListFilter
+        showModal={() => DisplayModel(true)}
+        ListName='Stuff'
+        selectedData={[]}
+      />
 
       {showModel ? (
         <Modal

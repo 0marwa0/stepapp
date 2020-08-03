@@ -32,7 +32,7 @@
   }
   100% {
     transform: translateY(0);
-  } 
+  }
 }
 .card_text {
   color: var(--gray);
@@ -72,14 +72,14 @@
 .card_wrapper:hover {
   box-shadow: 0 0 11px rgba(10, 10, 10, 0.1);
 }
-.card_wrapper:hover .card_btn {
-  color: white;
-  background-color: var(--blue);
-}
-.card_wrapper:hover .card_btn_icon {
-  color: white;
+.card_btn:hover {
+  border: 1px solid var(--blue);
+  color: var(--blue);
 }
 .card_btn_icon {
+  color: var(--gray);
+}
+.card_btn:hover .card_btn_icon {
   color: var(--blue);
 }
 @media only screen and (max-width: 1300px) {

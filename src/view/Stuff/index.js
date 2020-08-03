@@ -25,14 +25,13 @@ class index extends Component {
   }
   ShowEditModal = (showEditModal) => {
     this.setState({ showEditModal });
-    console.log("ffffffffffffffffffffack");
   };
   render() {
     return (
       <div>
         <Header slug='Stuff list' />
         <div className='container'>
-          <StuffFilter />
+          <StuffFilter selectedData={[]} />
           <div className='List_Wrapper'>
             <ListHead
               listName='Stuff'

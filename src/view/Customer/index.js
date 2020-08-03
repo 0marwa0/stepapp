@@ -75,7 +75,7 @@ class index extends Component {
                     />
                     <label for={`test${i}`}></label>
                   </div>
-                  <div>{i}</div>
+                  <div>{i + 1}</div>
 
                   <div>{item.itemName}</div>
                   <img

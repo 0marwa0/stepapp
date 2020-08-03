@@ -3,9 +3,11 @@
 import React from "react";
 import "./index.css";
 import "../../../App.css";
+import { FaEye } from "react-icons/fa";
+
 const EditPassword = () => {
   return (
-    <div>
+    <div className='edit_model'>
       <p className='alert_text'>
         if you renewed this old password will not work again
       </p>
@@ -14,16 +16,19 @@ const EditPassword = () => {
         The password could be any combination of letters ,numbers and symbols
       </p>
       <br />
-      <div className='input_wrapper space_wrapper'>
-        <span className='input_border '>
+      <div className='input_wrapper '>
+        <div>
           <input type='password' width='100%' placeholder='*********' />
-        </span>
+
+          <FaEye className='eye_icon' />
+        </div>
       </div>
       <br />
-      <div className='input_wrapper space_wrapper'>
-        <span className='input_border '>
+      <div className='input_wrapper '>
+        <div>
           <input type='password' width='100%' />
-        </span>
+          <FaEye className='eye_icon' />
+        </div>
       </div>
     </div>
   );

@@ -27,14 +27,12 @@ a {
 .input_wrapper {
   display: grid;
   grid-template-columns: auto;
-  margin-right: 3%;
 }
 .input_wrapper p {
   font-size: 13px;
   margin: 2% 0;
 }
 .input_wrapper > div {
-
   border: 1px solid var(--light-gray);
   border-radius: 5px;
   padding: 0 2px;
@@ -45,9 +43,12 @@ a {
 .input_wrapper > div .input_wrapper {
   border-right: none;
 }
+.input_wrapper > div {
+  width: 100%;
+}
 .two_col_flex {
   display: grid;
-
+  grid-gap: 10px;
   grid-template-columns: auto auto;
 }
 .space_wrapper {
@@ -56,17 +57,18 @@ a {
 }
 .warp_flex {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+  grid-template-columns: 0.5fr 0.5fr 0.5fr;
 }
 .input_wrapper input[type="text"],
 .input_wrapper input[type="password"] {
-
   font-size: 16px;
   color: #c4c1c1;
   border: none;
-  padding:0 3px;
-height:35px;width:95%;
- outline:none;
+  padding: 0 3px;
+  height: 35px;
+  width: 95%;
+  outline: none;
   border-radius: 5px;
 }
 
