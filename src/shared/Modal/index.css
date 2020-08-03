@@ -50,6 +50,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  backdrop-filter: blur(4px);
   background-color: rgb(114, 111, 111, 0.2);
 }
 

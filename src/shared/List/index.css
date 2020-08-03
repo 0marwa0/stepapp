@@ -27,8 +27,11 @@
   background-color: var(--blue);
   color: white;
   padding: 6px 8px !important;
-  font-size: 13px;
+  font-size: 14px;
   border-radius: 5px;
+}
+.List_btn {
+  height: 30px !important;
 }
 .plus_icon {
   margin: 0 3px;
@@ -37,8 +40,8 @@
 .Filter_ctrl {
   color: black;
   width: 60px;
-  height: 27px;
-  font-size: 13px;
+  height: 35px;
+  font-size: 14px;
   border-radius: 5px;
   color: var(--gray);
   display: flex;
