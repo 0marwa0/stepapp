@@ -141,9 +141,15 @@
   margin-left: 6px;
 }
 .list_type {
-  height: 15px;
+  /* height: 15px; */
   margin-left: 8px;
   float: right;
+  font-size: 27px;
+  cursor: pointer;
+  color: var(--light-gray);
+}
+.activeList {
+  color: var(--blue) !important;
 }
 /**********search input style*********/
 .search_input {
@@ -160,8 +166,9 @@
   position: absolute;
   right: 0;
   right: 3px;
+  font-size: 10px;
   color: var(--light-gray);
-  z-index: 5;
+  z-index: 0.2;
 }
 /***********check box style**********/
 [type="checkbox"]:not(:checked),

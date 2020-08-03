@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus,
@@ -10,8 +10,24 @@ import {
 import { RiFilter2Line } from "react-icons/ri";
 
 import { FaSortDown } from "react-icons/fa";
+import { FaThList } from "react-icons/fa";
+import { GiHamburgerMenu } from "react-icons/gi";
 import "../../App.css";
-function ListFilter({selectedData, showModal, ListName, isChecked, DeleteModal, props }) {
+function ListFilter({
+  selectedData,
+  showModal,
+  ListName,
+  isChecked,
+  DeleteModal,
+}) {
+  const [list, SetListActive] = useState(false);
+  const [burger, SetBurgerActive] = useState(true);
+  const listActive = (list) => {
+    SetListActive(list);
+  };
+  const burgerActive = (list) => {
+    SetBurgerActive(list);
+  };
   return (
     <div>
       <div className='List_filter'>
@@ -41,7 +57,7 @@ function ListFilter({selectedData, showModal, ListName, isChecked, DeleteModal, 
               }}
             />
           </div>{" "}
-          {selectedData.length!=0 ? (
+          {selectedData.length != 0 ? (
             <button className='btn btn_delete' onClick={DeleteModal}>
               Delete
             </button>
@@ -56,13 +72,19 @@ function ListFilter({selectedData, showModal, ListName, isChecked, DeleteModal, 
 
             {ListName == "product" ? (
               <div className='list_type_wrapper'>
-                <img
+                <FaThList
                   className='list_type'
-                  src={require("../../shared/Icon/productIcon1.png")}
+                  onClick={() => {
+                    listActive(true);
+                    burgerActive(false);
+                  }}
                 />
-                <img
+                <GiHamburgerMenu
                   className='list_type'
-                  src={require("../../shared/Icon/productIcon2.png")}
+                  onClick={() => {
+                    listActive(false);
+                    burgerActive(true);
+                  }}
                 />
               </div>
             ) : null}

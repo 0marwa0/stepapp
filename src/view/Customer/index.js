@@ -20,8 +20,7 @@ import CustomerFilter from "./CustomerFilter";
 class index extends Component {
   constructor(props) {
     super(props);
-    this.state = { isChecked: false, ShowDeleteModal: false,
-   Data:[] };
+    this.state = { isChecked: false, ShowDeleteModal: false, Data: [] };
   }
   IsCheck = () => {
     this.setState({
@@ -33,47 +32,27 @@ class index extends Component {
 
     return this.state.isChecked;
   }
-  
-  checked=(e,item)=>{
- if (e.target.checked){
-      //append to array
+
+  checked = (e, item) => {
+    if (e.target.checked) {
       this.setState({
-        Data: this.state.Data.concat([item])
-      })
+        Data: this.state.Data.concat([item]),
+      });
     } else {
-      //remove from array
       this.setState({
-        Data : this.state.Data.filter(function(val) {return val!==item})
-      })
-   }
-
-
-// let data =this.state.Data.concat(item)
-// this.setState({Data:data})
-
-
-   
-   
-// console.log(this.state.Data,"store");
-
-
-//  if(this.state.Data.find(u=>u.id==id)){
-// let m=this.state.Data.filter(u=>u.id==id)
-//     this.setState({Data:m})
-//     console.log(this.state.Data.filter(u=>u.id==id),"wat");
-//     }else{
-
-//     }
-
-
-  }
+        Data: this.state.Data.filter(function (val) {
+          return val !== item;
+        }),
+      });
+    }
+  };
   render() {
-    const listName="Customer"
+    const listName = "Customer";
     return (
       <div>
         <Header slug='Customer list' />
         <div className='container'>
-          <CustomerFilter selectedData={this.state.Data}/>
+          <CustomerFilter selectedData={this.state.Data} />
 
           <div className='List_Wrapper'>
             <ListHead
@@ -85,50 +64,41 @@ class index extends Component {
                 "Rating rate",
               ]}
             />
-          {Customers.map((item,i)=>{
-            return( 
+            {Customers.map((item, i) => {
+              return (
+                <div className='List_item'>
+                  <div>
+                    <input
+                      type='checkbox'
+                      id={`test${i}`}
+                      onChange={(e) => this.checked(e, item)}
+                    />
+                    <label for={`test${i}`}></label>
+                  </div>
+                  <div>{i}</div>
 
+                  <div>{item.itemName}</div>
+                  <img
+                    // src={require(`../../shared/Icon/${icon}`)}
+                    height='15px'
+                    // onClick={showModal}
+                  />
+                  <span>{item.type}</span>
 
-<div className='List_item'>
-      <div>
+                  <div>{item.mostOrder}</div>
+                  <div className={listName == "product" ? null : "order_ctrl"}>
+                    {item.orderValue}
+                  </div>
 
-        <input type='checkbox' id={`test${i}`} onChange={(e)=>this.checked(e,item)} />
-        <label for={`test${i}`}></label>
-      </div>
-      <div>{i}</div>
+                  {listName == "product" ? (
+                    <div className='order_ctrl'>{item.ratingRate}</div>
+                  ) : (
+                    <div className='rate_ctrl'>{item.ratingRate}</div>
+                  )}
+                </div>
+              );
+            })}
 
-      <div>{item.itemName}</div>
-      <img
-        // src={require(`../../shared/Icon/${icon}`)}
-        height='15px'
-        // onClick={showModal}
-      />
-      <span>{item.type}</span>
-
-      <div>{item.mostOrder}</div>
-      <div className={listName == "product" ? null : "order_ctrl"}>
-        {item.orderValue}
-      </div>
-
-      {listName == "product" ? (
-        <div className='order_ctrl'>{item.ratingRate}</div>
-      ) : (
-        <div className='rate_ctrl'>{item.ratingRate}</div>
-      )}
-    </div>
-
-
-
-
-
-
-
-
-
-
-            )})}
-         
-          
             <div className='List_footer'>
               <p>the results of your search is 500 items out of 10,000 item </p>
               <div>
