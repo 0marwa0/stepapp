@@ -36,7 +36,7 @@ const ListItem = ({
           {listName == "product" ? (
             <IoMdImage className='Item_Icon' />
           ) : (
-            <AiFillLock className='Item_Icon' />
+            <AiFillLock className='Item_Icon' onClick={showModal} />
           )}
         </div>
       }
