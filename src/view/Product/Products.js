@@ -10,6 +10,7 @@ import {
   faUnlockAlt,
 } from "@fortawesome/fontawesome-free-solid";
 import "./index.css";
+import { Products } from "../../Store/index";
 import ListHead from "../../shared/List//List_head";
 import ListType_item from "./ListType_item";
 export const ProductSType_1 = () => {
@@ -25,117 +26,19 @@ export const ProductSType_1 = () => {
             "Price",
           ]}
         />
-
-        <ListItem
-          icon='productIcon.png'
-          listName='product'
-          itemName='S type clavical locking plate'
-          itemNumber='1'
-          type='Lorem '
-          mostOrder='Plates and Secrews '
-          orderValue='Trauma'
-          ratingRate='119$'
-        />
-        <ListItem
-          icon='productIcon.png'
-          listName='product'
-          itemName='S type clavical locking plate-||'
-          itemNumber='2'
-          type='Ipsum '
-          mostOrder='Nail System '
-          orderValue='Athtoplsty'
-          ratingRate='230$'
-        />
-        <ListItem
-          icon='productIcon.png'
-          listName='product'
-          itemName='Distal type clavical locking plate'
-          itemNumber='3'
-          type='Dolor '
-          mostOrder='On pipe '
-          orderValue='Others'
-          ratingRate='120$'
-        />
-        <ListItem
-          icon='productIcon.png'
-          listName='product'
-          itemName='Distal type clavical locking plate'
-          itemNumber='4'
-          type='Sit '
-          mostOrder='Bone Cement'
-          orderValue='Trauma'
-          ratingRate='121$'
-        />
-        <ListItem
-          icon='productIcon.png'
-          listName='product'
-          itemName='Humerus loking plate'
-          itemNumber='5'
-          type='Lorem '
-          mostOrder='Bone Substiute'
-          orderValue='Arthroplasty'
-          ratingRate='116$'
-        />
-        <ListItem
-          icon='productIcon.png'
-          listName='product'
-          itemName='proximal Humerus Condylus locking plate-||'
-          itemNumber='6'
-          type='Ipsum '
-          mostOrder='Plus Lavage '
-          orderValue='Others'
-          ratingRate='123$'
-        />
-        <ListItem
-          icon='productIcon.png'
-          listName='product'
-          itemName='proximal Humerus lateral locking plate-||'
-          itemNumber='7'
-          type='Dolor '
-          mostOrder='Knee Spacers'
-          orderValue='Trauma'
-          ratingRate='133$'
-        />
-        <ListItem
-          icon='productIcon.png'
-          listName='product'
-          itemName='Disttal Humerus Candylus locking plate'
-          itemNumber='8'
-          type='Sit '
-          mostOrder='Hip Spacers '
-          orderValue='Arthroplasty'
-          ratingRate='134$'
-        />
-        <ListItem
-          icon='productIcon.png'
-          listName='product'
-          itemName='Disttal Humerus medial locking plate'
-          itemNumber='9'
-          type='Lorem '
-          mostOrder='etc '
-          orderValue='Others'
-          ratingRate='136$'
-        />
-        <ListItem
-          icon='productIcon.png'
-          listName='product'
-          itemName='Disttal Humerus sub-conduls locking plate'
-          itemNumber='10'
-          type='Lorem'
-          mostOrder='Plates and Secrews '
-          orderValue='Trauma'
-          ratingRate='137$'
-        />
-        <ListItem
-          icon='productIcon.png'
-          listName='product'
-          itemName='Y-type Humerus Candlus locking plate'
-          itemNumber='11'
-          type='Dolor'
-          mostOrder='Nail System '
-          orderValue='Arthroplasty'
-          ratingRate='135$'
-        />
+        {Products.map((item, i) => {
+          return (
+            <ListItem
+              listName='product'
+              itemName={item.itemName}
+              itemNumber={i + 1}
+              type={item.type}
+              mostOrder={item.mostOrder}
+              orderValue={item.orderValue}
+              ratingRate={item.ratingRate}
+            />
+          );
+        })}
       </div>
       <div className='List_footer'>
         <p>the results of your search is 500 items out of 10,000 item </p>

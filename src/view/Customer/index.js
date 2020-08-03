@@ -16,7 +16,9 @@ import { Customers } from "../../Store";
 import ListHead from "../../shared/List//List_head";
 import "../../shared/List/index.css";
 import CustomerFilter from "./CustomerFilter";
-import { GrMapLocation } from "react-icons/gr";
+import { RiRoadMapLine } from "react-icons/ri";
+
+import "../../shared/List/index.css";
 class index extends Component {
   constructor(props) {
     super(props);
@@ -78,12 +80,15 @@ class index extends Component {
                   <div>{i + 1}</div>
 
                   <div>{item.itemName}</div>
-                  {/* <GrMapLocation /> */}
-                  <img
+                  <div>
+                    <RiRoadMapLine className='Item_Icon' />
+                  </div>
+
+                  {/* <img
                     src={require(`../../shared/Icon/customerIcon.png`)}
                     height='15px'
                     // onClick={showModal}
-                  />
+                  /> */}
                   <span>{item.type}</span>
 
                   <div>{item.mostOrder}</div>

@@ -131,6 +131,13 @@
   justify-content: flex-start;
   align-items: center;
 }
+.Item_Icon {
+  color: var(--light-gray);
+  cursor: pointer;
+}
+.Item_Icon:hover {
+  color: var(--blue);
+}
 .sort_icon {
   color: var(--light-gray);
   font-size: 10px;

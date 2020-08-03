@@ -3,6 +3,10 @@
 import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { IoMdImage } from "react-icons/io";
+import { RiRoadMapLine } from "react-icons/ri";
+import { AiFillLock } from "react-icons/ai";
+
 const ListItem = ({
   itemName,
   listName,
@@ -26,11 +30,17 @@ const ListItem = ({
       <div>{itemNumber}</div>
 
       <div>{itemName}</div>
-      <img
-        src={require(`../../shared/Icon/${icon}`)}
-        height='15px'
-        onClick={showModal}
-      />
+
+      {
+        <div>
+          {listName == "product" ? (
+            <IoMdImage className='Item_Icon' />
+          ) : (
+            <AiFillLock className='Item_Icon' />
+          )}
+        </div>
+      }
+
       <span>{type}</span>
 
       <div>{mostOrder}</div>
