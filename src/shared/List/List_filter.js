@@ -56,29 +56,30 @@ function ListFilter({
               }}
             />
           </div>{" "}
-          {selectedData.length != 0 ? (
-            <div>
-              <button className='btn btn_delete' onClick={DeleteModal}>
-                Delete
+          <div className='btns_holder'>
+            {selectedData.length != 0 ? (
+              <div>
+                <button className='btn btn_delete' onClick={DeleteModal}>
+                  Delete
+                </button>
+              </div>
+            ) : null}
+            {selectedData.length == 1 ? (
+              <div>
+                <button className='btn btn_Edit'>
+                  <FaEdit className='plus_icon' />
+                  Edit
+                </button>
+              </div>
+            ) : null}
+            <div className='btn_holder'>
+              <button className='btn_ctrl btn' onClick={showModal}>
+                <span>
+                  <FontAwesomeIcon icon={faPlus} className='plus_icon' />
+                </span>
+                <span>Add</span>
               </button>
             </div>
-          ) : null}
-          {selectedData.length == 1 ? (
-            <div>
-              <button className='btn btn_Edit'>
-                <FaEdit className='plus_icon' />
-                Edit
-              </button>
-            </div>
-          ) : null}
-          <div className='btn_holder'>
-            <button className='btn_ctrl btn' onClick={showModal}>
-              <span>
-                <FontAwesomeIcon icon={faPlus} className='plus_icon' />
-              </span>
-              <span>Add</span>
-            </button>
-
             {ListName == "product" ? (
               <div className='list_type_wrapper'>
                 <FaThList

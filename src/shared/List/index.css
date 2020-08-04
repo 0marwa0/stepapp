@@ -14,18 +14,21 @@
 .List_filter .filter_holder {
   display: grid;
   align-items: center;
-
   grid-gap: 10px;
-  grid-template-columns: 360px 2fr auto auto auto;
+  grid-template-columns: 360px 2fr auto auto;
 }
-.btn_holder {
+
+.btns_holder {
   display: flex;
   align-items: center;
+  grid-gap: 10px;
+  justify-content: space-between;
   justify-content: center;
 }
 .btn_Edit {
   background-color: white;
   border: 1px solid gray;
+  padding: 3.5px 10px !important;
 }
 
 .plus_icon {
