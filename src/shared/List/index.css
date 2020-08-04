@@ -15,7 +15,7 @@
   display: grid;
   align-items: center;
   grid-gap: 10px;
-  grid-template-columns: 360px 2fr auto auto;
+  grid-template-columns: 360px 2fr auto;
 }
 
 .btns_holder {
