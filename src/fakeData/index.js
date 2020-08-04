@@ -2,6 +2,7 @@
 
 export const Customers = [
   {
+    id: 44,
     itemName: "Ahmed Saloom",
     type: "Lorem Surgery",
     mostOrder: "Plates and Secrews ",
@@ -9,6 +10,7 @@ export const Customers = [
     ratingRate: "4/5",
   },
   {
+    id: 45,
     itemName: "Mohamed Hamoodi",
     type: "Ipsum Surgery",
     mostOrder: "Nail System ",
@@ -17,6 +19,7 @@ export const Customers = [
   },
 
   {
+    id: 443,
     itemName: "Ali Ismail",
     type: "Dolor Surgery",
     mostOrder: "On pipe ",
@@ -24,6 +27,7 @@ export const Customers = [
     ratingRate: "4/5",
   },
   {
+    id: 454,
     itemName: "Ail Hamandi",
     type: "Sit Surgery",
     mostOrder: "Bone Cement",
@@ -33,6 +37,7 @@ export const Customers = [
 ];
 export const Products = [
   {
+    id: 444,
     listName: "product",
     itemName: "S type clavical locking plate",
     itemNumber: "1",
@@ -42,6 +47,7 @@ export const Products = [
     price: "119$",
   },
   {
+    id: 64,
     listName: "product",
     itemName: "S type clavical locking plate",
     itemNumber: "1",
@@ -51,6 +57,7 @@ export const Products = [
     price: "119$",
   },
   {
+    id: 994,
     listName: "product",
     itemName: "S type clavical locking plate",
     itemNumber: "1",
@@ -60,6 +67,7 @@ export const Products = [
     price: "119$",
   },
   {
+    id: 66,
     listName: "product",
     itemName: "S type clavical locking plate",
     itemNumber: "1",
@@ -71,6 +79,7 @@ export const Products = [
 ];
 export const Stuff = [
   {
+    id: 4445,
     itemName: "Ahmed Saloom",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",
@@ -78,6 +87,7 @@ export const Stuff = [
     ratingRate: "4/5",
   },
   {
+    id: 484,
     itemName: "Ahmed Saloom",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",
@@ -85,6 +95,7 @@ export const Stuff = [
     ratingRate: "4/5",
   },
   {
+    id: 664,
     itemName: "Mohamed Hamoodi",
     type: "Dolor",
     mostOrder: "Plates and Secrews ",
@@ -92,6 +103,7 @@ export const Stuff = [
     ratingRate: "4/5",
   },
   {
+    id: 44464,
     itemName: "Ahmed Saloom",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",

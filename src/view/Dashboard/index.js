@@ -42,7 +42,7 @@ class index extends Component {
             />
           </Link>
         </div>
-        <div className='Notification_container'>
+        <div className='Notification_Container'>
           <NotificationCtrl
             icon='order.png'
             number='100'

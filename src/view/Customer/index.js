@@ -22,11 +22,17 @@ import "../../shared/List/index.css";
 class index extends Component {
   constructor(props) {
     super(props);
-    this.state = { isChecked: false, ShowDeleteModal: false, Data: [] };
+    this.state = {
+      isChecked: false,
+      ShowDeleteModal: false,
+      Data: [],
+      checkedAll: false,
+    };
   }
   IsCheck = () => {
     this.setState({
       isChecked: true,
+      checkboxValue: "off",
     });
   };
   componentWillReceiveProps(props) {
@@ -41,6 +47,7 @@ class index extends Component {
         Data: this.state.Data.concat([item]),
       });
     } else {
+      this.setState({ checkedAll: false });
       this.setState({
         Data: this.state.Data.filter(function (val) {
           return val !== item;
@@ -48,17 +55,43 @@ class index extends Component {
       });
     }
   };
+  isSelected = (id) => {
+    let checked = this.state.Data.some((item) => item.id == id);
+
+    return checked;
+  };
+  SelectAll = (e) => {
+    let selected = e.target.checked;
+    if (selected) {
+      this.setState({
+        Data: Customers,
+        checkedAll: true,
+      });
+    } else {
+      this.setState({
+        Data: [],
+        checkedAll: false,
+      });
+    }
+
+    console.log(e.target.type, "shuld be all th datas");
+  };
   render() {
     const listName = "Customer";
     return (
       <div>
         <Header slug='Customer list' />
         <div className='container'>
-          <CustomerFilter selectedData={this.state.Data} />
+          <CustomerFilter
+            selectedData={this.state.Data}
+            SelectAll={this.SelectAll}
+          />
 
           <div className='List_Wrapper'>
             <ListHead
               listName='Customer'
+              SelectAll={this.SelectAll}
+              checkedAll={this.state.checkedAll}
               fieldsName={[
                 "Specialty",
                 "Most ordered Kit",
@@ -68,14 +101,20 @@ class index extends Component {
             />
             {Customers.map((item, i) => {
               return (
-                <div className='List_item'>
+                <div
+                  className={
+                    this.isSelected(item.id)
+                      ? "List_item selected_Item"
+                      : "List_item"
+                  }>
                   <div>
                     <input
                       type='checkbox'
-                      id={`test${i}`}
+                      id={`test${i + 1}`}
+                      checked={this.isSelected(item.id) ? true : ""}
                       onChange={(e) => this.checked(e, item)}
                     />
-                    <label for={`test${i}`}></label>
+                    <label for={`test${i + 1}`}></label>
                   </div>
                   <div>{i + 1}</div>
 
@@ -101,7 +140,10 @@ class index extends Component {
             })}
 
             <div className='List_footer'>
-              <p>the results of your search is 500 items out of 10,000 item </p>
+              <p>
+                the results of your search is {Customers.length} items out of{" "}
+                {Customers.length} item
+              </p>
               <div>
                 <FontAwesomeIcon icon={faLessThan} className='icon' />
                 <p>1/12</p>{" "}

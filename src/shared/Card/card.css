@@ -8,8 +8,8 @@
 .card_wrapper {
   animation: moveTop 1.1s ease-in-out;
   margin-top: 5%;
-  margin-right: 20px;
-  width: 353px;
+  margin-right: 15px;
+  width: 343px;
   height: 460px;
   padding: 70px 25px;
   border-radius: 2%;
@@ -67,6 +67,7 @@
   background-color: white;
   justify-content: space-between;
   padding: 5px 10px;
+  cursor: pointer;
 }
 
 .card_wrapper:hover {

@@ -18,13 +18,21 @@ const ListItem = ({
   ratingRate,
   checked,
   showModal,
+  onSelect,
+  isSelected,
+  checkboxValue,
 }) => {
   let id = `test${itemNumber}`;
 
   return (
-    <div className='List_item'>
+    <div className={isSelected ? "List_item selected_Item" : "List_item"}>
       <div>
-        <input type='checkbox' id={id} onChange={checked} />
+        <input
+          type='checkbox'
+          id={id}
+          onChange={onSelect}
+          value={checkboxValue}
+        />
         <label for={id}></label>
       </div>
       <div>{itemNumber}</div>

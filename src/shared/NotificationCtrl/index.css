@@ -1,17 +1,17 @@
-.Notification_container {
-  display: grid;
-  grid-template-columns: repeat(4, 0.2fr);
-  margin-top: 8px;
-  /* justify-content: center; */
-  align-items: center;
+/** @format */
+
+.Notification_Container {
+  display: flex;
+  flex-wrap: wrap;
+  height: 50px;
 }
 
 .notification_wrapper {
-  width: 260px;
+  width: 254px;
   height: 55px;
   display: flex;
   padding-left: 10px;
-  margin-right: 20px;
+  margin-right: 14px;
   margin-top: 15px;
   background-color: white;
   flex-direction: row;

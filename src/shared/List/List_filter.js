@@ -11,6 +11,8 @@ import { RiFilter2Line } from "react-icons/ri";
 
 import { FaSortDown } from "react-icons/fa";
 import { FaThList } from "react-icons/fa";
+import { FiEdit } from "react-icons/fi";
+
 import { GiHamburgerMenu } from "react-icons/gi";
 import "../../App.css";
 function ListFilter({
@@ -56,14 +58,23 @@ function ListFilter({
                 color: "var(--light-gray)",
               }}
             />
-          </div>{" "}
+          </div>
           {selectedData.length != 0 ? (
-            <button className='btn btn_delete' onClick={DeleteModal}>
-              Delete
-            </button>
+            <div>
+              <button className='btn btn_delete' onClick={DeleteModal}>
+                Delete
+              </button>
+            </div>
+          ) : null}
+          {selectedData.length == 1 ? (
+            <div>
+              <button className='btn_Edit btn'>
+                <FiEdit /> Edit
+              </button>
+            </div>
           ) : null}
           <div className='btn_holder'>
-            <button className='List_btn btn' onClick={showModal}>
+            <button className=' btn btn_ctrl' onClick={showModal}>
               <span>
                 <FontAwesomeIcon icon={faPlus} className='plus_icon' />
               </span>

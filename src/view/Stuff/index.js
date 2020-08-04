@@ -21,17 +21,35 @@ import Modal from "../../shared/Modal";
 class index extends Component {
   constructor(props) {
     super(props);
-    this.state = { showEditModal: false };
+    this.state = { showEditModal: false, Data: [], isSelected: false };
   }
   ShowEditModal = (showEditModal) => {
     this.setState({ showEditModal });
+  };
+  checked = (e, item) => {
+    if (e.target.checked) {
+      this.setState({
+        Data: this.state.Data.concat([item]),
+      });
+    } else {
+      this.setState({
+        Data: this.state.Data.filter(function (val) {
+          return val !== item;
+        }),
+      });
+    }
+  };
+  isSelected = (id) => {
+    let checked = this.state.Data.some((item) => item.id == id);
+    this.setState({ isSelected: checked });
+    return checked;
   };
   render() {
     return (
       <div>
         <Header slug='Stuff list' />
         <div className='container'>
-          <StuffFilter selectedData={[]} />
+          <StuffFilter selectedData={this.state.Data} />
           <div className='List_Wrapper'>
             <ListHead
               listName='Stuff'
@@ -48,6 +66,7 @@ class index extends Component {
                   itemName={item.itemName}
                   itemNumber={i + 1}
                   type={item.type}
+                  onSelect={() => this.isSelected(item.id)}
                   mostOrder={item.mostOrder}
                   orderValue={item.orderValue}
                   ratingRate={item.ratingRate}

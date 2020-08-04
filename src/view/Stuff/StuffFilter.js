@@ -15,7 +15,7 @@ function ProductFilter(selectedData) {
       <ListFilter
         showModal={() => DisplayModel(true)}
         ListName='Stuff'
-        selectedData={[]}
+        selectedData={selectedData}
       />
 
       {showModel ? (

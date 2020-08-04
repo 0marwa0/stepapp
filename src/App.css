@@ -45,6 +45,11 @@ a {
   border-right: none;
 }
 .input_wrapper > div {
+  height: 30px;
+}
+
+.input_wrapper input:focus + .input_wrapper > div {
+  border: 2px solid rgb(68, 217, 228) !important;
 }
 .two_col_flex {
   display: grid;
@@ -62,11 +67,11 @@ a {
 }
 .input_wrapper input[type="text"],
 .input_wrapper input[type="password"] {
-  font-size: 16px;
+  font-size: 14px;
   color: #c4c1c1;
   border: none;
   padding: 0 3px;
-  height: 35px;
+  height: 100%;
   width: 95%;
   outline: none;
   border-radius: 5px;
@@ -93,17 +98,24 @@ img {
 .input_wrapper input::placeholder {
   color: #e1e2e2;
 
-  font-size: 16px;
+  font-size: 14px;
 }
-body {
-  /* background-color: tomato; */
-}
+
 .container {
-  max-width: 1100px;
+  max-width: 1074px;
   width: 100%;
   margin: 0 auto;
+}
+.btn {
+  border: none;
+  cursor: pointer;
 
-  align-items: center;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+.btn_ctrl {
+  color: white;
+  background-color: var(--blue);
 }
 @media only screen and (max-width: 1220px) {
   .warp_flex {
@@ -139,7 +151,7 @@ body {
 }
 @media only screen and (max-width: 449px) {
 }
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1300px) {
   .container {
     margin: 0 auto;
     max-width: 900px;

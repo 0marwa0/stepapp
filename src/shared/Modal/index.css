@@ -6,7 +6,6 @@
   left: 25%;
   display: flex;
   flex-direction: column;
-  z-index: 199999999999;
   border-radius: 4px 4px 0 0;
   overflow: hidden;
   height: auto;
@@ -50,6 +49,8 @@
   left: 0;
   right: 0;
   bottom: 0;
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 999999999;
   backdrop-filter: blur(4px);
   background-color: rgb(114, 111, 111, 0.2);
 }
@@ -80,18 +81,12 @@
 }
 .DeleteModal_btn {
   background-color: var(--red) !important;
+  color: white !important;
 }
 .DeleteModal_header {
   color: var(--red) !important;
 }
-.btn {
-  border: none;
-  cursor: pointer;
-  color: white;
-  padding: 5px;
-  border-radius: 5px;
-  background-color: var(--blue);
-}
+
 @media screen and (max-width: 600px) {
   .Modal_header,
   .Modal_footer,
