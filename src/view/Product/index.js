@@ -22,6 +22,7 @@ import "./index.css";
 import { FaThList, FaBuromobelexperte } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import UploadImage from "./CreateProduct/UploadImage";
+import "../../shared/List/index.css";
 import { ProductSType_1, ProductSType_2 } from "./Products.js";
 var data = [
   { id: "1", tabTitle: "Tab 1", tabContent: <ProductSType_1 /> },
@@ -88,7 +89,7 @@ function ProductFilter(listType_1, listType_2, selectedData) {
           ) : null} */}
             <div className='btn_holder'>
               <button
-                className='List_btn btn'
+                className='btn_ctrl btn'
                 onClick={() => DisplayModel(true)}>
                 <span>
                   <FontAwesomeIcon icon={faPlus} className='plus_icon' />
