@@ -10,11 +10,12 @@ const index = () => {
         <img
           src={require("../shared/Icon/Logo.png")}
           alt=''
-          style={{ height: "22px" }}
+          className='nav_icon'
+          style={{ height: "27px" }}
         />
       </div>
       <div>
-        <FaRegUserCircle color='white' size='24px' />
+        <FaRegUserCircle color='white' className='nav_icon' size='24px' />
         {/* <img src={require("../shared/Icon/User.png")} /> */}
       </div>
     </div>

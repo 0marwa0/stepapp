@@ -1,3 +1,5 @@
+/** @format */
+
 .navBar {
   background-color: var(--black);
   width: 100%;
@@ -11,4 +13,8 @@
 }
 .navBar div {
   margin: 0 20px;
+}
+.nav_icon:hover {
+  opacity: 0.5;
+  cursor: pointer;
 }
