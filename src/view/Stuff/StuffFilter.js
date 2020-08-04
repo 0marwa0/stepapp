@@ -5,7 +5,7 @@ import ListFilter from "../../shared/List/List_filter";
 import { useState } from "react";
 import CreateStuff from "./CreateStuff";
 import Modal from "../../shared/Modal";
-function ProductFilter(selectedData) {
+function Index({ selectedData }) {
   const [showModel, setModel] = useState(false);
   const DisplayModel = (show) => {
     setModel(show);
@@ -33,4 +33,4 @@ function ProductFilter(selectedData) {
   );
 }
 
-export default ProductFilter;
+export default Index;

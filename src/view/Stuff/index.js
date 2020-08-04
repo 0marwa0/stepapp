@@ -21,7 +21,12 @@ import Modal from "../../shared/Modal";
 class index extends Component {
   constructor(props) {
     super(props);
-    this.state = { showEditModal: false, Data: [], isSelected: false };
+    this.state = {
+      showEditModal: false,
+      ShowDeleteModal: false,
+      Data: [],
+      checkedAll: false,
+    };
   }
   ShowEditModal = (showEditModal) => {
     this.setState({ showEditModal });
@@ -31,7 +36,13 @@ class index extends Component {
       this.setState({
         Data: this.state.Data.concat([item]),
       });
+      if (this.state.Data.length === Stuff.length - 1) {
+        this.setState({
+          checkedAll: true,
+        });
+      }
     } else {
+      this.setState({ checkedAll: false });
       this.setState({
         Data: this.state.Data.filter(function (val) {
           return val !== item;
@@ -41,8 +52,23 @@ class index extends Component {
   };
   isSelected = (id) => {
     let checked = this.state.Data.some((item) => item.id == id);
-    this.setState({ isSelected: checked });
+
     return checked;
+  };
+  SelectAll = (e) => {
+    let selected = e.target.checked;
+
+    if (selected) {
+      this.setState({
+        Data: Stuff,
+        checkedAll: true,
+      });
+    } else {
+      this.setState({
+        Data: [],
+        checkedAll: false,
+      });
+    }
   };
   render() {
     return (
@@ -53,6 +79,8 @@ class index extends Component {
           <div className='List_Wrapper'>
             <ListHead
               listName='Stuff'
+              SelectAll={this.SelectAll}
+              checkedAll={this.state.checkedAll}
               fieldsName={[
                 "Team",
                 "Most claimed task",
@@ -63,23 +91,33 @@ class index extends Component {
             {Stuff.map((item, i) => {
               return (
                 <ListItem
+                  listName='customer'
                   itemName={item.itemName}
+                  className={
+                    this.isSelected(item.id)
+                      ? "List_item selected_Item"
+                      : "List_item"
+                  }
                   itemNumber={i + 1}
                   type={item.type}
-                  onSelect={() => this.isSelected(item.id)}
+                  showModal={() => this.ShowEditModal(true)}
                   mostOrder={item.mostOrder}
                   orderValue={item.orderValue}
                   ratingRate={item.ratingRate}
-                  showModal={this.ShowEditModal}
+                  onChange={(e) => this.checked(e, item)}
+                  checked={this.isSelected(item.id) ? true : ""}
                 />
               );
             })}
 
             <div className='List_footer'>
-              <p>the results of your search is 500 items out of 10,000 item </p>
+              <p>
+                the results of your search is {Stuff.length} items out of{" "}
+                {Stuff.length} item{" "}
+              </p>
               <div>
                 <FontAwesomeIcon icon={faLessThan} className='icon' />
-                <p>1/12</p>{" "}
+                <p>1/1</p>{" "}
                 <FontAwesomeIcon icon={faGreaterThan} className='icon' />
               </div>
             </div>

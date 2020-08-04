@@ -10,27 +10,29 @@ import { AiFillLock } from "react-icons/ai";
 const ListItem = ({
   itemName,
   listName,
-  icon,
+  price,
   itemNumber,
   type,
   mostOrder,
   orderValue,
   ratingRate,
-  checked,
+  className,
   showModal,
   onSelect,
-  isSelected,
+  onChange,
   checkboxValue,
+  checked,
 }) => {
   let id = `test${itemNumber}`;
 
   return (
-    <div className={isSelected ? "List_item selected_Item" : "List_item"}>
+    <div className={className}>
       <div>
         <input
           type='checkbox'
           id={id}
-          onChange={onSelect}
+          checked={checked}
+          onChange={onChange}
           value={checkboxValue}
         />
         <label for={id}></label>
@@ -56,7 +58,7 @@ const ListItem = ({
         {orderValue}
       </div>
       {listName == "product" ? (
-        <div className='order_ctrl'>{ratingRate}</div>
+        <div className='order_ctrl'>{price}</div>
       ) : (
         <div className='rate_ctrl'>{ratingRate}</div>
       )}

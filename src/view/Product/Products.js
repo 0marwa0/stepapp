@@ -31,11 +31,18 @@ export const ProductSType_1 = () => {
             <ListItem
               listName='product'
               itemName={item.itemName}
+              className={
+                this.isSelected(item.id)
+                  ? "List_item selected_Item"
+                  : "List_item"
+              }
               itemNumber={i + 1}
               type={item.type}
               mostOrder={item.mostOrder}
               orderValue={item.orderValue}
               ratingRate={item.ratingRate}
+              onChange={(e) => this.checked(e, item)}
+              checked={this.isSelected(item.id) ? true : ""}
             />
           );
         })}

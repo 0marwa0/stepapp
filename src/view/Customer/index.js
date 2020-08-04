@@ -23,24 +23,11 @@ class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isChecked: false,
       ShowDeleteModal: false,
       Data: [],
       checkedAll: false,
     };
   }
-  IsCheck = () => {
-    this.setState({
-      isChecked: true,
-      checkboxValue: "off",
-    });
-  };
-  componentWillReceiveProps(props) {
-    this.IsCheck();
-
-    return this.state.isChecked;
-  }
-
   checked = (e, item) => {
     if (e.target.checked) {
       this.setState({
@@ -79,8 +66,6 @@ class index extends Component {
         checkedAll: false,
       });
     }
-
-    console.log(e.target.type, "shuld be all th datas");
   };
   render() {
     const listName = "Customer";
@@ -88,10 +73,7 @@ class index extends Component {
       <div>
         <Header slug='Customer list' />
         <div className='container'>
-          <CustomerFilter
-            selectedData={this.state.Data}
-            SelectAll={this.SelectAll}
-          />
+          <CustomerFilter selectedData={this.state.Data} />
 
           <div className='List_Wrapper'>
             <ListHead
@@ -107,41 +89,22 @@ class index extends Component {
             />
             {Customers.map((item, i) => {
               return (
-                <div
+                <ListItem
+                  listName='customer'
+                  itemName={item.itemName}
                   className={
                     this.isSelected(item.id)
                       ? "List_item selected_Item"
                       : "List_item"
-                  }>
-                  <div>
-                    <input
-                      type='checkbox'
-                      id={`test${i + 1}`}
-                      checked={this.isSelected(item.id) ? true : ""}
-                      onChange={(e) => this.checked(e, item)}
-                    />
-                    <label for={`test${i + 1}`}></label>
-                  </div>
-                  <div>{i + 1}</div>
-
-                  <div>{item.itemName}</div>
-                  <div>
-                    <RiRoadMapLine className='Item_Icon' />
-                  </div>
-
-                  <span>{item.type}</span>
-
-                  <div>{item.mostOrder}</div>
-                  <div className={listName == "product" ? null : "order_ctrl"}>
-                    {item.orderValue}
-                  </div>
-
-                  {listName == "product" ? (
-                    <div className='order_ctrl'>{item.ratingRate}</div>
-                  ) : (
-                    <div className='rate_ctrl'>{item.ratingRate}</div>
-                  )}
-                </div>
+                  }
+                  itemNumber={i + 1}
+                  type={item.type}
+                  mostOrder={item.mostOrder}
+                  orderValue={item.orderValue}
+                  ratingRate={item.ratingRate}
+                  onChange={(e) => this.checked(e, item)}
+                  checked={this.isSelected(item.id) ? true : ""}
+                />
               );
             })}
 
@@ -152,7 +115,7 @@ class index extends Component {
               </p>
               <div>
                 <FontAwesomeIcon icon={faLessThan} className='icon' />
-                <p>1/12</p>{" "}
+                <p>1/1</p>{" "}
                 <FontAwesomeIcon icon={faGreaterThan} className='icon' />
               </div>
             </div>

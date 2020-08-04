@@ -9,8 +9,8 @@ import {
 } from "@fortawesome/fontawesome-free-solid";
 import { RiFilter2Line } from "react-icons/ri";
 
-import { FaSortDown } from "react-icons/fa";
-import { FaThList } from "react-icons/fa";
+import { FaSortDown, FaEdit } from "react-icons/fa";
+import { FaThList, FaBuromobelexperte } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -19,17 +19,14 @@ function ListFilter({
   selectedData,
   showModal,
   ListName,
-  isChecked,
+
   DeleteModal,
+  children,
+  list,
+  burger,
+  listActive,
+  burgerActive,
 }) {
-  const [list, SetListActive] = useState(false);
-  const [burger, SetBurgerActive] = useState(true);
-  const listActive = (list) => {
-    SetListActive(list);
-  };
-  const burgerActive = (list) => {
-    SetBurgerActive(list);
-  };
   return (
     <div>
       <div className='List_filter'>
@@ -58,7 +55,7 @@ function ListFilter({
                 color: "var(--light-gray)",
               }}
             />
-          </div>
+          </div>{" "}
           {selectedData.length != 0 ? (
             <div>
               <button className='btn btn_delete' onClick={DeleteModal}>
@@ -68,13 +65,14 @@ function ListFilter({
           ) : null}
           {selectedData.length == 1 ? (
             <div>
-              <button className='btn_Edit btn'>
-                <FiEdit /> Edit
+              <button className='btn btn_Edit'>
+                <FaEdit className='plus_icon' />
+                Edit
               </button>
             </div>
           ) : null}
           <div className='btn_holder'>
-            <button className=' btn btn_ctrl' onClick={showModal}>
+            <button className='btn_ctrl btn' onClick={showModal}>
               <span>
                 <FontAwesomeIcon icon={faPlus} className='plus_icon' />
               </span>
@@ -84,14 +82,14 @@ function ListFilter({
             {ListName == "product" ? (
               <div className='list_type_wrapper'>
                 <FaThList
-                  className='list_type'
+                  className={list ? "list_type activeList" : "list_type "}
                   onClick={() => {
                     listActive(true);
                     burgerActive(false);
                   }}
-                />
-                <GiHamburgerMenu
-                  className='list_type'
+                />{" "}
+                <FaBuromobelexperte
+                  className={burger ? "list_type activeList" : "list_type "}
                   onClick={() => {
                     listActive(false);
                     burgerActive(true);
@@ -102,6 +100,7 @@ function ListFilter({
           </div>
         </span>
       </div>
+      {children}
     </div>
   );
 }

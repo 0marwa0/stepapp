@@ -48,7 +48,7 @@ function index({
               <button
                 onClick={fun}
                 className={
-                  modalType == "Delete" ? "btn DeleteModal_btn" : "btn"
+                  modalType == "Delete" ? "btn DeleteModal_btn" : "btn btn_ctrl"
                 }>
                 {modalButton}
               </button>

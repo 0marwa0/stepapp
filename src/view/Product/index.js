@@ -2,155 +2,211 @@
 
 import React, { Component } from "react";
 import ListFilter from "../../shared/List/List_filter";
-import { useState } from "react";
-import CreateProduct from "./CreateProduct";
-import Modal from "../../shared/Modal";
-import Header from "../../shared/header";
 
+import Header from "../../shared/header";
 import "../../shared/List/index.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlus,
-  faFilter,
-  faSortDown,
-} from "@fortawesome/fontawesome-free-solid";
+import { faPlus } from "@fortawesome/fontawesome-free-solid";
 import { RiFilter2Line } from "react-icons/ri";
 import "../../App.css";
 import { FaSortDown } from "react-icons/fa";
-import TabPanel from "./Tabs";
 import "./index.css";
+import ProductFilter from "./ProductFilter";
 import { FaThList, FaBuromobelexperte } from "react-icons/fa";
-import { GiHamburgerMenu } from "react-icons/gi";
-import UploadImage from "./CreateProduct/UploadImage";
 import "../../shared/List/index.css";
+import CreateProduct from "./CreateProduct";
 import { ProductSType_1, ProductSType_2 } from "./Products.js";
-var data = [
-  { id: "1", tabTitle: "Tab 1", tabContent: <ProductSType_1 /> },
-  { id: "2", tabTitle: "Tab 2", tabContent: <ProductSType_2 /> },
-];
+import Modal from "../../shared/Modal";
+import { Products } from "../../fakeData/";
+import ListItem from "../../shared/List/List_Item";
+import "../../App.css";
+import {
+  faGreaterThan,
+  faLessThan,
+  faUnlockAlt,
+} from "@fortawesome/fontawesome-free-solid";
+import "./index.css";
 
-function ProductFilter(listType_1, listType_2, selectedData) {
-  const [showModel, setModel] = useState(false);
-  const DisplayModel = (show) => {
-    setModel(show);
-  };
-  const [showUploadModel, setUploadModel] = useState(false);
-  const DisplayUploadModel = (showUpload) => {
-    setUploadModel(showUpload);
-  };
-  const _handleTabChange = (index) => {
-    console.log("Selected tab index", index);
+import ListHead from "../../shared/List//List_head";
+import ListType_item from "./ListType_item";
+export default class index extends React.Component {
+  state = {
+    showModel: false,
+    showUploadModel: false,
+    list: true,
+    burger: false,
+    showModel: false,
+    Data: [],
+    checkedAll: false,
   };
 
-  const [list, SetListActive] = useState(true);
-  const [burger, SetBurgerActive] = useState(false);
-  const listActive = (list) => {
-    SetListActive(list);
+  checked = (e, item) => {
+    if (e.target.checked) {
+      this.setState({
+        Data: this.state.Data.concat([item]),
+      });
+      if (this.state.Data.length === Products.length - 1) {
+        this.setState({
+          checkedAll: true,
+        });
+      }
+    } else {
+      this.setState({ checkedAll: false });
+      this.setState({
+        Data: this.state.Data.filter(function (val) {
+          return val !== item;
+        }),
+      });
+    }
   };
-  const burgerActive = (list) => {
-    SetBurgerActive(list);
+  isSelected = (id) => {
+    let checked = this.state.Data.some((item) => item.id == id);
+
+    return checked;
   };
-  const ListName = "product";
-  return (
-    <div>
-      <Header slug='Products List' />
-      <div className='container'>
-        <div className='List_filter'>
-          <span className='filter_holder'>
-            <div className='input_wrapper'>
+  SelectAll = (e) => {
+    let selected = e.target.checked;
+
+    if (selected) {
+      this.setState({
+        Data: Products,
+        checkedAll: true,
+      });
+    } else {
+      this.setState({
+        Data: [],
+        checkedAll: false,
+      });
+    }
+  };
+
+  DisplayModel = (showModel) => {
+    this.setState({ showModel });
+  };
+  DisplayUploadModel = (showUploadModel) => {
+    this.setState({ showUploadModel });
+  };
+
+  listActive = (list) => {
+    this.setState({ list });
+  };
+  burgerActive = (burger) => {
+    this.setState({ burger });
+  };
+
+  render() {
+    const ListName = "product";
+    console.log(this.state.Data, "our product data");
+    return (
+      <div>
+        <Header slug='Products List' />
+        <div className='container'>
+          <ListFilter
+            selectedData={this.state.Data}
+            showModal={() => this.DisplayModel(true)}
+            ListName='product'
+            list={this.state.list}
+            burger={this.state.burger}
+            listActive={this.listActive}
+            burgerActive={this.burgerActive}
+
+            // DeleteModal={() => this.DisplayDeleteModel(true)}
+          >
+            {this.state.list ? (
               <div>
-                <input type='text' placeholder='Search for something ...' />
-                <img
-                  src={require("../../shared/Icon/searchIcon.png")}
-                  height='13px'
-                  // className="searchIcon"
-                />
-              </div>
-            </div>
-            <div className='Filter_ctrl'>
-              <RiFilter2Line
-                style={{
-                  fontSize: "11px",
-                }}
-              />
-              <p> Filter</p>
-              <FaSortDown
-                style={{
-                  fontSize: "8px",
-                  margin: "0 2px",
-                  color: "var(--light-gray)",
-                }}
-              />
-            </div>{" "}
-            {/* {ListName != "product" && selectedData.length != 0 ? (
-            <button className='btn btn_delete' onClick={DeleteModal}>
-              Delete
-            </button>
-          ) : null} */}
-            <div className='btn_holder'>
-              <button
-                className='btn_ctrl btn'
-                onClick={() => DisplayModel(true)}>
-                <span>
-                  <FontAwesomeIcon icon={faPlus} className='plus_icon' />
-                </span>
-                <span>Add</span>
-              </button>
-
-              {ListName == "product" ? (
-                <div className='list_type_wrapper'>
-                  <FaBuromobelexperte
-                    className={burger ? "list_type activeList" : "list_type "}
-                    onClick={() => {
-                      listActive(false);
-                      burgerActive(true);
-                    }}
+                <div className='List_Wrapper'>
+                  <ListHead
+                    listName='Product'
+                    SelectAll={this.SelectAll}
+                    checkedAll={this.state.checkedAll}
+                    fieldsName={[
+                      "3rd stage category",
+                      "2nd stage category",
+                      "1st stage category",
+                      "Price",
+                    ]}
                   />
-                  <FaThList
-                    className={list ? "list_type activeList" : "list_type "}
-                    onClick={() => {
-                      listActive(true);
-                      burgerActive(false);
-                    }}
-                  />
+                  {Products.map((item, i) => {
+                    return (
+                      <ListItem
+                        listName='product'
+                        itemName={item.itemName}
+                        className={
+                          this.isSelected(item.id)
+                            ? "List_item selected_Item"
+                            : "List_item"
+                        }
+                        itemNumber={i + 1}
+                        type={item.type}
+                        mostOrder={item.mostOrder}
+                        orderValue={item.orderValue}
+                        ratingRate={item.ratingRate}
+                        price={item.price}
+                        onChange={(e) => this.checked(e, item)}
+                        checked={this.isSelected(item.id) ? true : ""}
+                      />
+                    );
+                  })}
                 </div>
-              ) : null}
-            </div>
-          </span>
-        </div>
-        {list ? <ProductSType_1 /> : <ProductSType_2 />}
-        {showModel ? (
-          <Modal
-            modalButton='Create New Item'
-            modalPurpose='From here you can add products to your list'
-            modalTitle='Add new Product'
-            width='60%'
-            height='70%'
-            fun={() => DisplayUploadModel(true)}
-            onCLose={() => DisplayModel(false)}>
-            <CreateProduct />
-          </Modal>
-        ) : null}
+                <div className='List_footer'>
+                  <p>
+                    the results of your search is {Products.length} items out of{" "}
+                    {Products.length} item{" "}
+                  </p>
+                  <div>
+                    <FontAwesomeIcon icon={faLessThan} className='icon' />
+                    <p>1/1</p>{" "}
+                    <FontAwesomeIcon icon={faGreaterThan} className='icon' />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className='ListType_2_wrapper'>
+                {Products.map((item, i) => {
+                  return (
+                    <ListType_item
+                      title={item.itemName}
+                      head={item.orderValue}
+                      text={item.mostOrder}
+                      price={item.price}
+                    />
+                  );
+                })}
+              </div>
+            )}
+          </ListFilter>
 
-        {showUploadModel ? (
-          <Modal
-            isMulti={true}
-            modalButton='Create New Item'
-            modalPurpose='From here you can add products to your list'
-            modalTitle='Add new Product'
-            width='60%'
-            height='70%'
-            onBack={() => {
-              DisplayModel(true);
-              DisplayUploadModel(false);
-            }}
-            onCLose={() => DisplayUploadModel(false)}>
-            <UploadImage />
-          </Modal>
-        ) : null}
-      </div>{" "}
-    </div>
-  );
+          {this.state.showModel ? (
+            <Modal
+              modalButton='Create New Item'
+              modalPurpose='From here you can add products to your list'
+              modalTitle='Add new Product'
+              width='60%'
+              height='70%'
+              fun={() => this.DisplayUploadModel(true)}
+              onCLose={() => this.DisplayModel(false)}>
+              <CreateProduct />
+            </Modal>
+          ) : null}
+
+          {/* {showUploadModel ? (
+        <Modal
+          isMulti={true}
+          modalButton='Create New Item'
+          modalPurpose='From here you can add products to your list'
+          modalTitle='Add new Product'
+          width='60%'
+          height='70%'
+          onBack={() => {
+            DisplayModel(true);
+            DisplayUploadModel(false);
+          }}
+          onCLose={() => DisplayUploadModel(false)}>
+          <UploadImage />
+        </Modal>
+      ) : null} */}
+        </div>{" "}
+      </div>
+    );
+  }
 }
-
-export default ProductFilter;

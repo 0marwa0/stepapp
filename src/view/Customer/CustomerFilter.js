@@ -6,7 +6,7 @@ import DeleteCustomer from "./DeleteCustomer_";
 import Modal from "../../shared/Modal/index";
 import CreateCustomer from "./CreateCustomer";
 
-function Index({ isChecked, selectedData }) {
+function Index({ selectedData }) {
   const [showModel, setModel] = useState(false);
   const DisplayModel = (show) => {
     setModel(show);
@@ -19,7 +19,6 @@ function Index({ isChecked, selectedData }) {
   return (
     <div>
       <ListFilter
-        isChecked={isChecked}
         selectedData={selectedData}
         showModal={() => DisplayModel(true)}
         ListName='customer'
