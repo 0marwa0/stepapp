@@ -46,6 +46,11 @@ class index extends Component {
       this.setState({
         Data: this.state.Data.concat([item]),
       });
+      if (this.state.Data.length === Customers.length - 1) {
+        this.setState({
+          checkedAll: true,
+        });
+      }
     } else {
       this.setState({ checkedAll: false });
       this.setState({
@@ -62,6 +67,7 @@ class index extends Component {
   };
   SelectAll = (e) => {
     let selected = e.target.checked;
+
     if (selected) {
       this.setState({
         Data: Customers,
