@@ -18,6 +18,8 @@ import "../../shared/List/index.css";
 import StuffFilter from "./StuffFilter";
 import EditPassword from "./EditPassword";
 import Modal from "../../shared/Modal";
+import ListFooter from "../../shared/List/List_footer";
+
 class index extends Component {
   constructor(props) {
     super(props);
@@ -26,6 +28,10 @@ class index extends Component {
       ShowDeleteModal: false,
       Data: [],
       checkedAll: false,
+      currentPage: 1,
+      pagePerOnce: 4,
+      isLoading: false,
+      pageNumber: 0,
     };
   }
   ShowEditModal = (showEditModal) => {
@@ -70,7 +76,29 @@ class index extends Component {
       });
     }
   };
+  prevPage = () => {
+    const currentPage = this.state.currentPage;
+    if (currentPage > 1) {
+      this.setState({
+        currentPage: this.state.currentPage - 1,
+      });
+    }
+  };
+
+  nextPage = () => {
+    const currentPage = this.state.currentPage;
+    const totalPge = Math.ceil(Stuff.length / this.state.pagePerOnce);
+    if (currentPage != totalPge) {
+      this.setState({
+        currentPage: this.state.currentPage + 1,
+      });
+    }
+  };
   render() {
+    const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
+    const indexOfFirstPage = indexOfLastPage - this.state.pagePerOnce;
+    const CurrentStuff = Stuff.slice(indexOfFirstPage, indexOfLastPage);
+    const totalPageNumber = Math.ceil(Stuff.length / this.state.pagePerOnce);
     return (
       <div>
         <Header slug='Stuff list' />
@@ -88,7 +116,7 @@ class index extends Component {
                 "Rating rate",
               ]}
             />
-            {Stuff.map((item, i) => {
+            {CurrentStuff.map((item, i) => {
               return (
                 <ListItem
                   listName='customer'
@@ -110,7 +138,15 @@ class index extends Component {
               );
             })}
 
-            <div className='List_footer'>
+            <ListFooter
+              currentPage={this.state.currentPage}
+              searchResult={Stuff.length}
+              prevPage={this.prevPage}
+              nextPage={this.nextPage}
+              totalPageNumber={totalPageNumber}
+            />
+
+            {/* <div className='List_footer'>
               <p>
                 the results of your search is {Stuff.length} items out of{" "}
                 {Stuff.length} item{" "}
@@ -120,7 +156,7 @@ class index extends Component {
                 <p>1/1</p>{" "}
                 <FontAwesomeIcon icon={faGreaterThan} className='icon' />
               </div>
-            </div>
+            </div> */}
           </div>{" "}
           {this.state.showEditModal ? (
             <Modal

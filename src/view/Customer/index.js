@@ -74,15 +74,7 @@ class index extends Component {
   getData = () => {
     return Customers;
   };
-  setPageNumber = () => {
-    const totalCustomer = Customers.length;
-    const perPage = this.state.pagePerOnce;
-    const pageNumbers = [];
-    for (let i = 0; i <= Math.ceil(totalCustomer / perPage); i++) {
-      pageNumbers.push(i);
-    }
-    return pageNumbers;
-  };
+
   componentDidMount() {
     const fetchCustomers = async () => {
       this.setState({ isLoading: true });
@@ -93,7 +85,6 @@ class index extends Component {
 
   prevPage = () => {
     const currentPage = this.state.currentPage;
-    const totalPge = Math.ceil(Customers.length / this.state.pagePerOnce);
     if (currentPage > 1) {
       this.setState({
         currentPage: this.state.currentPage - 1,

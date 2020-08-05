@@ -2,6 +2,7 @@
 
 import React, { Component } from "react";
 import ListFilter from "../../shared/List/List_filter";
+import ListFooter from "../../shared/List/List_footer";
 
 import Header from "../../shared/header";
 import "../../shared/List/index.css";
@@ -38,6 +39,10 @@ export default class index extends React.Component {
     showModel: false,
     Data: [],
     checkedAll: false,
+    currentPage: 1,
+    pagePerOnce: 4,
+    isLoading: false,
+    pageNumber: 0,
   };
 
   checked = (e, item) => {
@@ -93,10 +98,30 @@ export default class index extends React.Component {
   burgerActive = (burger) => {
     this.setState({ burger });
   };
+  prevPage = () => {
+    const currentPage = this.state.currentPage;
+    if (currentPage > 1) {
+      this.setState({
+        currentPage: this.state.currentPage - 1,
+      });
+    }
+  };
 
+  nextPage = () => {
+    const currentPage = this.state.currentPage;
+    const totalPge = Math.ceil(Products.length / this.state.pagePerOnce);
+    if (currentPage != totalPge) {
+      this.setState({
+        currentPage: this.state.currentPage + 1,
+      });
+    }
+  };
   render() {
     const ListName = "product";
-    console.log(this.state.Data, "our product data");
+    const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
+    const indexOfFirstPage = indexOfLastPage - this.state.pagePerOnce;
+    const CurrentProducts = Products.slice(indexOfFirstPage, indexOfLastPage);
+    const totalPageNumber = Math.ceil(Products.length / this.state.pagePerOnce);
     return (
       <div>
         <Header slug='Products List' />
@@ -126,7 +151,7 @@ export default class index extends React.Component {
                       "Price",
                     ]}
                   />
-                  {Products.map((item, i) => {
+                  {CurrentProducts.map((item, i) => {
                     return (
                       <ListItem
                         listName='product'
@@ -148,17 +173,13 @@ export default class index extends React.Component {
                     );
                   })}
                 </div>
-                <div className='List_footer'>
-                  <p>
-                    the results of your search is {Products.length} items out of{" "}
-                    {Products.length} item{" "}
-                  </p>
-                  <div>
-                    <FontAwesomeIcon icon={faLessThan} className='icon' />
-                    <p>1/1</p>{" "}
-                    <FontAwesomeIcon icon={faGreaterThan} className='icon' />
-                  </div>
-                </div>
+                <ListFooter
+                  currentPage={this.state.currentPage}
+                  searchResult={Products.length}
+                  prevPage={this.prevPage}
+                  nextPage={this.nextPage}
+                  totalPageNumber={totalPageNumber}
+                />
               </div>
             ) : (
               <div className='ListType_2_wrapper'>
