@@ -273,6 +273,10 @@ label:hover:before {
   color: var(--light-gray);
   font-size: 8px;
   margin: 0 10px;
+  cursor: pointer;
+}
+.List_footer .active {
+  color: var(--blue);
 }
 @media screen and (max-width: 600px) {
   .List_head,

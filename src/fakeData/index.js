@@ -34,6 +34,74 @@ export const Customers = [
     orderValue: "121$",
     ratingRate: "4/5",
   },
+
+  {
+    id: 44,
+    itemName: "Ail Hamandi",
+    type: "Lorem Surgery",
+    mostOrder: "Plates and Secrews ",
+    orderValue: "119$",
+    ratingRate: "4/5",
+  },
+  {
+    id: 45,
+    itemName: "Ail Hamandi",
+    type: "Ipsum Surgery",
+    mostOrder: "Nail System ",
+    orderValue: "230$",
+    ratingRate: "4/5",
+  },
+
+  {
+    id: 443,
+    itemName: "Ail Hamandi",
+    type: "Dolor Surgery",
+    mostOrder: "On pipe ",
+    orderValue: "120$",
+    ratingRate: "4/5",
+  },
+  {
+    id: 454,
+    itemName: "Ail Hamandi",
+    type: "Sit Surgery",
+    mostOrder: "Bone Cement",
+    orderValue: "121$",
+    ratingRate: "4/5",
+  },
+
+  {
+    id: 44,
+    itemName: "Ahmed Saloom",
+    type: "Lorem Surgery",
+    mostOrder: "Plates and Secrews ",
+    orderValue: "119$",
+    ratingRate: "4/5",
+  },
+  {
+    id: 45,
+    itemName: "Mohamed Hamoodi",
+    type: "Ipsum Surgery",
+    mostOrder: "Nail System ",
+    orderValue: "230$",
+    ratingRate: "4/5",
+  },
+
+  {
+    id: 443,
+    itemName: "Ali Ismail",
+    type: "Dolor Surgery",
+    mostOrder: "On pipe ",
+    orderValue: "120$",
+    ratingRate: "4/5",
+  },
+  {
+    id: 454,
+    itemName: "Ail Hamandi",
+    type: "Sit Surgery",
+    mostOrder: "Bone Cement",
+    orderValue: "121$",
+    ratingRate: "4/5",
+  },
 ];
 export const Products = [
   {

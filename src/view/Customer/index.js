@@ -17,7 +17,7 @@ import ListHead from "../../shared/List//List_head";
 import "../../shared/List/index.css";
 import CustomerFilter from "./CustomerFilter";
 import { RiRoadMapLine } from "react-icons/ri";
-
+import ListFooter from "../../shared/List/List_footer";
 import "../../shared/List/index.css";
 class index extends Component {
   constructor(props) {
@@ -26,6 +26,10 @@ class index extends Component {
       ShowDeleteModal: false,
       Data: [],
       checkedAll: false,
+      currentPage: 1,
+      pagePerOnce: 4,
+      isLoading: false,
+      pageNumber: 0,
     };
   }
   checked = (e, item) => {
@@ -67,8 +71,54 @@ class index extends Component {
       });
     }
   };
+  getData = () => {
+    return Customers;
+  };
+  setPageNumber = () => {
+    const totalCustomer = Customers.length;
+    const perPage = this.state.pagePerOnce;
+    const pageNumbers = [];
+    for (let i = 0; i <= Math.ceil(totalCustomer / perPage); i++) {
+      pageNumbers.push(i);
+    }
+    return pageNumbers;
+  };
+  componentDidMount() {
+    const fetchCustomers = async () => {
+      this.setState({ isLoading: true });
+      const res = await this.getData;
+      this.setState({ isLoading: false });
+    };
+  }
+
+  prevPage = () => {
+    const currentPage = this.state.currentPage;
+    const totalPge = Math.ceil(Customers.length / this.state.pagePerOnce);
+    if (currentPage > 1) {
+      this.setState({
+        currentPage: this.state.currentPage - 1,
+      });
+    }
+  };
+
+  nextPage = () => {
+    const currentPage = this.state.currentPage;
+    const totalPge = Math.ceil(Customers.length / this.state.pagePerOnce);
+    if (currentPage != totalPge) {
+      this.setState({
+        currentPage: this.state.currentPage + 1,
+      });
+    }
+  };
+
   render() {
     const listName = "Customer";
+    const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
+    const indexOfFirstPage = indexOfLastPage - this.state.pagePerOnce;
+    const CurrentCustomers = Customers.slice(indexOfFirstPage, indexOfLastPage);
+    const totalPageNumber = Math.ceil(
+      Customers.length / this.state.pagePerOnce
+    );
     return (
       <div>
         <Header slug='Customer list' />
@@ -87,7 +137,7 @@ class index extends Component {
                 "Rating rate",
               ]}
             />
-            {Customers.map((item, i) => {
+            {CurrentCustomers.map((item, i) => {
               return (
                 <ListItem
                   listName='customer'
@@ -108,17 +158,13 @@ class index extends Component {
               );
             })}
 
-            <div className='List_footer'>
-              <p>
-                the results of your search is {Customers.length} items out of{" "}
-                {Customers.length} item
-              </p>
-              <div>
-                <FontAwesomeIcon icon={faLessThan} className='icon' />
-                <p>1/1</p>{" "}
-                <FontAwesomeIcon icon={faGreaterThan} className='icon' />
-              </div>
-            </div>
+            <ListFooter
+              currentPage={this.state.currentPage}
+              searchResult={Customers.length}
+              prevPage={this.prevPage}
+              nextPage={this.nextPage}
+              totalPageNumber={totalPageNumber}
+            />
           </div>
         </div>
       </div>
