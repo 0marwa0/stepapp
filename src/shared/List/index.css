@@ -297,7 +297,6 @@ label:hover:before {
 } */
 @media screen and (max-width: 350px) {
   .List_filter {
-    grid-template-columns: auto auto;
   }
 }
 @media screen and (max-width: 450px) {

@@ -99,7 +99,7 @@ img {
 .input_wrapper input::placeholder {
   color: #e1e2e2;
 
-  font-size: 14px;
+  /* font-size: 14px; */
 }
 
 .container {
@@ -111,8 +111,8 @@ img {
 .btn {
   border: none;
   cursor: pointer;
-
-  padding: 5px 15px;
+  display: flex;
+  padding: 0.4em 1em;
   border-radius: 5px;
 }
 .btn_ctrl {
@@ -120,11 +120,14 @@ img {
   background-color: var(--blue);
 }
 @media only screen and (max-width: 1220px) {
-  .warp_flex {
-    grid-template-columns: 1fr 1fr;
+  * {
+    word-spacing: 0;
   }
+  /* .warp_flex {
+    grid-template-columns: 1fr 1fr;
+  } */
 }
-@media only screen and (max-width: 755px) {
+/* @media only screen and (max-width: 755px) {
   .two_col_flex,
   .warp_flex {
     grid-template-columns: auto;
@@ -138,20 +141,19 @@ img {
   .space_wrapper {
     padding: 0px;
   }
-}
-@media only screen and (max-width: 385px) {
+} */
+/* @media only screen and (max-width: 385px) {
   .input_wrapper input[type="text"],
   .input_wrapper input[type="password"] {
     width: 80%;
     height: 80%;
 
-    /* grid-template-columns: 1fr 0.1fr; */
   }
   .input_wrapper .input_border {
     height: 80%;
   }
-}
-@media only screen and (max-width: 449px) {
+} */
+/* @media only screen and (max-width: 449px) {
 }
 @media only screen and (max-width: 1300px) {
   .container {
@@ -167,4 +169,4 @@ img {
   .input_wrapper input::placeholder {
     font-size: 9px;
   }
-}
+} */

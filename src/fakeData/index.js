@@ -2,7 +2,7 @@
 
 export const Customers = [
   {
-    id: 44,
+    id: 1,
     itemName: "Ahmed Saloom",
     type: "Lorem Surgery",
     mostOrder: "Plates and Secrews ",
@@ -10,7 +10,7 @@ export const Customers = [
     ratingRate: "4/5",
   },
   {
-    id: 45,
+    id: 2,
     itemName: "Mohamed Hamoodi",
     type: "Ipsum Surgery",
     mostOrder: "Nail System ",
@@ -19,7 +19,7 @@ export const Customers = [
   },
 
   {
-    id: 443,
+    id: 3,
     itemName: "Ali Ismail",
     type: "Dolor Surgery",
     mostOrder: "On pipe ",
@@ -27,7 +27,7 @@ export const Customers = [
     ratingRate: "4/5",
   },
   {
-    id: 454,
+    id: 4,
     itemName: "Ail Hamandi",
     type: "Sit Surgery",
     mostOrder: "Bone Cement",
@@ -36,7 +36,7 @@ export const Customers = [
   },
 
   {
-    id: 44,
+    id: 5,
     itemName: "Ail Hamandi",
     type: "Lorem Surgery",
     mostOrder: "Plates and Secrews ",
@@ -44,7 +44,7 @@ export const Customers = [
     ratingRate: "4/5",
   },
   {
-    id: 45,
+    id: 6,
     itemName: "Ail Hamandi",
     type: "Ipsum Surgery",
     mostOrder: "Nail System ",
@@ -53,7 +53,7 @@ export const Customers = [
   },
 
   {
-    id: 443,
+    id: 8,
     itemName: "Ail Hamandi",
     type: "Dolor Surgery",
     mostOrder: "On pipe ",
@@ -61,7 +61,7 @@ export const Customers = [
     ratingRate: "4/5",
   },
   {
-    id: 454,
+    id: 9,
     itemName: "Ail Hamandi",
     type: "Sit Surgery",
     mostOrder: "Bone Cement",
@@ -70,7 +70,7 @@ export const Customers = [
   },
 
   {
-    id: 44,
+    id: 10,
     itemName: "Ahmed Saloom",
     type: "Lorem Surgery",
     mostOrder: "Plates and Secrews ",
@@ -78,7 +78,7 @@ export const Customers = [
     ratingRate: "4/5",
   },
   {
-    id: 45,
+    id: 11,
     itemName: "Mohamed Hamoodi",
     type: "Ipsum Surgery",
     mostOrder: "Nail System ",
@@ -87,7 +87,7 @@ export const Customers = [
   },
 
   {
-    id: 443,
+    id: 12,
     itemName: "Ali Ismail",
     type: "Dolor Surgery",
     mostOrder: "On pipe ",
@@ -95,7 +95,7 @@ export const Customers = [
     ratingRate: "4/5",
   },
   {
-    id: 454,
+    id: 13,
     itemName: "Ail Hamandi",
     type: "Sit Surgery",
     mostOrder: "Bone Cement",
@@ -105,7 +105,7 @@ export const Customers = [
 ];
 export const Products = [
   {
-    id: 444,
+    id: 1,
     listName: "product",
     itemName: "S type clavical locking plate",
     itemNumber: "1",
@@ -115,7 +115,7 @@ export const Products = [
     price: "119$",
   },
   {
-    id: 64,
+    id: 2,
     listName: "product",
     itemName: "S type clavical locking plate",
     itemNumber: "1",
@@ -125,7 +125,7 @@ export const Products = [
     price: "119$",
   },
   {
-    id: 444,
+    id: 3,
     listName: "product",
     itemName: "S type clavical locking plate",
     itemNumber: "1",
@@ -135,7 +135,7 @@ export const Products = [
     price: "119$",
   },
   {
-    id: 64,
+    id: 4,
     listName: "product",
     itemName: "S type clavical locking plate",
     itemNumber: "1",
@@ -145,7 +145,7 @@ export const Products = [
     price: "119$",
   },
   {
-    id: 444,
+    id: 5,
     listName: "product",
     itemName: "S type clavical locking plate",
     itemNumber: "1",
@@ -155,7 +155,7 @@ export const Products = [
     price: "119$",
   },
   {
-    id: 64,
+    id: 6,
     listName: "product",
     itemName: "S type clavical locking plate",
     itemNumber: "1",
@@ -165,7 +165,7 @@ export const Products = [
     price: "119$",
   },
   {
-    id: 994,
+    id: 7,
     listName: "product",
     itemName: "S type clavical locking plate",
     itemNumber: "1",
@@ -175,7 +175,7 @@ export const Products = [
     price: "119$",
   },
   {
-    id: 66,
+    id: 8,
     listName: "product",
     itemName: "S type clavical locking plate",
     itemNumber: "1",
@@ -187,7 +187,7 @@ export const Products = [
 ];
 export const Stuff = [
   {
-    id: 4445,
+    id: 1,
     itemName: "Ahmed Saloom",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",
@@ -195,7 +195,7 @@ export const Stuff = [
     ratingRate: "4/5",
   },
   {
-    id: 484,
+    id: 2,
     itemName: "Ahmed Saloom",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",
@@ -203,7 +203,7 @@ export const Stuff = [
     ratingRate: "4/5",
   },
   {
-    id: 664,
+    id: 3,
     itemName: "Mohamed Hamoodi",
     type: "Dolor",
     mostOrder: "Plates and Secrews ",
@@ -211,7 +211,7 @@ export const Stuff = [
     ratingRate: "4/5",
   },
   {
-    id: 44464,
+    id: 4,
     itemName: "Mohamed Hamoodi",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",
@@ -219,7 +219,7 @@ export const Stuff = [
     ratingRate: "4/5",
   },
   {
-    id: 4445,
+    id: 5,
     itemName: "Mohamed Hamoodi",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",
@@ -227,7 +227,7 @@ export const Stuff = [
     ratingRate: "4/5",
   },
   {
-    id: 484,
+    id: 6,
     itemName: "Mohamed Hamoodi",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",
@@ -235,7 +235,7 @@ export const Stuff = [
     ratingRate: "4/5",
   },
   {
-    id: 664,
+    id: 7,
     itemName: "Ahmed Saloom",
     type: "Dolor",
     mostOrder: "Plates and Secrews ",
@@ -243,7 +243,7 @@ export const Stuff = [
     ratingRate: "4/5",
   },
   {
-    id: 44464,
+    id: 8,
     itemName: "Ahmed Saloom",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",
