@@ -60,7 +60,7 @@ function ListFilter({
             {selectedData.length != 0 ? (
               <div>
                 <button className='btn btn_delete' onClick={DeleteModal}>
-                  Delete
+                  Delete {selectedData.length} item
                 </button>
               </div>
             ) : null}

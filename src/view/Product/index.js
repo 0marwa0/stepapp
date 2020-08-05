@@ -27,6 +27,7 @@ import {
   faUnlockAlt,
 } from "@fortawesome/fontawesome-free-solid";
 import "./index.css";
+import DeletToopLitp from "../../shared/Modal/DeletTooltip";
 
 import ListHead from "../../shared/List//List_head";
 import ListType_item from "./ListType_item";
@@ -34,6 +35,7 @@ export default class index extends React.Component {
   state = {
     showModel: false,
     showUploadModel: false,
+    showDeleteModel: false,
     list: true,
     burger: false,
     showModel: false,
@@ -44,7 +46,9 @@ export default class index extends React.Component {
     isLoading: false,
     pageNumber: 0,
   };
-
+  showDeleteModel = (showDeleteModel) => {
+    this.setState({ showDeleteModel });
+  };
   checked = (e, item) => {
     if (e.target.checked) {
       this.setState({
@@ -134,7 +138,7 @@ export default class index extends React.Component {
             burger={this.state.burger}
             listActive={this.listActive}
             burgerActive={this.burgerActive}
-
+            DeleteModal={() => this.showDeleteModel(true)}
             // DeleteModal={() => this.DisplayDeleteModel(true)}
           >
             {this.state.list ? (
@@ -209,7 +213,18 @@ export default class index extends React.Component {
               <CreateProduct />
             </Modal>
           ) : null}
-
+          {/* {this.state.showDeleteModel ? (
+            <Modal
+              modalButton='Delete Account'
+              modalType='Delete'
+              modalPurpose='Write the name with respect to letter casing '
+              modalTitle='Delete customer '
+              width='45%'
+              height='50%'
+              onCLose={() => this.showDeleteModel(false)}>
+              <DeletToopLitp />
+            </Modal>
+          ) : null} */}
           {/* {showUploadModel ? (
         <Modal
           isMulti={true}
