@@ -33,11 +33,12 @@ a {
   margin: 2% 0;
 }
 .input_wrapper > div {
-  border: 1px solid var(--light-gray);
+  border: 1px solid rgb(155, 153, 153);
   border-radius: 5px;
   padding-right: 7px;
   display: grid;
   width: 100%;
+
   align-items: center;
   grid-template-columns: 2fr auto;
 }
@@ -45,12 +46,9 @@ a {
   border-right: none;
 }
 .input_wrapper > div {
-  height: 30px;
+  height: 33px;
 }
 
-.input_wrapper input:focus + .input_wrapper > div {
-  border: 2px solid rgb(68, 217, 228) !important;
-}
 .two_col_flex {
   display: grid;
   grid-gap: 10px;
@@ -70,8 +68,8 @@ a {
   font-size: 14px;
   color: #c4c1c1;
   border: none;
-  padding: 0 3px;
-  height: 25px;
+  padding: 0 10px;
+  height: 28px;
 
   width: 95%;
   outline: none;
@@ -87,7 +85,7 @@ img {
 .input_wrapper .input_border {
   display: grid;
   grid-template-columns: auto;
-  border: 1px solid var(--light-gray);
+  border: 1px solid rgb(155, 153, 153);
   border-radius: 5px;
 }
 
@@ -97,7 +95,7 @@ img {
   outline: none !important;
 }
 .input_wrapper input::placeholder {
-  color: #e1e2e2;
+  color: rgb(141, 136, 136);
 
   /* font-size: 14px; */
 }
@@ -109,11 +107,14 @@ img {
   margin: 0 auto !important;
 }
 .btn {
-  border: none;
-  cursor: pointer;
-  display: flex;
-  padding: 0.4em 1em;
+  border: 1px solid var(--light-gray);
+  cursor: pointer !important;
+
+  padding: 0.5em 0.7em;
+  font-size: 14px;
+  background-color: white;
   border-radius: 5px;
+  color: rgb(83, 80, 80);
 }
 .btn_ctrl {
   color: white;

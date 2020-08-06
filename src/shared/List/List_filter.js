@@ -7,9 +7,8 @@ import {
   faFilter,
   faSortDown,
 } from "@fortawesome/fontawesome-free-solid";
-import { RiFilter2Line } from "react-icons/ri";
-
-import { FaSortDown, FaEdit } from "react-icons/fa";
+import { RiFilter2Line, RiErrorWarningLine } from "react-icons/ri";
+import { FaSortDown, FaEdit, FaImage } from "react-icons/fa";
 import { FaThList, FaBuromobelexperte } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 
@@ -19,7 +18,6 @@ function ListFilter({
   selectedData,
   showModal,
   ListName,
-
   DeleteModal,
   children,
   list,
@@ -27,6 +25,14 @@ function ListFilter({
   listActive,
   burgerActive,
 }) {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const showTooltipModel = () => {
+    setShowTooltip(true);
+  };
+  const closeTooltipModel = () => {
+    setShowTooltip(false);
+    console.log(showTooltip, "on close");
+  };
   return (
     <div>
       <div className='List_filter'>
@@ -59,7 +65,30 @@ function ListFilter({
           <div className='btns_holder'>
             {selectedData.length != 0 ? (
               <div>
-                <button className='btn btn_delete' onClick={DeleteModal}>
+                {/* {showTooltip ? (
+                  <div class='tooltip_container'>
+                    <div class='tooltip'>
+                      <div className='tooltip_content'>
+                        <span>
+                          <RiErrorWarningLine className='warning_icon' />
+                          Are you sure to delete this item ?
+                        </span>
+
+                        <span>
+                          <button className='btn' onClick={closeTooltipModel}>
+                            No
+                          </button>
+                          <button className='btn btn_ctrl'>Yes</button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ) : null} */}
+                <button
+                  className='btn btn_delete'
+                  onClick={
+                    ListName != "customer" ? showTooltipModel : DeleteModal
+                  }>
                   Delete {selectedData.length} item
                 </button>
               </div>
@@ -68,7 +97,15 @@ function ListFilter({
               <div>
                 <button className='btn btn_Edit'>
                   <FaEdit className='plus_icon' />
-                  Edit
+                  {selectedData.map((item) => item.itemName)}
+                </button>
+              </div>
+            ) : null}
+            {selectedData.length == 1 && ListName == "product" ? (
+              <div>
+                <button className='btn btn_Edit'>
+                  <FaImage className='plus_icon' />
+                  change image
                 </button>
               </div>
             ) : null}

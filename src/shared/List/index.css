@@ -5,7 +5,7 @@
 }
 .List_filter {
   /* display: grid; */
-  padding-bottom: 14px;
+  padding-bottom: 20px;
   padding-top: 5%;
 
   align-items: center;
@@ -28,7 +28,7 @@
 .btn_Edit {
   background-color: white;
   border: 1px solid gray;
-  padding: 3.5px 10px !important;
+  /* padding: 3.5px 10px !important; */
 }
 
 .plus_icon {
@@ -38,19 +38,20 @@
 .Filter_ctrl {
   color: black;
   width: max-content;
-  /* height: 35px; */
+
   font-size: 14px;
   border-radius: 5px;
   color: var(--gray);
   display: flex;
   align-items: center;
-  padding: 3px 10px;
+  padding: 0.4em 0.5em;
   align-items: center;
   margin-left: 5px;
   justify-content: center;
   border: 1px solid #edeef0;
   background-color: var(--lighter-gray);
 }
+
 .filterIcon {
   color: var(--light-gray);
 }
@@ -199,9 +200,10 @@
   height: 1.2em;
   background-color: white;
 
-  border: 1px solid var(--lighter-gray);
+  border: 1px solid var(--light-gray);
   border-radius: 7px;
 }
+
 /* checked mark aspect */
 [type="checkbox"]:not(:checked) + label:after,
 [type="checkbox"]:checked + label:after {
@@ -324,3 +326,86 @@ label:hover:before {
     font-size: 8px !important;
   }
 }
+/***********************tooltip*********************/
+.tooltip_container {
+  position: relative;
+
+  background-color: teal;
+}
+
+.tooltip_container .tooltip {
+  background: white;
+  box-shadow: 1px 1px 20px 1px rgb(214, 214, 214);
+  border-radius: 7px;
+  display: block;
+  top: -120px;
+  right: -7em;
+  padding: 10px 20px;
+  font-size: 15px;
+  pointer-events: none;
+  position: absolute;
+  width: max-content;
+  z-index: 1102;
+  -webkit-transform: translateY(10px);
+  -moz-transform: translateY(10px);
+  -ms-transform: translateY(10px);
+  -o-transform: translateY(10px);
+  transform: translateY(10px);
+  -webkit-transition: all 0.7s ease-out;
+  -moz-transition: all 0.7s ease-out;
+  -ms-transition: all 0.7s ease-out;
+  -o-transition: all 0.7s ease-out;
+  transition: all 0.7s ease-out;
+}
+.tooltip_content {
+  display: flex;
+
+  flex-direction: column;
+}
+.warning_icon {
+  color: red;
+  font-size: 20px;
+}
+.tooltip_content span {
+  margin-top: 5%;
+  display: flex;
+  justify-content: flex-end;
+  grid-gap: 5px;
+}
+/* This is the grey triangle behind the yellow one that makes the border continuous */
+/* .tooltip_container .tooltip:before {
+  bottom: -42px;
+  content: " ";
+  display: block;
+  height: 20px;
+  left: 126px;
+  position: absolute;
+  border-color: #a9a9a9 transparent transparent transparent;
+  border-style: solid;
+  border-width: 11px;
+} */
+
+/* Yellow triangle */
+.tooltip_container .tooltip:after {
+  border-left: solid transparent 10px;
+  border-right: solid transparent 10px;
+  border-top: solid white 10px;
+  bottom: 0;
+  content: " ";
+  height: 0;
+  top: 95%;
+  left: 50%;
+  margin-left: -13px;
+  position: absolute;
+  width: 0;
+}
+
+/* .tooltip_container:hover .tooltip {
+  opacity: 1;
+  pointer-events: auto;
+  -webkit-transform: translateY(0px);
+  -moz-transform: translateY(0px);
+  -ms-transform: translateY(0px);
+  -o-transform: translateY(0px);
+  transform: translateY(0px);
+} */

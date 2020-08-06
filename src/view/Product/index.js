@@ -27,7 +27,6 @@ import {
   faUnlockAlt,
 } from "@fortawesome/fontawesome-free-solid";
 import "./index.css";
-import DeletToopLitp from "../../shared/Modal/DeletTooltip";
 
 import ListHead from "../../shared/List//List_head";
 import ListType_item from "./ListType_item";

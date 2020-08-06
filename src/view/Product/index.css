@@ -7,12 +7,36 @@
 }
 .listType_item {
   display: grid;
-
   grid-template-columns: auto 1fr auto;
-  align-items: center;
-  padding: 0px 10px;
+  /* align-items: center; */
+
+  padding-right: 10px;
   border-radius: 6px;
   border: 1px solid var(--light-gray);
+}
+.listType_item p {
+  margin: 1% 0;
+}
+.listType_item p:nth-child(1) {
+  margin-top: 3%;
+  font-size: 22px;
+  font-weight: 500;
+}
+.listType_item p:nth-child(2) {
+  font-size: 16px;
+  font-weight: 600;
+  color: gray;
+}
+.listType_item p:nth-child(3) {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--light-gray);
+  margin-bottom: 3%;
+}
+.listType_item img {
+  width: 100px;
+  height: 100%;
+  border-radius: 6px 0 0 6px;
 }
 .customize_holder {
 }
