@@ -30,7 +30,11 @@
   border: 1px solid gray;
   /* padding: 3.5px 10px !important; */
 }
-
+.btn_Edit:hover {
+  color: var(--blue);
+  opacity: 0.8;
+  border: 1px solid var(--blue);
+}
 .plus_icon {
   margin-right: 7px;
   padding: 1px;
@@ -38,7 +42,7 @@
 .Filter_ctrl {
   color: black;
   width: max-content;
-
+  cursor: pointer;
   font-size: 14px;
   border-radius: 5px;
   color: var(--gray);
@@ -335,14 +339,13 @@ label:hover:before {
 
 .tooltip_container .tooltip {
   background: white;
-  box-shadow: 1px 1px 20px 1px rgb(214, 214, 214);
+  box-shadow: 1px 1px 30px 1px rgb(175, 175, 175);
   border-radius: 7px;
   display: block;
   top: -120px;
   right: -7em;
   padding: 10px 20px;
   font-size: 15px;
-  pointer-events: none;
   position: absolute;
   width: max-content;
   z-index: 1102;
@@ -366,11 +369,14 @@ label:hover:before {
   color: red;
   font-size: 20px;
 }
+.tooltip_content button {
+  padding: 0.2em 0.5em !important;
+}
 .tooltip_content span {
   margin-top: 5%;
   display: flex;
   justify-content: flex-end;
-  grid-gap: 5px;
+  grid-gap: 8px;
 }
 /* This is the grey triangle behind the yellow one that makes the border continuous */
 /* .tooltip_container .tooltip:before {

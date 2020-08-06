@@ -65,7 +65,7 @@ function ListFilter({
           <div className='btns_holder'>
             {selectedData.length != 0 ? (
               <div>
-                {/* {showTooltip ? (
+                {showTooltip ? (
                   <div class='tooltip_container'>
                     <div class='tooltip'>
                       <div className='tooltip_content'>
@@ -75,7 +75,9 @@ function ListFilter({
                         </span>
 
                         <span>
-                          <button className='btn' onClick={closeTooltipModel}>
+                          <button
+                            className='btn btn_Edit'
+                            onClick={closeTooltipModel}>
                             No
                           </button>
                           <button className='btn btn_ctrl'>Yes</button>
@@ -83,7 +85,7 @@ function ListFilter({
                       </div>
                     </div>
                   </div>
-                ) : null} */}
+                ) : null}
                 <button
                   className='btn btn_delete'
                   onClick={
