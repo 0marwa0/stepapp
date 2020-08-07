@@ -15,7 +15,11 @@ function Index({ selectedData }) {
   const DisplayDeleteModel = (Delete) => {
     setDeleteModel(Delete);
   };
+  const [EditModel, setEditModel] = useState(false);
 
+  const DisplayEditModel = (EditModel) => {
+    setEditModel(EditModel);
+  };
   return (
     <div>
       <ListFilter
@@ -23,6 +27,7 @@ function Index({ selectedData }) {
         showModal={() => DisplayModel(true)}
         ListName='customer'
         DeleteModal={() => DisplayDeleteModel(true)}
+        DisplayEditModel={() => DisplayEditModel(true)}
       />
 
       {showModel ? (
@@ -34,6 +39,17 @@ function Index({ selectedData }) {
           width='60%'
           height='70%'
           onCLose={() => DisplayModel(false)}>
+          <CreateCustomer />
+        </Modal>
+      ) : null}
+      {EditModel ? (
+        <Modal
+          modalButton='Save Edit '
+          modalPurpose=''
+          modalTitle='Edit customer'
+          width='60%'
+          height='70%'
+          onCLose={() => DisplayEditModel(false)}>
           <CreateCustomer />
         </Modal>
       ) : null}

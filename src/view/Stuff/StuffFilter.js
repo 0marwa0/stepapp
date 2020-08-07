@@ -5,7 +5,7 @@ import ListFilter from "../../shared/List/List_filter";
 import { useState } from "react";
 import CreateStuff from "./CreateStuff";
 import Modal from "../../shared/Modal";
-function Index({ selectedData }) {
+function Index({ selectedData, DisplayEditModel }) {
   const [showModel, setModel] = useState(false);
   const DisplayModel = (show) => {
     setModel(show);
@@ -16,6 +16,7 @@ function Index({ selectedData }) {
         showModal={() => DisplayModel(true)}
         ListName='Stuff'
         selectedData={selectedData}
+        DisplayEditModel={DisplayEditModel}
       />
 
       {showModel ? (

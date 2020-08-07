@@ -19,12 +19,13 @@ import StuffFilter from "./StuffFilter";
 import EditPassword from "./EditPassword";
 import Modal from "../../shared/Modal";
 import ListFooter from "../../shared/List/List_footer";
-
+import EditStuff from "./EditStuff";
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showEditModal: false,
+      showEditPassword: false,
+      DisplayEditModel: false,
       ShowDeleteModal: false,
       Data: [],
       checkedAll: false,
@@ -34,8 +35,11 @@ class index extends Component {
       pageNumber: 0,
     };
   }
-  ShowEditModal = (showEditModal) => {
-    this.setState({ showEditModal });
+  showEditPassword = (showEditPassword) => {
+    this.setState({ showEditPassword });
+  };
+  DisplayEditModel = (DisplayEditModel) => {
+    this.setState({ DisplayEditModel });
   };
   checked = (e, item) => {
     if (e.target.checked) {
@@ -103,7 +107,10 @@ class index extends Component {
       <div>
         <Header slug='Stuff list' />
         <div className='container'>
-          <StuffFilter selectedData={this.state.Data} />
+          <StuffFilter
+            selectedData={this.state.Data}
+            DisplayEditModel={() => this.DisplayEditModel(true)}
+          />
           <div className='List_Wrapper'>
             <ListHead
               listName='Stuff'
@@ -128,7 +135,7 @@ class index extends Component {
                   }
                   itemNumber={i + 1}
                   type={item.type}
-                  showModal={() => this.ShowEditModal(true)}
+                  showModal={() => this.showEditPassword(true)}
                   mostOrder={item.mostOrder}
                   orderValue={item.orderValue}
                   ratingRate={item.ratingRate}
@@ -158,15 +165,26 @@ class index extends Component {
               </div>
             </div> */}
           </div>{" "}
-          {this.state.showEditModal ? (
+          {this.state.showEditPassword ? (
             <Modal
               modalButton='Re-new password'
               modalPurpose=' '
               modalTitle='Re-new password'
-              width='45%'
-              height='50%'
-              onCLose={() => this.ShowEditModal(false)}>
+              width='40%'
+              height='55%'
+              onCLose={() => this.showEditPassword(false)}>
               <EditPassword />
+            </Modal>
+          ) : null}
+          {this.state.DisplayEditModel ? (
+            <Modal
+              modalButton='Save edit'
+              modalPurpose=' '
+              modalTitle='Edit team member'
+              width='50%'
+              height='60%'
+              onCLose={() => this.DisplayEditModel(false)}>
+              <EditStuff />
             </Modal>
           ) : null}
         </div>

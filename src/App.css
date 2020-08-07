@@ -10,6 +10,7 @@ a {
   text-decoration: none;
   color: unset;
 }
+
 :root {
   --red: #f72f57;
   --blue: #3b86ff;
@@ -23,6 +24,7 @@ a {
   --offWhite: #f4f7fc;
   --light-blue: #ebf3ff;
   --lighter-gray: #f6f8fa;
+  --bright-gray: #d9d9d9;
 }
 .input_wrapper {
   display: grid;
@@ -33,7 +35,7 @@ a {
   margin: 2% 0;
 }
 .input_wrapper > div {
-  border: 1px solid rgb(155, 153, 153);
+  border: 1px solid var(--bright-gray);
   border-radius: 5px;
   padding-right: 7px;
   display: grid;
@@ -55,7 +57,8 @@ a {
   grid-template-columns: auto auto;
 }
 .space_wrapper {
-  padding: 5px;
+  padding: 5px 0;
+
   padding-left: none;
 }
 .warp_flex {
@@ -84,8 +87,9 @@ img {
 }
 .input_wrapper .input_border {
   display: grid;
+
   grid-template-columns: auto;
-  border: 1px solid rgb(155, 153, 153);
+  border: 1px solid var(--bright-gray);
   border-radius: 5px;
 }
 

@@ -15,7 +15,7 @@ import "./index.css";
 import ProductFilter from "./ProductFilter";
 import { FaThList, FaBuromobelexperte } from "react-icons/fa";
 import "../../shared/List/index.css";
-import CreateProduct from "./CreateProduct";
+import CreateProduct, { EditProduct } from "./CreateProduct";
 import { ProductSType_1, ProductSType_2 } from "./Products.js";
 import Modal from "../../shared/Modal";
 import { Products } from "../../fakeData/";
@@ -27,14 +27,14 @@ import {
   faUnlockAlt,
 } from "@fortawesome/fontawesome-free-solid";
 import "./index.css";
-
+import UploadImage from "././CreateProduct/UploadImage";
 import ListHead from "../../shared/List//List_head";
 import ListType_item from "./ListType_item";
 export default class index extends React.Component {
   state = {
     showModel: false,
     showUploadModel: false,
-    showDeleteModel: false,
+    showEditModel: false,
     list: true,
     burger: false,
     showModel: false,
@@ -45,9 +45,7 @@ export default class index extends React.Component {
     isLoading: false,
     pageNumber: 0,
   };
-  showDeleteModel = (showDeleteModel) => {
-    this.setState({ showDeleteModel });
-  };
+
   checked = (e, item) => {
     if (e.target.checked) {
       this.setState({
@@ -94,7 +92,9 @@ export default class index extends React.Component {
   DisplayUploadModel = (showUploadModel) => {
     this.setState({ showUploadModel });
   };
-
+  DisplayEditModel = (showEditModel) => {
+    this.setState({ showEditModel });
+  };
   listActive = (list) => {
     this.setState({ list });
   };
@@ -137,9 +137,8 @@ export default class index extends React.Component {
             burger={this.state.burger}
             listActive={this.listActive}
             burgerActive={this.burgerActive}
-            DeleteModal={() => this.showDeleteModel(true)}
-            // DeleteModal={() => this.DisplayDeleteModel(true)}
-          >
+            DisplayUploadModel={() => this.DisplayUploadModel(true)}
+            DisplayEditModel={() => this.DisplayEditModel(true)}>
             {this.state.list ? (
               <div>
                 <div className='List_Wrapper'>
@@ -205,41 +204,41 @@ export default class index extends React.Component {
               modalButton='Create New Item'
               modalPurpose='From here you can add products to your list'
               modalTitle='Add new Product'
-              width='60%'
-              height='70%'
-              fun={() => this.DisplayUploadModel(true)}
+              width='50%'
+              height='100%'
+              // fun={() => this.DisplayUploadModel(true)}
               onCLose={() => this.DisplayModel(false)}>
               <CreateProduct />
             </Modal>
           ) : null}
-          {/* {this.state.showDeleteModel ? (
+          {this.state.showEditModel ? (
             <Modal
-              modalButton='Delete Account'
-              modalType='Delete'
-              modalPurpose='Write the name with respect to letter casing '
-              modalTitle='Delete customer '
-              width='45%'
-              height='50%'
-              onCLose={() => this.showDeleteModel(false)}>
-              <DeletToopLitp />
+              modalButton='Save Edit'
+              modalPurpose=''
+              modalTitle='Edit product'
+              width='50%'
+              height='55%'
+              // fun={() => this.DisplayUploadModel(true)}
+              onCLose={() => this.DisplayEditModel(false)}>
+              <EditProduct />
             </Modal>
-          ) : null} */}
-          {/* {showUploadModel ? (
-        <Modal
-          isMulti={true}
-          modalButton='Create New Item'
-          modalPurpose='From here you can add products to your list'
-          modalTitle='Add new Product'
-          width='60%'
-          height='70%'
-          onBack={() => {
-            DisplayModel(true);
-            DisplayUploadModel(false);
-          }}
-          onCLose={() => DisplayUploadModel(false)}>
-          <UploadImage />
-        </Modal>
-      ) : null} */}
+          ) : null}
+          {this.state.showUploadModel ? (
+            <Modal
+              // isMulti={true}
+              modalButton='Save Edit'
+              modalPurpose=''
+              modalTitle='Change image'
+              width='50%'
+              height='70%'
+              // onBack={() => {
+              //   DisplayModel(true);
+              //   DisplayUploadModel(false);
+              // }}
+              onCLose={() => this.DisplayUploadModel(false)}>
+              <UploadImage />
+            </Modal>
+          ) : null}
         </div>{" "}
       </div>
     );

@@ -3,7 +3,8 @@
 import React from "react";
 import "./index.css";
 import { AiOutlineLock } from "react-icons/ai";
-const CreateProduct = () => {
+import UploadImage from "./UploadImage";
+export const EditProduct = () => {
   return (
     <div>
       <div className='two_col_flex paddingTop'>
@@ -39,13 +40,22 @@ const CreateProduct = () => {
             <input type='text' placeholder='Trauma' />
           </span>
         </div>
-        <div className='input_wrapper space_wrapper'>
-          <p>Product Photo</p>
-          <span className='input_border'>
-            <input type='text' placeholder='Max size is 5MP' />
-          </span>
-        </div>
+      </div>{" "}
+      <div className='input_wrapper space_wrapper'>
+        <p>Component</p>
+        <span className='input_border'>
+          <input type='text' width='100%' />
+        </span>
       </div>
+    </div>
+  );
+};
+
+const CreateProduct = () => {
+  return (
+    <div>
+      <EditProduct />
+      <UploadImage />
     </div>
   );
 };

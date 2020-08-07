@@ -1,31 +1,39 @@
 /** @format */
 
-import React from "react";
+import React, { Component } from "react";
 import "./index.css";
-const index = () => {
-  return (
-    <div className='upload_modal'>
-      <div className='upload_modal_bg'>
-        <img src={require("../../../shared/Icon/upload.png")} />
-        <p>
-          {" "}
-          Choose a file from your PC or
-          <span>drag& drop</span>here
-        </p>
-        <div className='file-wrapper'>
-          <span className='label'>Browse</span>
 
-          <input
-            type='file'
-            name='upload'
-            id='upload'
-            class='upload-box'
-            placeholder='Upload image'
-          />
+class index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { isActive: false };
+  }
+  Active = (isActive) => {
+    this.setState({ isActive });
+  };
+  componentDidMount() {
+    // window.addEventListener('ondrag', this.Active(true));
+  }
+  render() {
+    return (
+      <div>
+        <div className='upload_text'>Product photo</div>
+        <div
+          onDragOver={() => this.Active(true)}
+          onDragLeave={() => this.Active(false)}
+          className={
+            this.state.isActive ? "upload_modal active" : "upload_modal "
+          }>
+          <img src={require("../../../shared/Icon/upload.png")} />
+          <span>
+            Drop file here or
+            <input type='file' id='file' />
+            <label for='file'> browse</label>
+          </span>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default index;

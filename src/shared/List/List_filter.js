@@ -24,6 +24,8 @@ function ListFilter({
   burger,
   listActive,
   burgerActive,
+  DisplayUploadModel,
+  DisplayEditModel,
 }) {
   const [showTooltip, setShowTooltip] = useState(false);
   const showTooltipModel = () => {
@@ -97,7 +99,7 @@ function ListFilter({
             ) : null}
             {selectedData.length == 1 ? (
               <div>
-                <button className='btn btn_Edit'>
+                <button className='btn btn_Edit' onClick={DisplayEditModel}>
                   <FaEdit className='plus_icon' />
                   {selectedData.map((item) => item.itemName)}
                 </button>
@@ -105,7 +107,7 @@ function ListFilter({
             ) : null}
             {selectedData.length == 1 && ListName == "product" ? (
               <div>
-                <button className='btn btn_Edit'>
+                <button className='btn btn_Edit' onClick={DisplayUploadModel}>
                   <FaImage className='plus_icon' />
                   change image
                 </button>
