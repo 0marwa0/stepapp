@@ -62,6 +62,7 @@ class index extends Component {
               <AiOutlineUser className='eye_icon' />
               <input
                 type='text'
+                placeholder='Email'
                 onChange={(e) => this.handleChange(e, "email")}
               />{" "}
             </div>
@@ -73,6 +74,7 @@ class index extends Component {
               <input
                 type='password'
                 width='100%'
+                placeholder='password'
                 onChange={(e) => this.handleChange(e, "password")}
               />{" "}
             </div>
