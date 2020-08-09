@@ -26,7 +26,11 @@ class ListHead extends React.Component {
           <div>#</div>
         </div>
         <div className='sort_icon_holder '>
-          <div>{this.props.listName}Name</div>
+          {this.props.listName == "Stuff" ? (
+            <div>Name</div>
+          ) : (
+            <div>{this.props.listName}Name</div>
+          )}
 
           <FontAwesomeIcon icon={faSort} className='sort_icon' />
         </div>
