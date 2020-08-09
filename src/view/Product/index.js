@@ -154,7 +154,7 @@ export default class index extends React.Component {
                     return (
                       <ListItem
                         listName='product'
-                        itemName={item.itemName}
+                        itemName={item.name}
                         style='productItem'
                         className={
                           this.isSelected(item.id)

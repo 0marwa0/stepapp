@@ -3,7 +3,7 @@
 export const Customers = [
   {
     id: 1,
-    itemName: "Ahmed ",
+    name: "Ahmed ",
     type: "Lorem Surgery",
     mostOrder: "Plates and Secrews ",
     orderValue: "119$",
@@ -11,7 +11,7 @@ export const Customers = [
   },
   {
     id: 2,
-    itemName: "Mohamed",
+    name: "Mohamed",
     type: "Ipsum Surgery",
     mostOrder: "Nail System ",
     orderValue: "230$",
@@ -20,7 +20,7 @@ export const Customers = [
 
   {
     id: 3,
-    itemName: "Ali",
+    name: "Ali",
     type: "Dolor Surgery",
     mostOrder: "On pipe ",
     orderValue: "120$",
@@ -28,7 +28,7 @@ export const Customers = [
   },
   {
     id: 4,
-    itemName: "Ail ",
+    name: "Ail ",
     type: "Sit Surgery",
     mostOrder: "Bone Cement",
     orderValue: "121$",
@@ -37,7 +37,7 @@ export const Customers = [
 
   {
     id: 5,
-    itemName: "Ail ",
+    name: "Ail ",
     type: "Lorem Surgery",
     mostOrder: "Plates and Secrews ",
     orderValue: "119$",
@@ -45,7 +45,7 @@ export const Customers = [
   },
   {
     id: 6,
-    itemName: "Ail",
+    name: "Ail",
     type: "Ipsum Surgery",
     mostOrder: "Nail System ",
     orderValue: "230$",
@@ -54,7 +54,7 @@ export const Customers = [
 
   {
     id: 8,
-    itemName: "Ail",
+    name: "Ail",
     type: "Dolor Surgery",
     mostOrder: "On pipe ",
     orderValue: "120$",
@@ -62,7 +62,7 @@ export const Customers = [
   },
   {
     id: 9,
-    itemName: "Ail ",
+    name: "Ail ",
     type: "Sit Surgery",
     mostOrder: "Bone Cement",
     orderValue: "121$",
@@ -71,7 +71,7 @@ export const Customers = [
 
   {
     id: 10,
-    itemName: "Ahmed ",
+    name: "Ahmed ",
     type: "Lorem Surgery",
     mostOrder: "Plates and Secrews ",
     orderValue: "119$",
@@ -79,7 +79,7 @@ export const Customers = [
   },
   {
     id: 11,
-    itemName: "Mohamed ",
+    name: "Mohamed ",
     type: "Ipsum Surgery",
     mostOrder: "Nail System ",
     orderValue: "230$",
@@ -88,7 +88,7 @@ export const Customers = [
 
   {
     id: 12,
-    itemName: "Ali ",
+    name: "Ali ",
     type: "Dolor Surgery",
     mostOrder: "On pipe ",
     orderValue: "120$",
@@ -96,7 +96,7 @@ export const Customers = [
   },
   {
     id: 13,
-    itemName: "Ail",
+    name: "Ail",
     type: "Sit Surgery",
     mostOrder: "Bone Cement",
     orderValue: "121$",
@@ -107,7 +107,7 @@ export const Products = [
   {
     id: 1,
     listName: "product",
-    itemName: "S type clavical ",
+    name: "S type clavical ",
     itemNumber: "1",
     type: "Lorem ",
     mostOrder: "Plates and Secrews ",
@@ -117,7 +117,7 @@ export const Products = [
   {
     id: 2,
     listName: "product",
-    itemName: "S type clavical ",
+    name: "S type clavical ",
     itemNumber: "1",
     type: "Lorem ",
     mostOrder: "Nail System ",
@@ -127,7 +127,7 @@ export const Products = [
   {
     id: 3,
     listName: "product",
-    itemName: "S type clavical ",
+    name: "S type clavical ",
     itemNumber: "1",
     type: "Lorem ",
     mostOrder: "Plates and Secrews ",
@@ -137,7 +137,7 @@ export const Products = [
   {
     id: 4,
     listName: "product",
-    itemName: "S  locking plate",
+    name: "S  locking plate",
     itemNumber: "1",
     type: "Lorem ",
     mostOrder: "Nail System ",
@@ -147,7 +147,7 @@ export const Products = [
   {
     id: 5,
     listName: "product",
-    itemName: " locking plate",
+    name: " locking plate",
     itemNumber: "1",
     type: "Lorem ",
     mostOrder: "Plates and Secrews ",
@@ -157,7 +157,7 @@ export const Products = [
   {
     id: 6,
     listName: "product",
-    itemName: "S type plate",
+    name: "S type plate",
     itemNumber: "1",
     type: "Lorem ",
     mostOrder: "Nail System ",
@@ -167,7 +167,7 @@ export const Products = [
   {
     id: 7,
     listName: "product",
-    itemName: "locking plate",
+    name: "locking plate",
     itemNumber: "1",
     type: "Dolor",
     mostOrder: "On pipe ",
@@ -177,7 +177,7 @@ export const Products = [
   {
     id: 8,
     listName: "product",
-    itemName: "S type clavical ",
+    name: "S type clavical ",
     itemNumber: "1",
     type: "Dolor",
     mostOrder: "Bone Cement ",
@@ -188,7 +188,7 @@ export const Products = [
 export const Stuff = [
   {
     id: 1,
-    itemName: "Ahmed ",
+    name: "Ahmed ",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",
     orderValue: "119",
@@ -196,7 +196,7 @@ export const Stuff = [
   },
   {
     id: 2,
-    itemName: "Ahmed ",
+    name: "Ahmed ",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",
     orderValue: "119",
@@ -204,7 +204,7 @@ export const Stuff = [
   },
   {
     id: 3,
-    itemName: "Mohamed ",
+    name: "Mohamed ",
     type: "Dolor",
     mostOrder: "Plates and Secrews ",
     orderValue: "119",
@@ -212,7 +212,7 @@ export const Stuff = [
   },
   {
     id: 4,
-    itemName: "Mohamed",
+    name: "Mohamed",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",
     orderValue: "119",
@@ -220,7 +220,7 @@ export const Stuff = [
   },
   {
     id: 5,
-    itemName: "Mohamed",
+    name: "Mohamed",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",
     orderValue: "119",
@@ -228,7 +228,7 @@ export const Stuff = [
   },
   {
     id: 6,
-    itemName: "Mohamed ",
+    name: "Mohamed ",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",
     orderValue: "119",
@@ -236,7 +236,7 @@ export const Stuff = [
   },
   {
     id: 7,
-    itemName: "Ahmed ",
+    name: "Ahmed ",
     type: "Dolor",
     mostOrder: "Plates and Secrews ",
     orderValue: "119",
@@ -244,7 +244,7 @@ export const Stuff = [
   },
   {
     id: 8,
-    itemName: "Ahmed",
+    name: "Ahmed",
     type: "Lorem",
     mostOrder: "Plates and Secrews ",
     orderValue: "119",
