@@ -4,21 +4,16 @@ import React, { Component } from "react";
 
 import Header from "../../shared/header";
 
-import ListItem from "../../shared/List/List_Item";
+import ListItem from "./List_Customer_item.js";
+import API from "../../API/index";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faGreaterThan,
-  faLessThan,
-  faMap,
-} from "@fortawesome/fontawesome-free-solid";
-import { Customers } from "../../fakeData";
+// import { Customers } from "../../fakeData";
 import ListHead from "../../shared/List//List_head";
 import "../../shared/List/index.css";
 import CustomerFilter from "./CustomerFilter";
-import { RiRoadMapLine } from "react-icons/ri";
 import ListFooter from "../../shared/List/List_footer";
 import "../../shared/List/index.css";
+import Loader from "react-loader-spinner";
 class index extends Component {
   constructor(props) {
     super(props);
@@ -28,8 +23,9 @@ class index extends Component {
       checkedAll: false,
       currentPage: 1,
       pagePerOnce: 4,
-      isLoading: false,
+      isLoading: true,
       pageNumber: 0,
+      Customers: [],
     };
   }
   checked = (e, item) => {
@@ -37,7 +33,7 @@ class index extends Component {
       this.setState({
         Data: this.state.Data.concat([item]),
       });
-      if (this.state.Data.length === Customers.length - 1) {
+      if (this.state.Data.length === this.state.Customers.length - 1) {
         this.setState({
           checkedAll: true,
         });
@@ -61,7 +57,7 @@ class index extends Component {
 
     if (selected) {
       this.setState({
-        Data: Customers,
+        Data: this.state.Customers,
         checkedAll: true,
       });
     } else {
@@ -71,16 +67,18 @@ class index extends Component {
       });
     }
   };
-  getData = () => {
-    return Customers;
-  };
 
   componentDidMount() {
     const fetchCustomers = async () => {
-      this.setState({ isLoading: true });
-      const res = await this.getData;
-      this.setState({ isLoading: false });
+      const res = await API.getCustomers((data) => {
+        console.log(data, "users");
+        this.setState({ isLoading: false });
+        for (let i = 0; i < data.users.length; i++) {
+          this.setState({ Customers: data.users[0] });
+        }
+      });
     };
+    fetchCustomers();
   }
 
   prevPage = () => {
@@ -94,7 +92,9 @@ class index extends Component {
 
   nextPage = () => {
     const currentPage = this.state.currentPage;
-    const totalPge = Math.ceil(Customers.length / this.state.pagePerOnce);
+    const totalPge = Math.ceil(
+      this.state.Customers.length / this.state.pagePerOnce
+    );
     if (currentPage != totalPge) {
       this.setState({
         currentPage: this.state.currentPage + 1,
@@ -106,9 +106,12 @@ class index extends Component {
     const listName = "Customer";
     const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
     const indexOfFirstPage = indexOfLastPage - this.state.pagePerOnce;
-    const CurrentCustomers = Customers.slice(indexOfFirstPage, indexOfLastPage);
+    const CurrentCustomers = this.state.Customers.slice(
+      indexOfFirstPage,
+      indexOfLastPage
+    );
     const totalPageNumber = Math.ceil(
-      Customers.length / this.state.pagePerOnce
+      this.state.Customers.length / this.state.pagePerOnce
     );
     return (
       <div>
@@ -120,38 +123,57 @@ class index extends Component {
             <ListHead
               listName='Customer'
               SelectAll={this.SelectAll}
+              style='customerItem'
               checkedAll={this.state.checkedAll}
               fieldsName={[
+                "Phone Number",
                 "Specialty",
+                "Degree",
                 "Most ordered Kit",
                 "Order value",
                 "Rating rate",
               ]}
             />
-            {CurrentCustomers.map((item, i) => {
-              return (
-                <ListItem
-                  listName='customer'
-                  itemName={item.itemName}
-                  className={
-                    this.isSelected(item.id)
-                      ? "List_item selected_Item"
-                      : "List_item"
-                  }
-                  itemNumber={i + 1}
-                  type={item.type}
-                  mostOrder={item.mostOrder}
-                  orderValue={item.orderValue}
-                  ratingRate={item.ratingRate}
-                  onChange={(e) => this.checked(e, item)}
-                  checked={this.isSelected(item.id) ? true : ""}
-                />
-              );
-            })}
 
+            {this.state.isLoading ? (
+              <div className='loader_wrapper'>
+                <Loader
+                  type='ThreeDots'
+                  color='var(--blue)'
+                  height={100}
+                  width={100}
+                />
+              </div>
+            ) : (
+              <div>
+                {CurrentCustomers.map((item, i) => {
+                  return (
+                    <ListItem
+                      listName='customer'
+                      style='customerItem'
+                      itemName={item.name}
+                      className={
+                        this.isSelected(item.id)
+                          ? "List_item selected_Item"
+                          : "List_item"
+                      }
+                      itemNumber={i + 1}
+                      specialty={item.specialty}
+                      degree={item.dgree}
+                      phone={item.phone}
+                      mostOrder={item.needOtp == null ? 0 : item.needOtp}
+                      orderValue={item.orderValue == null ? 0 : item.orderValue}
+                      ratingRate={item.ratingRate == null ? 0 : item.ratingRate}
+                      onChange={(e) => this.checked(e, item)}
+                      checked={this.isSelected(item.id) ? true : ""}
+                    />
+                  );
+                })}
+              </div>
+            )}
             <ListFooter
               currentPage={this.state.currentPage}
-              searchResult={Customers.length}
+              searchResult={this.state.Customers.length}
               prevPage={this.prevPage}
               nextPage={this.nextPage}
               totalPageNumber={totalPageNumber}

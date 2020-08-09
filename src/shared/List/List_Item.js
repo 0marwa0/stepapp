@@ -22,11 +22,12 @@ const ListItem = ({
   onChange,
   checkboxValue,
   checked,
+  style,
 }) => {
   let id = `test${itemNumber}`;
 
   return (
-    <div className={className}>
+    <div className={`${className}${" "} ${style}`}>
       <div>
         <input
           type='checkbox'
@@ -41,7 +42,7 @@ const ListItem = ({
 
       <div>{itemName}</div>
 
-      {
+      {listName != "customer" ? (
         <div>
           {listName == "product" ? (
             <IoMdImage className='Item_Icon' />
@@ -49,7 +50,7 @@ const ListItem = ({
             <AiFillLock className='Item_Icon' onClick={showModal} />
           )}
         </div>
-      }
+      ) : null}
 
       <span>{type}</span>
 

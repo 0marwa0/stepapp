@@ -6,26 +6,20 @@ import ListFooter from "../../shared/List/List_footer";
 
 import Header from "../../shared/header";
 import "../../shared/List/index.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/fontawesome-free-solid";
-import { RiFilter2Line } from "react-icons/ri";
+
 import "../../App.css";
-import { FaSortDown } from "react-icons/fa";
 import "./index.css";
 import ProductFilter from "./ProductFilter";
-import { FaThList, FaBuromobelexperte } from "react-icons/fa";
+
 import "../../shared/List/index.css";
 import CreateProduct, { EditProduct } from "./CreateProduct";
-import { ProductSType_1, ProductSType_2 } from "./Products.js";
+
 import Modal from "../../shared/Modal";
 import { Products } from "../../fakeData/";
 import ListItem from "../../shared/List/List_Item";
 import "../../App.css";
-import {
-  faGreaterThan,
-  faLessThan,
-  faUnlockAlt,
-} from "@fortawesome/fontawesome-free-solid";
+import API from "../../API/index";
+
 import "./index.css";
 import UploadImage from "././CreateProduct/UploadImage";
 import ListHead from "../../shared/List//List_head";
@@ -44,6 +38,7 @@ export default class index extends React.Component {
     pagePerOnce: 4,
     isLoading: false,
     pageNumber: 0,
+    Products: Products,
   };
 
   checked = (e, item) => {
@@ -119,6 +114,7 @@ export default class index extends React.Component {
       });
     }
   };
+
   render() {
     const ListName = "product";
     const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
@@ -146,6 +142,7 @@ export default class index extends React.Component {
                     listName='Product'
                     SelectAll={this.SelectAll}
                     checkedAll={this.state.checkedAll}
+                    style='productItem'
                     fieldsName={[
                       "3rd stage category",
                       "2nd stage category",
@@ -158,6 +155,7 @@ export default class index extends React.Component {
                       <ListItem
                         listName='product'
                         itemName={item.itemName}
+                        style='productItem'
                         className={
                           this.isSelected(item.id)
                             ? "List_item selected_Item"

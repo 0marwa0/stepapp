@@ -6,7 +6,7 @@ import { faSort } from "@fortawesome/fontawesome-free-solid";
 class ListHead extends React.Component {
   render() {
     return (
-      <div className='List_head'>
+      <div className={`List_head ${" "}${this.props.style}`}>
         <div className='SORTIcon'>
           {/* <FontAwesomeIcon icon={faSort} className='icon' /> */}
           <div className='icon'>
@@ -22,7 +22,7 @@ class ListHead extends React.Component {
           </div>
         </div>
 
-        <div className='sort_icon_holder '>
+        <div className='sort_icon_hoglder '>
           <div>#</div>
         </div>
         <div className='sort_icon_holder '>
@@ -30,7 +30,8 @@ class ListHead extends React.Component {
 
           <FontAwesomeIcon icon={faSort} className='sort_icon' />
         </div>
-        <div></div>
+        {this.props.listName == "Customer" ? null : <div>ff</div>}
+
         {this.props.fieldsName.map((item, i) => (
           <div className='sort_icon_holder '>
             <div>{item}</div>

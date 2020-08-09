@@ -68,7 +68,7 @@
 .List_head {
   background-color: var(--lighter-gray);
   border-radius: 7px 7px 0 0;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .List_head,
@@ -76,10 +76,21 @@
   width: 100%;
   display: grid;
   padding: 15px 0;
-
-  grid-template-columns: 0.4fr 0.4fr 3fr 40px 1.5fr 1.5fr 1.5fr 0.9fr;
-
+  /* grid-template-columns: 0.4fr 0.4fr 3fr 40px 1.5fr 1.5fr 1.5fr 0.9fr; */
+  /* grid-template-columns: 0.4fr 0.4fr repeat(7, 1fr); */
   border: 1px solid var(--lighter-gray);
+}
+.customerItem {
+  display: grid;
+  grid-template-columns: 0.4fr 0.4fr repeat(7, 1fr);
+}
+.stuffItem {
+  display: grid;
+  grid-template-columns: 0.4fr 0.4fr 1fr 0.6fr repeat(5, 1fr);
+}
+.productItem {
+  display: grid;
+  grid-template-columns: 0.4fr 0.4fr 1fr 0.2fr repeat(4, 1fr);
 }
 .List_item {
   color: var(--gray);
@@ -89,6 +100,13 @@
 .List_item:hover {
   background-color: rgb(229, 239, 243);
 }
+/* .List_head > div {
+  border: 1px solid red;
+}
+.List_item > div {
+  border: 1px solid red;
+} */
+
 .selected_Item {
   background-color: rgb(229, 239, 243) !important;
 }
@@ -142,6 +160,7 @@
 .Item_Icon {
   color: var(--light-gray);
   cursor: pointer;
+  font-size: 18px;
 }
 .Item_Icon:hover {
   color: var(--blue);
@@ -174,7 +193,7 @@
 .SORTIcon {
   display: flex;
 
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
 }
 .SORTIcon .icon {

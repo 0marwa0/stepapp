@@ -101,7 +101,7 @@ function ListFilter({
               <div>
                 <button className='btn btn_Edit' onClick={DisplayEditModel}>
                   <FaEdit className='plus_icon' />
-                  {selectedData.map((item) => item.itemName)}
+                  {selectedData.map((item) => item.name)}
                 </button>
               </div>
             ) : null}

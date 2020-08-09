@@ -4,22 +4,20 @@ import React, { Component } from "react";
 
 import Header from "../../shared/header";
 
-import ListItem from "../../shared/List/List_Item";
+import ListItem from "./List_stuff_item.js";
 import "../../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faGreaterThan,
-  faLessThan,
-  faUnlockAlt,
-} from "@fortawesome/fontawesome-free-solid";
-import { Stuff } from "../../fakeData";
-import ListHead from "../../shared/List//List_head";
+
+// import { Stuff } from "../../fakeData";
+import ListHead from "../../shared/List/List_head";
 import "../../shared/List/index.css";
 import StuffFilter from "./StuffFilter";
 import EditPassword from "./EditPassword";
 import Modal from "../../shared/Modal";
 import ListFooter from "../../shared/List/List_footer";
 import EditStuff from "./EditStuff";
+import API from "../../API/index";
+import Loader from "react-loader-spinner";
 class index extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +31,8 @@ class index extends Component {
       pagePerOnce: 4,
       isLoading: false,
       pageNumber: 0,
+      Stuff: [],
+      isLoading: true,
     };
   }
   showEditPassword = (showEditPassword) => {
@@ -46,7 +46,7 @@ class index extends Component {
       this.setState({
         Data: this.state.Data.concat([item]),
       });
-      if (this.state.Data.length === Stuff.length - 1) {
+      if (this.state.Data.length === this.state.Stuff.length - 1) {
         this.setState({
           checkedAll: true,
         });
@@ -70,7 +70,7 @@ class index extends Component {
 
     if (selected) {
       this.setState({
-        Data: Stuff,
+        Data: this.state.Stuff,
         checkedAll: true,
       });
     } else {
@@ -91,18 +91,38 @@ class index extends Component {
 
   nextPage = () => {
     const currentPage = this.state.currentPage;
-    const totalPge = Math.ceil(Stuff.length / this.state.pagePerOnce);
+    const totalPge = Math.ceil(
+      this.state.Stuff.length / this.state.pagePerOnce
+    );
     if (currentPage != totalPge) {
       this.setState({
         currentPage: this.state.currentPage + 1,
       });
     }
   };
+  componentDidMount() {
+    API.getStuff((data) => {
+      console.log(data);
+      if (data) {
+        this.setState({ isLoading: false });
+      }
+      for (let i = 0; i < data.admins.length; i++) {
+        this.setState({ Stuff: data.admins[0] });
+        console.log(data.admins[0].map((i) => i));
+      }
+    });
+  }
   render() {
     const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
     const indexOfFirstPage = indexOfLastPage - this.state.pagePerOnce;
-    const CurrentStuff = Stuff.slice(indexOfFirstPage, indexOfLastPage);
-    const totalPageNumber = Math.ceil(Stuff.length / this.state.pagePerOnce);
+    const CurrentStuff = this.state.Stuff.slice(
+      indexOfFirstPage,
+      indexOfLastPage
+    );
+    const totalPageNumber = Math.ceil(
+      this.state.Stuff.length / this.state.pagePerOnce
+    );
+    console.log(new Date(), "what kind of date");
     return (
       <div>
         <Header slug='Stuff list' />
@@ -115,55 +135,59 @@ class index extends Component {
             <ListHead
               listName='Stuff'
               SelectAll={this.SelectAll}
+              style='stuffItem'
               checkedAll={this.state.checkedAll}
               fieldsName={[
+                "Email",
+                "Phone Number",
+                "Birthday",
                 "Team",
-                "Most claimed task",
-                "Number of tasks",
-                "Rating rate",
+                "Location",
               ]}
             />
-            {CurrentStuff.map((item, i) => {
-              return (
-                <ListItem
-                  listName='customer'
-                  itemName={item.itemName}
-                  className={
-                    this.isSelected(item.id)
-                      ? "List_item selected_Item"
-                      : "List_item"
-                  }
-                  itemNumber={i + 1}
-                  type={item.type}
-                  showModal={() => this.showEditPassword(true)}
-                  mostOrder={item.mostOrder}
-                  orderValue={item.orderValue}
-                  ratingRate={item.ratingRate}
-                  onChange={(e) => this.checked(e, item)}
-                  checked={this.isSelected(item.id) ? true : ""}
+            {this.state.isLoading ? (
+              <div className='loader_wrapper'>
+                <Loader
+                  type='ThreeDots'
+                  color='var(--blue)'
+                  height={100}
+                  width={100}
                 />
-              );
-            })}
-
+              </div>
+            ) : (
+              <div>
+                {CurrentStuff.map((item, i) => {
+                  return (
+                    <ListItem
+                      listName='stuff'
+                      style='stuffItem'
+                      itemName={item.name}
+                      className={
+                        this.isSelected(item.id)
+                          ? "List_item selected_Item"
+                          : "List_item"
+                      }
+                      itemNumber={i + 1}
+                      email={item.email}
+                      showModal={() => this.showEditPassword(true)}
+                      phone={item.phone}
+                      birthday={item.birthday.slice(0, 4)}
+                      location={item.location}
+                      team={item.type}
+                      onChange={(e) => this.checked(e, item)}
+                      checked={this.isSelected(item.id) ? true : ""}
+                    />
+                  );
+                })}
+              </div>
+            )}
             <ListFooter
               currentPage={this.state.currentPage}
-              searchResult={Stuff.length}
+              searchResult={this.state.Stuff.length}
               prevPage={this.prevPage}
               nextPage={this.nextPage}
               totalPageNumber={totalPageNumber}
             />
-
-            {/* <div className='List_footer'>
-              <p>
-                the results of your search is {Stuff.length} items out of{" "}
-                {Stuff.length} item{" "}
-              </p>
-              <div>
-                <FontAwesomeIcon icon={faLessThan} className='icon' />
-                <p>1/1</p>{" "}
-                <FontAwesomeIcon icon={faGreaterThan} className='icon' />
-              </div>
-            </div> */}
           </div>{" "}
           {this.state.showEditPassword ? (
             <Modal

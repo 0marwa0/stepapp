@@ -9,4 +9,5 @@
 }
 .eye_icon {
   color: var(--light-gray);
+  margin: 0 5px;
 }
