@@ -34,7 +34,7 @@ class ListHead extends React.Component {
 
           <FontAwesomeIcon icon={faSort} className='sort_icon' />
         </div>
-        {this.props.listName == "Customer" ? null : <div>ff</div>}
+        {this.props.listName == "Customer" ? null : <div></div>}
 
         {this.props.fieldsName.map((item, i) => (
           <div className='sort_icon_holder '>

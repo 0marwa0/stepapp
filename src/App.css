@@ -44,9 +44,7 @@ a {
   align-items: center;
   grid-template-columns: auto max-content;
 }
-.login_page.input_wrapper > div {
-  grid-template-columns: auto max-content !important;
-}
+
 .input_wrapper > div .input_wrapper {
   border-right: none;
 }
@@ -102,7 +100,7 @@ img {
   outline: none !important;
 }
 .input_wrapper input::placeholder {
-  color: rgb(141, 136, 136);
+  color: rgb(201, 198, 198);
 
   /* font-size: 14px; */
 }
