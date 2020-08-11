@@ -7,7 +7,8 @@
   width: 100%;
   border: 2px dashed transparent;
   border-radius: 3px;
-  height: 250px;
+  min-height: 250px;
+  height: auto;
   grid-gap: 5%;
   padding-top: 50px;
   background-color: #f4f7fc;
@@ -28,7 +29,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
   justify-content: center;
 }
 .upload_modal [type="file"] {
