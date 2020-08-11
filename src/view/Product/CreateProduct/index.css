@@ -18,10 +18,18 @@
 .upload_modal.active {
   border: 2px dashed red !important;
 }
-.upload_modal img {
+.upload_modal .img {
   height: auto;
   width: 140px;
+
   pointer-events: none;
+}
+.upload_img_close {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
 }
 .upload_modal [type="file"] {
   height: 0;

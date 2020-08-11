@@ -122,7 +122,7 @@ class index extends Component {
     const totalPageNumber = Math.ceil(
       this.state.Stuff.length / this.state.pagePerOnce
     );
-    console.log(new Date(), "what kind of date");
+
     return (
       <div>
         <Header slug='Stuff list' />

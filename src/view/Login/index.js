@@ -7,7 +7,9 @@ import { AiOutlineMail } from "react-icons/ai";
 import { AiOutlineUser } from "react-icons/ai";
 import Loader from "react-loader-spinner";
 import { BsLock } from "react-icons/bs";
+import { NotificationManager } from "react-notifications";
 import Axios from "axios";
+import { NotifyHandler, NotifyComponent } from "react-notification-component";
 class index extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +19,7 @@ class index extends Component {
         password: "",
       },
       isLoading: false,
+      isLogin: false,
     };
   }
 
@@ -36,21 +39,25 @@ class index extends Component {
       subgroup: 1,
       components: [1],
     };
-    // API.login(data);
-
-    let options = {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
+    API.login(
+      data,
+      (callback) => {
+        this.setState({ isLogin: true });
+        NotifyHandler.add("Title", "Message", {
+          time: 2, // Time how much notification will be shown; default - 2
+          animationDelay: 0.3, // Delay for notification animation; default - 0.3
+          animationTimeFunc: "linear", // Animation func; default - 'linear'
+          position: "RT", // Position. Options - 'RT', 'RB', 'LT', 'LB'; default - 'RT'; ('RT' - Right Top, 'LB' - Left Bottom)
+          hide: true, // Hide after time (default - 2); default - true
+          progress: true, // Show progress line (timeline); default - true
+        });
+        console.log(callback, "login data");
       },
-      body: JSON.stringify(data),
-    };
+      (i) => console.log(i, "failure")
+    );
 
-    fetch(
-      "https://step-copy.herokuapp.com/dash/v1/login",
-      options
-    ).then((resp) => resp.json());
     // API.addProduct(product);
+
     this.props.history.push("/dashboard");
   };
   render() {

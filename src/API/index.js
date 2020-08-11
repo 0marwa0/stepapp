@@ -3,42 +3,23 @@
 import axios from "axios";
 import { Config } from "./Config";
 export default class API extends axios {
-  static login(data) {
+  static login(params, onSuccess, onFailure) {
     let URL = `${Config.host}/login`;
 
-    let options = {
-      method: "post",
+    this.post(URL, params, {
       headers: {
         "Content-Type": "application/json",
-        token: localStorage.getItem("USER_TOKEN"),
       },
-      body: JSON.stringify(data),
-    };
-
-    fetch(URL, options).then((resp) => resp.json());
-    // .then((jsonData) => callback(null, jsonData))
-    // .catch((err) => callback(err.message, null));
-
-    // let formdata = new FormData();
-    // formdata.append("email", "murtadha");
-    // formdata.append("password", "123");
-    // this.post(
-    //   URL,
-    //   {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   },
-    //   formdata
-    // )
-    //   .then(function (response) {
-    //     let token = response.data.token;
-    //     localStorage.setItem("USER_TOKEN", token);
-    //     console.log(response);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    })
+      .then((response) => {
+        let data = response.data;
+        onSuccess(data);
+        console.log(response, "on success");
+      })
+      .catch((error) => {
+        onFailure(error.response, "on failure");
+        console.log(error.response);
+      });
   }
 
   static getCustomers(callback) {
@@ -97,42 +78,84 @@ export default class API extends axios {
   }
 
   static addProduct(data) {
-    let URLs = `${Config.host}/product`;
-    this.post(
-      URLs,
+    let URL = `https://step-copy.herokuapp.com/dash/v1/product`;
 
+    var formdata = new FormData();
+    formdata.append("name", "iem1");
+    formdata.append("description", "item description");
+    formdata.append("price", "200");
+    formdata.append("subgroup", "sub");
+    formdata.append("components", "1");
+
+    let options = {
+      method: "post",
+      body: formdata,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+
+        token: localStorage.getItem("USER_TOKEN"),
+      },
+    };
+
+    this.post(
+      "https://step-copy.herokuapp.com/dash/v1/product",
       {
         headers: {
-          "Content-Type": "application/json",
           token: localStorage.getItem("USER_TOKEN"),
+          "Content-Type": "application/json",
         },
       },
-      data
+      {}
     )
-      .then(function (response) {
+      .then((response) => {
         console.log(response);
       })
-      .catch(function (error) {
-        console.log(error, "error withe add product");
+      .catch((error) => {
+        console.log(error.response, "error msg");
       });
 
-    // fetch("https://step-copy.herokuapp.com/dash/v1/product", {
-    //   method: "POST", // *GET, POST, PUT, DELETE, etc.
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     name: "name2",
-    //     description: "description",
-    //     price: 200,
-    //     subgroup: 1,
-    //     components: [1],
-    //   }),
-    // })
-    //   .then((res) => {
-    //     res.json();
+    // axios
+    //   .post(
+    //     "https://step-copy.herokuapp.com/dash/v1/product",
+
+    //     {
+    //       headers: {
+    //         // "Content-Type": "application/json",
+    //         token: localStorage.getItem("USER_TOKEN"),
+    //       },
+    //     },
+    //     {
+    //       name: "name2",
+    //       description: "description",
+    //       price: 200,
+    //       subgroup: 1,
+    //       components: [1],
+    //     }
+    //   )
+    //   .then(function (response) {
+    //     console.log(response);
     //   })
-    //   .then((data) => console.log(data)) // ur data is here
-    //   .catch((err) => console.log("api Erorr: ", err));
+    //   .catch(function (error) {
+    //     console.log(error, "error withe add product");
+    //   });
+
+    // Axios.post(
+    //   "https://step-copy.herokuapp.com/dash/v1/login",
+    //   {
+    //     email: "fs",
+    //     password: "MY_PASSWORD",
+    //   },
+    //   {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   }
+    // )
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.response);
+    //   });
   }
 }

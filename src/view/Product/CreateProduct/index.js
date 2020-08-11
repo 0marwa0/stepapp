@@ -2,62 +2,91 @@
 
 import React from "react";
 import "./index.css";
-import { AiOutlineLock } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 import UploadImage from "./UploadImage";
-export const EditProduct = () => {
-  return (
-    <div>
-      <div className='two_col_flex paddingTop'>
-        <div className='input_wrapper space_wrapper'>
-          <p>Product name</p>
-          <span className='input_border'>
-            <input type='text' width='100%' placeholder='$ type calvide' />
-          </span>
-        </div>
-        <div className='input_wrapper space_wrapper'>
-          <p>Price</p>
-          <span className='input_border '>
-            <input type='text' width='100%' placeholder='1,000$' />
-          </span>
-        </div>
-      </div>
-      <div className='warp_flex paddingTop'>
-        <div className='input_wrapper space_wrapper'>
-          <p>3rd stage category</p>
-          <span className='input_border'>
-            <input type='text' width='200px' placeholder='Unla' />
-          </span>
-        </div>
-        <div className='input_wrapper space_wrapper'>
-          <p>2nd stage category</p>
-          <span className='input_border'>
-            <input type='text' placeholder='Plates and Secrews' />
-          </span>
-        </div>
-        <div className='input_wrapper space_wrapper'>
-          <p>1st stage category</p>
-          <span className='input_border'>
-            <input type='text' placeholder='Trauma' />
-          </span>
-        </div>
-      </div>{" "}
-      <div className='input_wrapper space_wrapper'>
-        <p>Component</p>
-        <span className='input_border'>
-          <input type='text' width='100%' />
-        </span>
-      </div>
-    </div>
-  );
-};
+import EditProduct from "./EditProduct.js";
 
-const CreateProduct = () => {
-  return (
-    <div>
-      <EditProduct />
-      <UploadImage />
-    </div>
-  );
-};
+class CreateProduct extends React.Component {
+  state = {
+    data: {
+      name: "name2",
+      description: "description",
+      price: 200,
+      subgroup: 1,
+      components: [1],
+      Image: require("../../../shared/Icon/upload.png"),
+    },
+    Image: require("../../../shared/Icon/upload.png"),
+    allowToChange: false,
+    isActive: false,
+  };
+  Active = (isActive) => {
+    this.setState({ isActive });
+  };
+  handleImageChange = (event, key) => {
+    let value = event.target.files[0];
+    let data = this.state.data;
+    this.setState({
+      Image: URL.createObjectURL(event.target.files[0]),
+      allowToChange: true,
+    });
+
+    var reader = new FileReader();
+    reader.readAsDataURL(value);
+    reader.onload = function () {
+      data[key] = reader.result;
+    };
+    this.setState({ data });
+  };
+  removeImage = () => {
+    this.setState({
+      Image: require("../../../shared/Icon/upload.png"),
+      allowToChange: false,
+    });
+  };
+  handelInputChange = (event, key) => {
+    let value = event.target.value;
+    let data = this.state.data;
+    data[key] = value;
+    this.setState({ data });
+  };
+  render() {
+    return (
+      <div>
+        <EditProduct handelInputChange={this.handelInputChange} />
+        <div>
+          <div className='upload_text'>Product photo</div>
+          <div
+            onDragOver={() => this.Active(true)}
+            onDragLeave={() => this.Active(false)}
+            className={
+              this.state.isActive ? "upload_modal active" : "upload_modal "
+            }>
+            <div className='upload_img_close'>
+              {this.state.allowToChange ? (
+                <AiOutlineClose
+                  size='20px'
+                  style={{ cursor: "pointer" }}
+                  onClick={this.removeImage}
+                />
+              ) : null}
+
+              <img src={this.state.Image} className='img' />
+            </div>
+            <span>
+              Drop file here or
+              <input
+                type='file'
+                id='file'
+                onChange={(e) => this.handleImageChange(e, "Image")}
+              />
+              <label for='file'> browse</label>
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
 
 export default CreateProduct;

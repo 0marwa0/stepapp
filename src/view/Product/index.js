@@ -12,18 +12,21 @@ import "./index.css";
 import ProductFilter from "./ProductFilter";
 
 import "../../shared/List/index.css";
-import CreateProduct, { EditProduct } from "./CreateProduct";
-
+import CreateProduct from "./CreateProduct";
+import EditProduct from "./CreateProduct/EditProduct";
 import Modal from "../../shared/Modal";
 import { Products } from "../../fakeData/";
 import ListItem from "../../shared/List/List_Item";
 import "../../App.css";
 import API from "../../API/index";
-
 import "./index.css";
 import UploadImage from "././CreateProduct/UploadImage";
 import ListHead from "../../shared/List//List_head";
 import ListType_item from "./ListType_item";
+import SideNav from "../../shared/SideModel/index.js";
+import Category from "../../API/middleware/Category";
+import SubGroup from "../../API/middleware/SubGroup";
+import Group from "../../API/middleware/Groups";
 export default class index extends React.Component {
   state = {
     showModel: false,
@@ -39,6 +42,10 @@ export default class index extends React.Component {
     isLoading: false,
     pageNumber: 0,
     Products: Products,
+    showSideNav: false,
+    category: [],
+    groups: [],
+    subgroups: [],
   };
 
   checked = (e, item) => {
@@ -90,6 +97,24 @@ export default class index extends React.Component {
   DisplayEditModel = (showEditModel) => {
     this.setState({ showEditModel });
   };
+  handleOutsideClick(e) {
+    // if (this.node.contains(e.target)) {
+    //   return;
+    // }
+
+    this.DisplaySideNav();
+  }
+
+  DisplaySideNav = (showSideNav) => {
+    // !this.state.showSideNav
+    //   ? document.addEventListener("click", () => this.handleOutsideClick, false)
+    //   : document.addEventListener(
+    //       "click",
+    //       () => this.handleOutsideClick,
+    //       false
+    //     );
+    this.setState({ showSideNav });
+  };
   listActive = (list) => {
     this.setState({ list });
   };
@@ -114,6 +139,11 @@ export default class index extends React.Component {
       });
     }
   };
+  componentDidMount() {
+    Category.getCategory((categories) => this.setState({ categories }));
+    Group.getGroups((groups) => this.setState({ groups }));
+    SubGroup.getSubGroup((subgroups) => this.setState({ subgroups }));
+  }
 
   render() {
     const ListName = "product";
@@ -123,7 +153,10 @@ export default class index extends React.Component {
     const totalPageNumber = Math.ceil(Products.length / this.state.pagePerOnce);
     return (
       <div>
-        <Header slug='Products List' />
+        <Header
+          slug='Products List'
+          DisplaySideNav={() => this.DisplaySideNav(true)}
+        />
         <div className='container'>
           <ListFilter
             selectedData={this.state.Data}
@@ -237,7 +270,16 @@ export default class index extends React.Component {
               <UploadImage />
             </Modal>
           ) : null}
-        </div>{" "}
+          {this.state.showSideNav && (
+            <SideNav
+              categories={this.state.categories}
+              groups={this.state.groups}
+              subgroups={this.state.subgroups}
+              deleteItem={this.deleteItem}
+              DisplaySideNav={this.DisplaySideNav}
+            />
+          )}
+        </div>
       </div>
     );
   }
