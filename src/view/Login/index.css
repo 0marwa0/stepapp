@@ -14,6 +14,10 @@
   grid-gap: 5px;
   transition: ease-in-out 2s;
 }
-.login_page .input_wrapper > div {
-  grid-template-columns: max-content auto !important;
+.login_input {
+  grid-template-columns: 30px auto !important;
+}
+.errorMsg {
+  color: red;
+  /* padding: 2px 0; */
 }

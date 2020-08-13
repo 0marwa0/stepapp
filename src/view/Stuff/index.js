@@ -6,8 +6,6 @@ import Header from "../../shared/header";
 
 import ListItem from "./List_stuff_item.js";
 import "../../App.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 // import { Stuff } from "../../fakeData";
 import ListHead from "../../shared/List/List_head";
 import "../../shared/List/index.css";
@@ -18,6 +16,8 @@ import ListFooter from "../../shared/List/List_footer";
 import EditStuff from "./EditStuff";
 import API from "../../API/index";
 import Loader from "react-loader-spinner";
+import { loadData } from "../../API/";
+import Stuff from "../../API/middleware/Stuff/index";
 class index extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +33,15 @@ class index extends Component {
       pageNumber: 0,
       Stuff: [],
       isLoading: true,
+      data: {
+        name: "",
+        phone: "",
+        email: "",
+        password: "",
+        location: "",
+        birthday: "",
+        type: "pd",
+      },
     };
   }
   showEditPassword = (showEditPassword) => {
@@ -101,8 +110,7 @@ class index extends Component {
     }
   };
   componentDidMount() {
-    API.getStuff((data) => {
-      console.log(data);
+    loadData("admins", (errorMsg, data) => {
       if (data) {
         this.setState({ isLoading: false });
       }
@@ -112,6 +120,31 @@ class index extends Component {
       }
     });
   }
+  handelInputChange = (event, key) => {
+    let value = event.target.value;
+    let data = this.state.data;
+    data[key] = value;
+    this.setState({ data });
+  };
+  handelCreateStuff = () => {
+    this.setState({ isLoading: true });
+
+    Stuff.createStuff(this.state.data, () => {
+      API.getStuff((data) => {
+        console.log(data);
+        if (data) {
+          this.setState({ isLoading: false });
+        }
+        for (let i = 0; i < data.admins.length; i++) {
+          this.setState({ Stuff: data.admins[0] });
+          console.log(data.admins[0].map((i) => i));
+        }
+      });
+    });
+  };
+  handelEditStuff = () => {
+    Stuff.editStuff(this.state.data);
+  };
   render() {
     const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
     const indexOfFirstPage = indexOfLastPage - this.state.pagePerOnce;
@@ -129,6 +162,8 @@ class index extends Component {
         <div className='container'>
           <StuffFilter
             selectedData={this.state.Data}
+            handelInputChange={this.handelInputChange}
+            handelCreateStuff={this.handelCreateStuff}
             DisplayEditModel={() => this.DisplayEditModel(true)}
           />
           <div className='List_Wrapper'>
@@ -207,8 +242,9 @@ class index extends Component {
               modalTitle='Edit team member'
               width='50%'
               height='60%'
+              fun={this.handelEditStuff}
               onCLose={() => this.DisplayEditModel(false)}>
-              <EditStuff />
+              <EditStuff handelInputChange={this.handelInputChange} />
             </Modal>
           ) : null}
         </div>

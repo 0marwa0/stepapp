@@ -5,9 +5,10 @@ import React, { Component } from "react";
 import Header from "../../shared/header";
 
 import ListItem from "./List_Customer_item.js";
-import API from "../../API/index";
+import { loadData } from "../../API";
 
 // import { Customers } from "../../fakeData";
+
 import ListHead from "../../shared/List//List_head";
 import "../../shared/List/index.css";
 import CustomerFilter from "./CustomerFilter";
@@ -69,16 +70,12 @@ class index extends Component {
   };
 
   componentDidMount() {
-    const fetchCustomers = async () => {
-      const res = await API.getCustomers((data) => {
-        console.log(data, "users");
-        this.setState({ isLoading: false });
-        for (let i = 0; i < data.users.length; i++) {
-          this.setState({ Customers: data.users[0] });
-        }
-      });
-    };
-    fetchCustomers();
+    loadData("users", (errorMsg, data) => {
+      this.setState({ isLoading: false });
+      for (let i = 0; i < data.users.length; i++) {
+        this.setState({ Customers: data.users[0] });
+      }
+    });
   }
 
   prevPage = () => {

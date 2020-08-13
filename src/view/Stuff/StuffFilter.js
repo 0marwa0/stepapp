@@ -5,11 +5,18 @@ import ListFilter from "../../shared/List/List_filter";
 import { useState } from "react";
 import CreateStuff from "./CreateStuff";
 import Modal from "../../shared/Modal";
-function Index({ selectedData, DisplayEditModel }) {
+function Index({
+  selectedData,
+  DisplayEditModel,
+  handelInputChange,
+  handelCreateStuff,
+}) {
   const [showModel, setModel] = useState(false);
+
   const DisplayModel = (show) => {
     setModel(show);
   };
+
   return (
     <div>
       <ListFilter
@@ -26,8 +33,9 @@ function Index({ selectedData, DisplayEditModel }) {
           modalTitle='Add new team member'
           width='60%'
           height='75%'
+          fun={handelCreateStuff}
           onCLose={() => DisplayModel(false)}>
-          <CreateStuff />
+          <CreateStuff handelInputChange={handelInputChange} />
         </Modal>
       ) : null}
     </div>

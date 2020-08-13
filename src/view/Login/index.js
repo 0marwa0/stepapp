@@ -1,5 +1,5 @@
 /** @format */
-import API from "../../API/index.js";
+import { addData } from "../../API/index.js";
 import React, { Component } from "react";
 import "./index.css";
 import { FaEye, FaSpinner } from "react-icons/fa";
@@ -20,6 +20,9 @@ class index extends Component {
       },
       isLoading: false,
       isLogin: false,
+      errorMsg: "",
+      emailErrorMsg: "",
+      passErrorMsg: "",
     };
   }
 
@@ -28,64 +31,84 @@ class index extends Component {
     let data = this.state.data;
     data[key] = value;
     this.setState({ data });
+    this.setState({ emailErrorMsg: "", passErrorMsg: "" });
   }
   onSubmit = () => {
     let data = this.state.data;
     this.setState({ isLoading: true });
-    let product = {
-      name: "name2",
-      description: "description",
-      price: 200,
-      subgroup: 1,
-      components: [1],
-    };
-    API.login(
-      data,
-      (callback) => {
-        this.setState({ isLogin: true });
-        NotifyHandler.add("Title", "Message", {
-          time: 2, // Time how much notification will be shown; default - 2
-          animationDelay: 0.3, // Delay for notification animation; default - 0.3
-          animationTimeFunc: "linear", // Animation func; default - 'linear'
-          position: "RT", // Position. Options - 'RT', 'RB', 'LT', 'LB'; default - 'RT'; ('RT' - Right Top, 'LB' - Left Bottom)
-          hide: true, // Hide after time (default - 2); default - true
-          progress: true, // Show progress line (timeline); default - true
-        });
-        console.log(callback, "login data");
-      },
-      (i) => console.log(i, "failure")
-    );
+    this.login(data, (data) => {
+      if (data.status) {
+        this.setState({ isLoading: false });
+        localStorage.setItem("step_token", data.token);
+        console.log(data);
+        this.props.history.push("/dashboard");
+      } else {
+        this.setState({ isLoading: false });
+        this.errorHandle(data.errMsg);
+        console.log(data.errMsg);
+        this.props.history.push("/");
+      }
+    });
 
-    // API.addProduct(product);
-
-    this.props.history.push("/dashboard");
+    // this.status.errMsg.err
+    //   ? this.setState({ passErrorMsg: " wrong password" })
+    //   : null;
   };
+  errorHandle = (error) => {
+    if (error.email) {
+      this.setState({ emailErrorMsg: "email is not exist" });
+    }
+
+    if (error.err) {
+      this.setState({ passErrorMsg: "Wrong credentials" });
+    }
+  };
+  login = (data, callback) => {
+    let myHeaders = new Headers();
+    let raw = JSON.stringify(data);
+    myHeaders.append("Content-Type", "application/json");
+    let requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+
+      body: raw,
+      redirect: "follow",
+    };
+    fetch("https://step-copy.herokuapp.com/dash/v1/login", requestOptions)
+      .then((response) => response.json())
+      .then((result) => callback(result))
+      .catch((error) => console.log("error", error));
+  };
+
   render() {
     return (
       <div className='login_page'>
         <div>
           <div className='input_wrapper '>
-            <div>
+            <div className='login_input'>
               <AiOutlineUser className='eye_icon' />
               <input
                 type='text'
                 placeholder='Email'
                 onChange={(e) => this.handleChange(e, "email")}
-              />{" "}
+              />
             </div>
+            <p className='errorMsg'>{this.state.emailErrorMsg}</p>
           </div>
           <br />
           <div className='input_wrapper '>
-            <div>
+            <div className='login_input'>
               <BsLock className='eye_icon' />
               <input
                 type='password'
                 width='100%'
                 placeholder='password'
                 onChange={(e) => this.handleChange(e, "password")}
-              />{" "}
+              />
             </div>
+            <p className='errorMsg'>{this.state.passErrorMsg}</p>{" "}
           </div>
+
           <br />
           <button className='btn btn_ctrl' onClick={this.onSubmit}>
             <div className='login_btn'>

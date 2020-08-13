@@ -10,7 +10,7 @@ import "../../shared/List/index.css";
 import "../../App.css";
 import "./index.css";
 import ProductFilter from "./ProductFilter";
-
+import { loadData } from "../../API";
 import "../../shared/List/index.css";
 import CreateProduct from "./CreateProduct";
 import EditProduct from "./CreateProduct/EditProduct";
@@ -140,9 +140,21 @@ export default class index extends React.Component {
     }
   };
   componentDidMount() {
-    Category.getCategory((categories) => this.setState({ categories }));
-    Group.getGroups((groups) => this.setState({ groups }));
-    SubGroup.getSubGroup((subgroups) => this.setState({ subgroups }));
+    loadData("categories", (errorMsg, data) => {
+      for (let i = 0; i < data.categories.length; i++) {
+        this.setState({ categories: data.categories[0] });
+      }
+    });
+    loadData("groups", (errorMsg, data) => {
+      for (let i = 0; i < data.groups.length; i++) {
+        this.setState({ groups: data.groups[0] });
+      }
+    });
+    loadData("subgroups", (errorMsg, data) => {
+      for (let i = 0; i < data.subgroups.length; i++) {
+        this.setState({ subgroups: data.subgroups[0] });
+      }
+    });
   }
 
   render() {

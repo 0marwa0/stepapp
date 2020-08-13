@@ -10,13 +10,23 @@ const index = () => {
         <div className='input_wrapper space_wrapper'>
           <p>Employee name</p>
           <span className='input_border'>
-            <input type='text' width='100%' placeholder='Hamdon AL-hamdoni' />
+            <input
+              type='text'
+              width='100%'
+              onChange={(e) => this.props.handelInputChange(e, "name")}
+              placeholder='name'
+            />
           </span>
         </div>
         <div className='input_wrapper space_wrapper'>
           <p>Phone number</p>
           <span className='input_border '>
-            <input type='text' width='100%' placeholder='0780123567' />
+            <input
+              type='text'
+              width='100%'
+              onChange={(e) => this.props.handelInputChange(e, "phone")}
+              placeholder='0780123567'
+            />
           </span>
         </div>
       </div>
@@ -24,25 +34,42 @@ const index = () => {
         <div className='input_wrapper space_wrapper'>
           <p>E-mail</p>
           <span className='input_border'>
-            <input type='text' width='200px' placeholder='email' />
+            <input
+              type='text'
+              onChange={(e) => this.props.handelInputChange(e, "email")}
+              width='200px'
+              placeholder='email'
+            />
           </span>
         </div>
         <div className='input_wrapper space_wrapper'>
           <p>Team</p>
           <span className='input_border'>
-            <input type='text' placeholder='lorem' />
+            <input
+              type='text'
+              onChange={(e) => this.props.handelInputChange(e, "type")}
+              placeholder='lorem'
+            />
           </span>
         </div>
         <div className='input_wrapper space_wrapper'>
           <p>Birth year </p>
           <span className='input_border'>
-            <input type='text' placeholder='1999' />
+            <input
+              type='text'
+              onChange={(e) => this.props.handelInputChange(e, "birthday")}
+              placeholder='1999'
+            />
           </span>
         </div>{" "}
         <div className='input_wrapper space_wrapper'>
           <p>Location</p>
           <span className='input_border'>
-            <input type='text' placeholder='lorem' />
+            <input
+              type='text'
+              onChange={(e) => this.props.handelInputChange(e, "location")}
+              placeholder='lorem'
+            />
           </span>
         </div>
       </div>{" "}
