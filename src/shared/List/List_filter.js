@@ -45,7 +45,7 @@ function ListFilter({
             className={isLoading ? "input_wrapper loading" : "input_wrapper"}>
             <div>
               <input type='text' placeholder='Search for something ...' />
-              {isLoading ? (
+              {/* {isLoading ? (
                 <Loader
                   type='Oval'
                   color='black'
@@ -54,12 +54,12 @@ function ListFilter({
                   width={15}
                 />
               ) : (
-                <img
-                  src={require("../../shared/Icon/searchIcon.png")}
-                  height='13px'
-                  // className="searchIcon"
-                />
-              )}
+                // <img
+                //   src={require("../../shared/Icon/searchIcon.png")}
+                //   height='13px'
+                //   // className="searchIcon"
+                // />
+              )} */}
             </div>
           </div>
           <div className={isLoading ? "Filter_ctrl loading" : "Filter_ctrl"}>

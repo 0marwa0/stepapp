@@ -20,14 +20,14 @@ const EditPassword = () => {
         <div>
           <input type='password' width='100%' placeholder='*********' />
 
-          <FaEye className='eye_icon' />
+          {/* <FaEye className='eye_icon' /> */}
         </div>
       </div>
       <br />
       <div className='input_wrapper '>
         <div>
           <input type='password' width='100%' />
-          <FaEye className='eye_icon' />
+          {/* <FaEye className='eye_icon' /> */}
         </div>
       </div>
     </div>
