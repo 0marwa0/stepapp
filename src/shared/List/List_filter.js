@@ -11,6 +11,7 @@ import { RiFilter2Line, RiErrorWarningLine } from "react-icons/ri";
 import { FaSortDown, FaEdit, FaImage } from "react-icons/fa";
 import { FaThList, FaBuromobelexperte } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
+import Loader from "react-loader-spinner";
 
 import { GiHamburgerMenu } from "react-icons/gi";
 import "../../App.css";
@@ -26,6 +27,7 @@ function ListFilter({
   burgerActive,
   DisplayUploadModel,
   DisplayEditModel,
+  isLoading,
 }) {
   const [showTooltip, setShowTooltip] = useState(false);
   const showTooltipModel = () => {
@@ -39,17 +41,28 @@ function ListFilter({
     <div>
       <div className='List_filter'>
         <span className='filter_holder'>
-          <div className='input_wrapper'>
+          <div
+            className={isLoading ? "input_wrapper loading" : "input_wrapper"}>
             <div>
               <input type='text' placeholder='Search for something ...' />
-              <img
-                src={require("../../shared/Icon/searchIcon.png")}
-                height='13px'
-                // className="searchIcon"
-              />
+              {isLoading ? (
+                <Loader
+                  type='Oval'
+                  color='black'
+                  style={{ opacity: 1 }}
+                  height={15}
+                  width={15}
+                />
+              ) : (
+                <img
+                  src={require("../../shared/Icon/searchIcon.png")}
+                  height='13px'
+                  // className="searchIcon"
+                />
+              )}
             </div>
           </div>
-          <div className='Filter_ctrl'>
+          <div className={isLoading ? "Filter_ctrl loading" : "Filter_ctrl"}>
             <RiFilter2Line
               style={{
                 fontSize: "11px",
@@ -114,7 +127,9 @@ function ListFilter({
               </div>
             ) : null}
             <div className='btn_holder'>
-              <button className='btn_ctrl btn' onClick={showModal}>
+              <button
+                className={isLoading ? "btn_ctrl btn loading" : "btn_ctrl btn"}
+                onClick={showModal}>
                 <span>
                   <FontAwesomeIcon icon={faPlus} className='plus_icon' />
                 </span>

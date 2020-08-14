@@ -17,8 +17,10 @@ function index({
   fun,
   isMulti,
   onBack,
+  props,
 }) {
   const style = { height: height, width: width };
+
   return (
     <div className='Overlay'>
       <div className='Modal' style={style}>

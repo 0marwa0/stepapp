@@ -10,6 +10,7 @@ function Index({
   DisplayEditModel,
   handelInputChange,
   handelCreateStuff,
+  isLoading,
 }) {
   const [showModel, setModel] = useState(false);
 
@@ -22,6 +23,7 @@ function Index({
       <ListFilter
         showModal={() => DisplayModel(true)}
         ListName='Stuff'
+        isLoading={isLoading}
         selectedData={selectedData}
         DisplayEditModel={DisplayEditModel}
       />

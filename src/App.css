@@ -11,6 +11,9 @@ a {
   color: unset;
 }
 
+.loading {
+  opacity: 0.5;
+}
 :root {
   --red: #f72f57;
   --blue: #3b86ff;
@@ -34,7 +37,7 @@ a {
   font-size: 13px;
   margin: 2% 0;
 }
-.input_wrapper > div {
+/* .input_wrapper > div {
   border: 1px solid var(--bright-gray);
   border-radius: 5px;
   padding-right: 7px;
@@ -43,14 +46,14 @@ a {
 
   align-items: center;
   grid-template-columns: auto max-content;
-}
+} */
 
-.input_wrapper > div .input_wrapper {
+/* .input_wrapper > div .input_wrapper {
   border-right: none;
 }
 .input_wrapper > div {
   height: 33px;
-}
+} */
 
 .two_col_flex {
   display: grid;
@@ -71,15 +74,17 @@ a {
 .input_wrapper input[type="password"] {
   font-size: 14px;
   color: #c4c1c1;
-  border: none;
   padding: 0 10px;
   height: 28px;
-
+  border: 1px solid var(--light-blue);
   width: 100%;
   outline: none;
   border-radius: 5px;
 }
-
+.input_wrapper input[type="text"]:hover,
+.input_wrapper input[type="password"]:hover {
+  border: 1px solid rgba(81, 203, 238, 1);
+}
 button {
   outline: none !important;
 }
@@ -96,8 +101,10 @@ img {
 
 .input_wrapper input[type="text"]:focus,
 .input_wrapper input[type="password"]:focus {
-  border: none;
-  outline: none !important;
+  /* border: none;
+  outline: none !important; */
+
+  box-shadow: 0 0 5px rgba(113, 218, 247, 1);
 }
 .input_wrapper input::placeholder {
   color: rgb(201, 198, 198);
@@ -114,7 +121,7 @@ img {
 .btn {
   border: 1px solid var(--light-gray);
   cursor: pointer !important;
-  transition: ease-in-out 5s;
+
   padding: 0.5em 0.7em;
   font-size: 14px;
   background-color: white;

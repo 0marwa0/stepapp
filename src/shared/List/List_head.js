@@ -6,7 +6,12 @@ import { faSort } from "@fortawesome/fontawesome-free-solid";
 class ListHead extends React.Component {
   render() {
     return (
-      <div className={`List_head ${" "}${this.props.style}`}>
+      <div
+        className={
+          this.props.isLoading
+            ? `List_head ${" "}${this.props.style} loading`
+            : `List_head ${" "}${this.props.style}`
+        }>
         <div className='SORTIcon'>
           {/* <FontAwesomeIcon icon={faSort} className='icon' /> */}
           <div className='icon'>

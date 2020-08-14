@@ -110,6 +110,7 @@ class index extends Component {
     }
   };
   componentDidMount() {
+    if (!this.props.isLogin) this.props.history.push("/");
     loadData("admins", (errorMsg, data) => {
       if (data) {
         this.setState({ isLoading: false });
@@ -162,6 +163,7 @@ class index extends Component {
         <div className='container'>
           <StuffFilter
             selectedData={this.state.Data}
+            isLoading={this.state.isLoading}
             handelInputChange={this.handelInputChange}
             handelCreateStuff={this.handelCreateStuff}
             DisplayEditModel={() => this.DisplayEditModel(true)}
@@ -170,6 +172,7 @@ class index extends Component {
             <ListHead
               listName='Stuff'
               SelectAll={this.SelectAll}
+              isLoading={this.state.isLoading}
               style='stuffItem'
               checkedAll={this.state.checkedAll}
               fieldsName={[
@@ -196,6 +199,7 @@ class index extends Component {
                     <ListItem
                       listName='stuff'
                       style='stuffItem'
+                      isLoading={this.state.isLoading}
                       itemName={item.name}
                       className={
                         this.isSelected(item.id)

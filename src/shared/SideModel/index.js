@@ -8,6 +8,8 @@ import Group from "../../API/middleware/Groups";
 import Category from "../../API/middleware/Category";
 import SubGroup from "../../API/middleware/SubGroup";
 import { FiTrash } from "react-icons/fi";
+import Loader from "react-loader-spinner";
+
 const options = [
   { value: "categories", label: "Main Category" },
   { value: "groups", label: "Group" },
@@ -129,7 +131,7 @@ class index extends React.Component {
     return (
       <div onClick={(e) => this.handleClose(e)} className='SideOverlay'>
         <div
-          className='SideModal'
+          className={this.props.isLoading ? "SideModal loading" : "SideModal"}
           ref={(node) => {
             this.node = node;
           }}>
@@ -148,10 +150,21 @@ class index extends React.Component {
             <div className='input_wrapper'>
               <div>
                 <input type='text' placeholder='Search for something ...' />
-                <img
-                  src={require("../../shared/Icon/searchIcon.png")}
-                  height='13px'
-                />
+
+                {this.props.isLoading ? (
+                  <Loader
+                    type='Oval'
+                    color='black'
+                    style={{ opacity: 1 }}
+                    height={15}
+                    width={15}
+                  />
+                ) : (
+                  <img
+                    src={require("../../shared/Icon/searchIcon.png")}
+                    height='13px'
+                  />
+                )}
               </div>
             </div>
           </div>

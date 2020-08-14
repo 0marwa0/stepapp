@@ -90,7 +90,7 @@
 }
 .productItem {
   display: grid;
-  grid-template-columns: 0.4fr 0.4fr 1fr 0.2fr repeat(4, 1fr);
+  grid-template-columns: 0.4fr 0.4fr 1fr 0.5fr repeat(3, 1.1fr) 0.5fr;
 }
 .List_item {
   color: var(--gray);

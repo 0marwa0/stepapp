@@ -6,7 +6,7 @@ import DeleteCustomer from "./DeleteCustomer_";
 import Modal from "../../shared/Modal/index";
 import CreateCustomer from "./CreateCustomer";
 
-function Index({ selectedData }) {
+function Index({ selectedData, isLoading }) {
   const [showModel, setModel] = useState(false);
   const DisplayModel = (show) => {
     setModel(show);
@@ -28,6 +28,7 @@ function Index({ selectedData }) {
         ListName='customer'
         DeleteModal={() => DisplayDeleteModel(true)}
         DisplayEditModel={() => DisplayEditModel(true)}
+        isLoading={isLoading}
       />
 
       {showModel ? (

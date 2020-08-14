@@ -39,6 +39,7 @@ export default class index extends React.Component {
     checkedAll: false,
     currentPage: 1,
     pagePerOnce: 4,
+    isLoadingData: true,
     isLoading: false,
     pageNumber: 0,
     Products: Products,
@@ -140,17 +141,21 @@ export default class index extends React.Component {
     }
   };
   componentDidMount() {
+    if (!this.props.isLogin) this.props.history.push("/");
     loadData("categories", (errorMsg, data) => {
+      this.setState({ isLoading: false });
       for (let i = 0; i < data.categories.length; i++) {
         this.setState({ categories: data.categories[0] });
       }
     });
     loadData("groups", (errorMsg, data) => {
+      this.setState({ isLoading: false });
       for (let i = 0; i < data.groups.length; i++) {
         this.setState({ groups: data.groups[0] });
       }
     });
     loadData("subgroups", (errorMsg, data) => {
+      this.setState({ isLoading: false });
       for (let i = 0; i < data.subgroups.length; i++) {
         this.setState({ subgroups: data.subgroups[0] });
       }
@@ -176,6 +181,7 @@ export default class index extends React.Component {
             ListName='product'
             list={this.state.list}
             burger={this.state.burger}
+            isLoading={this.state.isLoading}
             listActive={this.listActive}
             burgerActive={this.burgerActive}
             DisplayUploadModel={() => this.DisplayUploadModel(true)}
@@ -288,6 +294,7 @@ export default class index extends React.Component {
               groups={this.state.groups}
               subgroups={this.state.subgroups}
               deleteItem={this.deleteItem}
+              isLoading={this.state.isLoading}
               DisplaySideNav={this.DisplaySideNav}
             />
           )}

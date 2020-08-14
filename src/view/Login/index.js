@@ -3,12 +3,15 @@ import { addData } from "../../API/index.js";
 import React, { Component } from "react";
 import "./index.css";
 import { FaEye, FaSpinner } from "react-icons/fa";
-import { AiOutlineMail } from "react-icons/ai";
-import { AiOutlineUser } from "react-icons/ai";
+import { AiOutlineMail, AiFillCloseCircle } from "react-icons/ai";
+import { AiOutlineUser, AiOutlineCloseCircle } from "react-icons/ai";
 import Loader from "react-loader-spinner";
 import { BsLock } from "react-icons/bs";
 import { NotificationManager } from "react-notifications";
 import Axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Tost from "../../shared/Tost";
 import { NotifyHandler, NotifyComponent } from "react-notification-component";
 class index extends Component {
   constructor(props) {
@@ -28,27 +31,46 @@ class index extends Component {
 
   handleChange(event, key) {
     let value = event.target.value;
+    // if (value.length === 0) {
+    //   this.setState({ emailErrorMsg: "", passErrorMsg: "" });
+    // }
     let data = this.state.data;
     data[key] = value;
     this.setState({ data });
+
     this.setState({ emailErrorMsg: "", passErrorMsg: "" });
   }
   onSubmit = () => {
     let data = this.state.data;
-    this.setState({ isLoading: true });
-    this.login(data, (data) => {
-      if (data.status) {
-        this.setState({ isLoading: false });
-        localStorage.setItem("step_token", data.token);
-        console.log(data);
-        this.props.history.push("/dashboard");
-      } else {
-        this.setState({ isLoading: false });
-        this.errorHandle(data.errMsg);
-        console.log(data.errMsg);
-        this.props.history.push("/");
-      }
-    });
+    console.log(data.length, "login data length");
+    if (this.state.data.email === "" && this.state.data.email === "") {
+      this.setState({
+        emailErrorMsg: "Please enter your Email!",
+        passErrorMsg: "Please enter your password",
+      });
+    } else {
+      this.setState({ isLoading: true });
+      this.props.Login(data, (data) => {
+        if (data.status) {
+          toast("Login Successfully");
+          this.setState({ isLoading: false, isLogin: true });
+
+          localStorage.setItem("step_token", data.token);
+          console.log(data);
+          this.props.history.push({
+            pathname: "/dashboard",
+            state: {
+              show: "show",
+            },
+          });
+        } else {
+          this.setState({ isLoading: false });
+          this.errorHandle(data.errMsg);
+          console.log(data.errMsg);
+          this.props.history.push("/");
+        }
+      });
+    }
 
     // this.status.errMsg.err
     //   ? this.setState({ passErrorMsg: " wrong password" })
@@ -56,68 +78,97 @@ class index extends Component {
   };
   errorHandle = (error) => {
     if (error.email) {
-      this.setState({ emailErrorMsg: "email is not exist" });
+      toast(
+        ` 
+        ❌
+      
+      Email ${this.state.data.email} is not valid`,
+        {
+          position: "top-center",
+          autoClose: 2000,
+
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+
+      // this.setState({ emailErrorMsg: "email is not exist" });
     }
 
     if (error.err) {
-      this.setState({ passErrorMsg: "Wrong credentials" });
-    }
-  };
-  login = (data, callback) => {
-    let myHeaders = new Headers();
-    let raw = JSON.stringify(data);
-    myHeaders.append("Content-Type", "application/json");
-    let requestOptions = {
-      method: "POST",
-      headers: myHeaders,
+      toast(` ❌ Wrong credentials`, {
+        position: "top-center",
+        autoClose: 2000,
+        className: "tostStyleError",
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
 
-      body: raw,
-      redirect: "follow",
-    };
-    fetch("https://step-copy.herokuapp.com/dash/v1/login", requestOptions)
-      .then((response) => response.json())
-      .then((result) => callback(result))
-      .catch((error) => console.log("error", error));
+        progress: undefined,
+      });
+
+      // this.setState({ passErrorMsg: "Wrong credentials" });
+    }
   };
 
   render() {
     return (
-      <div className='login_page'>
-        <div>
-          <div className='input_wrapper '>
-            <div className='login_input'>
-              <AiOutlineUser className='eye_icon' />
-              <input
-                type='text'
-                placeholder='Email'
-                onChange={(e) => this.handleChange(e, "email")}
-              />
+      <div>
+        <div className='login_page'>
+          <div>
+            <ToastContainer
+              position='top-center'
+              autoClose={2000}
+              hideProgressBar
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
+            <div className='input_wrapper '>
+              <div className='login_input'>
+                {/* <AiOutlineUser className='eye_icon' /> */}
+                <input
+                  type='text'
+                  placeholder='Email'
+                  onChange={(e) => this.handleChange(e, "email")}
+                />
+              </div>
+              <p className='errorMsg'>{this.state.emailErrorMsg}</p>
             </div>
-            <p className='errorMsg'>{this.state.emailErrorMsg}</p>
-          </div>
-          <br />
-          <div className='input_wrapper '>
-            <div className='login_input'>
-              <BsLock className='eye_icon' />
-              <input
-                type='password'
-                width='100%'
-                placeholder='password'
-                onChange={(e) => this.handleChange(e, "password")}
-              />
-            </div>
-            <p className='errorMsg'>{this.state.passErrorMsg}</p>{" "}
-          </div>
 
-          <br />
-          <button className='btn btn_ctrl' onClick={this.onSubmit}>
-            <div className='login_btn'>
-              {this.state.isLoading ? (
-                <Loader type='Oval' color='white' height={15} width={15} />
-              ) : null}{" "}
-              Log in
+            <div className='input_wrapper '>
+              <div className='login_input'>
+                {/* <BsLock className='eye_icon' /> */}
+                <input
+                  type='password'
+                  width='100%'
+                  placeholder='password'
+                  onChange={(e) => this.handleChange(e, "password")}
+                />
+              </div>
+              <p className='errorMsg'>{this.state.passErrorMsg}</p>
             </div>
-          </button>
+
+            <button
+              disabled={this.state.data.length === 0 ? true : false}
+              className={
+                this.state.isLoading ? "btn btn_ctrl loading" : "btn btn_ctrl"
+              }
+              onClick={this.onSubmit}>
+              <div className='login_btn'>
+                {this.state.isLoading ? (
+                  <Loader type='Oval' color='white' height={15} width={15} />
+                ) : null}{" "}
+                Log in
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     );

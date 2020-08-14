@@ -70,6 +70,7 @@ class index extends Component {
   };
 
   componentDidMount() {
+    if (!this.props.isLogin) this.props.history.push("/");
     loadData("users", (errorMsg, data) => {
       this.setState({ isLoading: false });
       for (let i = 0; i < data.users.length; i++) {
@@ -114,13 +115,17 @@ class index extends Component {
       <div>
         <Header slug='Customer list' />
         <div className='container'>
-          <CustomerFilter selectedData={this.state.Data} />
+          <CustomerFilter
+            selectedData={this.state.Data}
+            isLoading={this.state.isLoading}
+          />
 
           <div className='List_Wrapper'>
             <ListHead
               listName='Customer'
               SelectAll={this.SelectAll}
               style='customerItem'
+              isLoading={this.state.isLoading}
               checkedAll={this.state.checkedAll}
               fieldsName={[
                 "Phone Number",
