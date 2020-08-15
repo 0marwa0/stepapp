@@ -12,7 +12,7 @@ const options = [
 
 class index extends React.Component {
   state = {
-    selectedOption: { value: "admin", label: " admin" },
+    selectedOption: { value: "pd", label: "pd" },
   };
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
@@ -65,7 +65,7 @@ class index extends React.Component {
                 type='text'
                 width='100%'
                 onChange={(e) => this.props.handelInputChange(e, "name")}
-                placeholder='name'
+                // placeholder='name'
               />
             </span>
           </div>
@@ -76,7 +76,7 @@ class index extends React.Component {
                 type='text'
                 width='100%'
                 onChange={(e) => this.props.handelInputChange(e, "phone")}
-                placeholder='0780123567'
+                // placeholder='0780123567'
               />
             </span>
           </div>
@@ -89,7 +89,7 @@ class index extends React.Component {
                 type='text'
                 onChange={(e) => this.props.handelInputChange(e, "email")}
                 width='200px'
-                placeholder='email'
+                // placeholder='email'
               />
             </span>
           </div>
@@ -116,7 +116,7 @@ class index extends React.Component {
               <input
                 type='text'
                 onChange={(e) => this.props.handelInputChange(e, "birthday")}
-                placeholder='1999'
+                // placeholder='1999'
               />
             </span>
           </div>{" "}
@@ -126,7 +126,7 @@ class index extends React.Component {
               <input
                 type='text'
                 onChange={(e) => this.props.handelInputChange(e, "location")}
-                placeholder='lorem'
+                // placeholder='lorem'
               />
             </span>
           </div>
@@ -139,14 +139,17 @@ class index extends React.Component {
                 type='password'
                 onChange={(e) => this.props.handelInputChange(e, "password")}
                 width='200px'
-                placeholder='******'
+                // placeholder='******'
               />
             </span>
           </div>
           <div className='input_wrapper space_wrapper'>
             <p>Confirm password</p>
             <span className='input_border'>
-              <input type='text' placeholder='Re-write the same password' />
+              <input
+                type='text'
+                // placeholder='Re-write the same password'
+              />
             </span>
           </div>
         </div>

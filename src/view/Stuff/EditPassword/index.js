@@ -5,7 +5,7 @@ import "./index.css";
 import "../../../App.css";
 import { FaEye } from "react-icons/fa";
 
-const EditPassword = () => {
+const EditPassword = ({ handelInputChange }) => {
   return (
     <div className='edit_model'>
       <p className='alert_text'>
@@ -18,7 +18,11 @@ const EditPassword = () => {
       <br />
       <div className='input_wrapper '>
         <div>
-          <input type='password' width='100%' placeholder='*********' />
+          <input
+            type='password'
+            width='100%'
+            onChange={(e) => handelInputChange(e, "password")}
+          />
 
           {/* <FaEye className='eye_icon' /> */}
         </div>

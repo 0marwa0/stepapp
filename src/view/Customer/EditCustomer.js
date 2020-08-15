@@ -3,7 +3,11 @@
 import React from "react";
 import "./index.css";
 import { AiOutlineLock } from "react-icons/ai";
-function Index({ handelInputChange }) {
+function Index({ handelInputChange, data }) {
+  let name = data.map((i) => i.name);
+  let phone = data.map((i) => i.phone);
+  let location = data.map((i) => i.location);
+  let speciality = data.map((i) => i.speciality);
   return (
     <div>
       <div className='two_col_flex paddingTop'>
@@ -13,8 +17,9 @@ function Index({ handelInputChange }) {
             <input
               type='text'
               width='100%'
+              defaultValue={name}
               onChange={(e) => handelInputChange(e, "name")}
-              // placeholder='test'
+              placeholder='test'
             />
           </span>
         </div>
@@ -24,8 +29,8 @@ function Index({ handelInputChange }) {
             <input
               type='text'
               width='100%'
+              defaultValue={phone}
               onChange={(e) => handelInputChange(e, "phone")}
-              // placeholder='0780123567'
             />
           </span>
         </div>
@@ -37,18 +42,15 @@ function Index({ handelInputChange }) {
             <input
               type='text'
               width='200px'
-              onChange={(e) => handelInputChange(e, "type")}
-              // placeholder='Autafia'
+              defaultValue={location}
+              onChange={(e) => handelInputChange(e, "location")}
             />
           </span>
         </div>
         <div className='input_wrapper space_wrapper'>
           <p>Hostpital</p>
           <span className='input_border'>
-            <input
-              type='text'
-              //  placeholder='Hospital'
-            />
+            <input type='text' onChange={(e) => handelInputChange(e, "his")} />
           </span>
         </div>
         <div className='input_wrapper space_wrapper'>
@@ -56,7 +58,7 @@ function Index({ handelInputChange }) {
           <span className='input_border'>
             <input
               type='text'
-              // placeholder='Trauma'
+              defaultValue={speciality}
               onChange={(e) => handelInputChange(e, "specialty")}
             />
           </span>

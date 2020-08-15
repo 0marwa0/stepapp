@@ -22,7 +22,7 @@ class ListHead extends React.Component {
                 checked={this.props.checkedAll}
                 onChange={(e) => this.props.SelectAll(e)}
               />
-              <label for='test0'></label>
+              <label htmlFor='test0'></label>
             </div>
           </div>
         </div>

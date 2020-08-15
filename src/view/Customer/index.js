@@ -101,7 +101,35 @@ class index extends Component {
       }
     });
   };
+  handelEditStuff = (callback) => {
+    let id;
+    let data = this.state.Data;
+    this.setState({ isLoading: true });
+    if (data.length === 1) {
+      data.map((i) => (id = i.id));
+    }
+    console.log("edited");
+    editData("user", this.state.data, id, () => {
+      console.log(this.state.data, id, "should be edited");
+      this.setState({ isLoading: false, Data: [] });
+      toast(
+        `
+      Edited Successfully `,
+        {
+          position: "top-center",
+          autoClose: 2000,
 
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+      this.getData();
+      callback();
+    });
+  };
   handelCreateCustomer = (callback) => {
     this.setState({ isLoading: true });
     console.log(this.state.data, "uplaoded data");
@@ -179,7 +207,8 @@ class index extends Component {
       });
     } else {
       id = data.map((i) => i.id);
-      removeItems("users", id, () => {
+      console.log(id, "deleted");
+      removeItems("users", { ids: id }, () => {
         this.setState({ isLoading: false, Data: [] });
         toast(
           `
@@ -227,6 +256,7 @@ class index extends Component {
         <Header slug='Customer list' />
         <div className='container'>
           <CustomerFilter
+            handelEditStuff={this.handelEditStuff}
             selectedData={this.state.Data}
             isLoading={this.state.isLoading}
             handelInputChange={this.handelInputChange}

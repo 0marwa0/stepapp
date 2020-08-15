@@ -6,13 +6,14 @@ import DeleteCustomer from "./DeleteCustomer_";
 import Modal from "../../shared/Modal/index";
 import CreateCustomer from "./CreateCustomer";
 import { removeItems, editData } from "../../API";
-
+import EditCustomer from "./EditCustomer";
 function Index({
   selectedData,
   isLoading,
   handelDelete,
   handelCreateCustomer,
   handelInputChange,
+  handelEditStuff,
 }) {
   const [showModel, setModel] = useState(false);
   const DisplayModel = (show) => {
@@ -64,9 +65,12 @@ function Index({
           modalTitle='Edit customer'
           width='60%'
           height='70%'
-          handelInputChange={handelInputChange}
+          fun={handelEditStuff}
           onCLose={() => DisplayEditModel(false)}>
-          <CreateCustomer />
+          <EditCustomer
+            handelInputChange={handelInputChange}
+            data={selectedData}
+          />
         </Modal>
       ) : null}
       {showDeleteModel ? (

@@ -48,7 +48,7 @@ function index({
             ) : null}
             <div>
               <button
-                disabled={true}
+                // disabled={true}
                 onClick={() => fun(onCLose)}
                 className={
                   modalType == "Delete" ? "btn DeleteModal_btn" : "btn btn_ctrl"

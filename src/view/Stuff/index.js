@@ -18,6 +18,7 @@ import API, { addData } from "../../API/index";
 import Loader from "react-loader-spinner";
 import { loadData, editData, removeItem, removeItems } from "../../API/";
 import { ToastContainer, toast } from "react-toastify";
+
 import Stuff from "../../API/middleware/Stuff/index";
 class index extends Component {
   constructor(props) {
@@ -39,6 +40,14 @@ class index extends Component {
         phone: "",
         email: "",
         password: "",
+        location: "",
+        birthday: "",
+        type: "pd",
+      },
+      editedData: {
+        name: "",
+        phone: "",
+        email: "",
         location: "",
         birthday: "",
         type: "pd",
@@ -117,7 +126,6 @@ class index extends Component {
 
         for (let i = 0; i < data.admins.length; i++) {
           this.setState({ Stuff: data.admins[0] });
-          console.log(data.admins[0].map((i) => i));
         }
       } else {
         toast("fetch failed", {
@@ -141,7 +149,12 @@ class index extends Component {
     data[key] = value;
     this.setState({ data });
   };
-
+  handelEditChange = (event, key) => {
+    let value = event.target.value;
+    let editedData = this.state.editedData;
+    editedData[key] = value;
+    this.setState({ editedData });
+  };
   handelCreateStuff = (callback) => {
     this.setState({ isLoading: true });
     addData("admin", this.state.data, () => {
@@ -165,7 +178,8 @@ class index extends Component {
     if (data.length === 1) {
       data.map((i) => (id = i.id));
     }
-    editData("admin", this.state.data, id, () => {
+
+    editData("admin", this.state.editedData, id, () => {
       this.setState({ isLoading: false, Data: [] });
       toast(
         `
@@ -173,12 +187,11 @@ class index extends Component {
         {
           position: "top-center",
           autoClose: 2000,
-
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          // draggable: true,
+          // progress: undefined,
         }
       );
       this.getData();
@@ -214,8 +227,8 @@ class index extends Component {
       });
     } else {
       id = data.map((i) => i.id);
-      removeItems("admins", id, () => {
-        this.setState({ isLoading: false });
+      removeItems("admins", { ids: id }, () => {
+        this.setState({ isLoading: false, Data: [] });
         toast(
           `
          Deleted Successfully `,
@@ -235,6 +248,34 @@ class index extends Component {
       });
     }
   };
+  handelEditPassword = (callback) => {
+    let id;
+    let data = this.state.Data;
+    this.setState({ isLoading: true });
+    if (data.length === 1) {
+      data.map((i) => (id = i.id));
+    }
+
+    editData("admin", this.state.data, id, () => {
+      this.setState({ isLoading: false, Data: [] });
+      toast(
+        `
+      Password changed Successfully `,
+        {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+      this.getData();
+      callback();
+    });
+  };
+
   render() {
     const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
     const indexOfFirstPage = indexOfLastPage - this.state.pagePerOnce;
@@ -298,6 +339,7 @@ class index extends Component {
                 {CurrentStuff.map((item, i) => {
                   return (
                     <ListItem
+                      key={i}
                       listName='stuff'
                       style='stuffItem'
                       isLoading={this.state.isLoading}
@@ -311,7 +353,7 @@ class index extends Component {
                       email={item.email}
                       showModal={() => this.showEditPassword(true)}
                       phone={item.phone}
-                      birthday={item.birthday}
+                      birthday={item.birthday.slice(0, 4)}
                       location={item.location}
                       team={item.type}
                       onChange={(e) => this.checked(e, item)}
@@ -336,8 +378,12 @@ class index extends Component {
               modalTitle='Re-new password'
               width='40%'
               height='55%'
+              fun={this.handelEditPassword}
               onCLose={() => this.showEditPassword(false)}>
-              <EditPassword />
+              <EditPassword
+                data={this.state.Data}
+                handelInputChange={this.handelInputChange}
+              />
             </Modal>
           ) : null}
           {this.state.DisplayEditModel ? (
@@ -351,7 +397,7 @@ class index extends Component {
               onCLose={() => this.DisplayEditModel(false)}>
               <EditStuff
                 data={this.state.Data}
-                handelInputChange={this.handelInputChange}
+                handelInputChange={this.handelEditChange}
               />
             </Modal>
           ) : null}

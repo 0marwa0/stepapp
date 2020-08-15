@@ -10,8 +10,7 @@ const options = [
 ];
 class index extends React.Component {
   state = {
-    name: "marwa",
-    selectedOption: { value: "admin", label: " admin" },
+    selectedOption: { value: "pd", label: " pd" },
   };
   componentDidMount() {}
   render() {
@@ -67,7 +66,6 @@ class index extends React.Component {
                 width='100%'
                 defaultValue={name}
                 onChange={(e) => this.props.handelInputChange(e, "name")}
-                placeholder='name'
               />
             </span>
           </div>
@@ -79,7 +77,6 @@ class index extends React.Component {
                 width='100%'
                 defaultValue={phone}
                 onChange={(e) => this.props.handelInputChange(e, "phone")}
-                placeholder='0780123567'
               />
             </span>
           </div>
@@ -93,7 +90,6 @@ class index extends React.Component {
                 defaultValue={email}
                 onChange={(e) => this.props.handelInputChange(e, "email")}
                 width='200px'
-                placeholder='email'
               />
             </span>
           </div>
@@ -106,7 +102,7 @@ class index extends React.Component {
                 isSearchable={false}
                 defaultValue=''
                 styles={selectStyle}
-                onChange={this.handleChange}
+                // onChange={(e) => this.props.handelInputChange(e, "type")}
                 components={{
                   IndicatorSeparator: () => null,
                 }}
@@ -127,7 +123,6 @@ class index extends React.Component {
                 type='text'
                 defaultValue={birthday}
                 onChange={(e) => this.props.handelInputChange(e, "birthday")}
-                placeholder='1999'
               />
             </span>
           </div>{" "}
@@ -138,7 +133,6 @@ class index extends React.Component {
                 type='text'
                 defaultValue={location}
                 onChange={(e) => this.props.handelInputChange(e, "location")}
-                placeholder='lorem'
               />
             </span>
           </div>
