@@ -11,6 +11,7 @@ function Index({
   handelInputChange,
   handelCreateStuff,
   isLoading,
+  handelDelete,
 }) {
   const [showModel, setModel] = useState(false);
 
@@ -25,6 +26,7 @@ function Index({
         ListName='Stuff'
         isLoading={isLoading}
         selectedData={selectedData}
+        handelDelete={handelDelete}
         DisplayEditModel={DisplayEditModel}
       />
 

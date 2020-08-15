@@ -2,9 +2,59 @@
 
 import React from "react";
 import "./index.css";
+import Select from "react-select";
 import { AiOutlineLock } from "react-icons/ai";
+const options = [
+  { value: "pd", label: "pd" },
+  { value: "admin", label: "admin" },
+  { value: "support", label: "support" },
+];
+
 class index extends React.Component {
+  state = {
+    selectedOption: { value: "admin", label: " admin" },
+  };
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+    console.log(`Option selected:`, selectedOption);
+  };
   render() {
+    let selectStyle = {
+      menu: (styles) => ({ ...styles, width: "100%", borderRadius: 6 }),
+
+      option: (provided, state) => ({
+        ...provided,
+        "&:hover": {
+          backgroundColor: state.isSelected
+            ? "rgb(230, 247, 255)"
+            : "var(--lighter-gray)",
+        },
+        width: "100%",
+        // height: "1.5em",
+        fontSize: "14px",
+        color: "black",
+        backgroundColor: state.isSelected ? "rgb(230, 247, 255)" : "",
+
+        padding: 10,
+      }),
+      control: () => ({
+        width: "100%",
+        display: "flex",
+        height: "30px",
+        cursor: "pointer",
+        fontSize: "14px",
+        borderRadius: "3px",
+        "&:focus": { boxShadow: " 0 0 3px rgba(113, 218, 247, 1)" },
+        border: "1px solid var(--light-gray)",
+      }),
+      singleValue: (provided, state) => {
+        const opacity = state.isDisabled ? 0.5 : 1;
+        const transition = "all 300ms";
+
+        return { ...provided, opacity, transition };
+      },
+    };
+    const { selectedOption } = this.state;
     return (
       <div>
         <div className='two_col_flex paddingTop'>
@@ -45,11 +95,18 @@ class index extends React.Component {
           </div>
           <div className='input_wrapper space_wrapper'>
             <p>Team</p>
+
             <span className='input_border'>
-              <input
-                type='text'
-                onChange={(e) => this.props.handelInputChange(e, "type")}
-                placeholder='lorem'
+              <Select
+                options={options}
+                defaultValue=''
+                isSearchable={false}
+                value={this.state.selectedOption}
+                styles={selectStyle}
+                onChange={this.handleChange}
+                components={{
+                  IndicatorSeparator: () => null,
+                }}
               />
             </span>
           </div>

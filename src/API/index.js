@@ -77,7 +77,10 @@ export const addData = (query, data, callback) => {
   }
   fetch(`${Config.host}${query}`, options)
     .then((resp) => resp.json())
-    .then((jsonData) => callback(null, jsonData))
+    .then((jsonData) => {
+      callback(null, jsonData);
+      console.log(jsonData, "data added");
+    })
     .catch((err) => callback(err.message, null));
 };
 
@@ -107,7 +110,10 @@ export const editData = (query, data, id, callback) => {
   }
   fetch(`${Config.host}${query}/${id}`, options)
     .then((resp) => resp.json())
-    .then((jsonData) => callback(null, jsonData))
+    .then((jsonData) => {
+      callback(null, jsonData);
+      console.log(jsonData);
+    })
     .catch((err) => callback(err.message, null));
 };
 

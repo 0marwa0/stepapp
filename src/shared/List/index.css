@@ -191,11 +191,13 @@
   width: 30%;
 }
 .SORTIcon {
-  display: grid;
+  display: flex;
   justify-content: center;
   align-items: center;
+  margin: auto;
 }
 .SORTIcon .icon {
+  margin-left: 0.5em;
 }
 /***********check box style**********/
 [type="checkbox"]:not(:checked),

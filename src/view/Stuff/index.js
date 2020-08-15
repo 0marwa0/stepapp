@@ -14,7 +14,7 @@ import EditPassword from "./EditPassword";
 import Modal from "../../shared/Modal";
 import ListFooter from "../../shared/List/List_footer";
 import EditStuff from "./EditStuff";
-import API from "../../API/index";
+import API, { addData } from "../../API/index";
 import Loader from "react-loader-spinner";
 import { loadData, editData, removeItem, removeItems } from "../../API/";
 import { ToastContainer, toast } from "react-toastify";
@@ -110,8 +110,7 @@ class index extends Component {
       });
     }
   };
-  componentDidMount() {
-    if (!localStorage.getItem("step_token")) this.props.history.push("/");
+  getData = () => {
     loadData("admins", (errorMsg, data) => {
       if (data) {
         this.setState({ isLoading: false });
@@ -131,6 +130,10 @@ class index extends Component {
         });
       }
     });
+  };
+  componentDidMount() {
+    if (!localStorage.getItem("step_token")) this.props.history.push("/");
+    this.getData();
   }
   handelInputChange = (event, key) => {
     let value = event.target.value;
@@ -138,27 +141,99 @@ class index extends Component {
     data[key] = value;
     this.setState({ data });
   };
-  handelCreateStuff = () => {
-    this.setState({ isLoading: true });
 
-    Stuff.createStuff(this.state.data, () => {
-      API.getStuff((data) => {
-        console.log(data);
-        if (data) {
-          this.setState({ isLoading: false });
-        }
-        for (let i = 0; i < data.admins.length; i++) {
-          this.setState({ Stuff: data.admins[0] });
-          console.log(data.admins[0].map((i) => i));
-        }
+  handelCreateStuff = (callback) => {
+    this.setState({ isLoading: true });
+    addData("admin", this.state.data, () => {
+      this.getData();
+      this.setState({ isLoading: false });
+      toast("Add Successfully", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
       });
     });
+    callback();
   };
-  handelEditStuff = () => {
-    let id = 999;
-    editData("admin", this.state.data, id, (data) => {
-      console.log(data);
+  handelEditStuff = (callback) => {
+    let id;
+    let data = this.state.Data;
+    this.setState({ isLoading: true });
+    if (data.length === 1) {
+      data.map((i) => (id = i.id));
+    }
+    editData("admin", this.state.data, id, () => {
+      this.setState({ isLoading: false, Data: [] });
+      toast(
+        `
+      Edited Successfully `,
+        {
+          position: "top-center",
+          autoClose: 2000,
+
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+      this.getData();
+      callback();
     });
+  };
+
+  handelDelete = (callback) => {
+    let id;
+    let data = this.state.Data;
+
+    this.setState({ isLoading: true });
+    if (data.length === 1) {
+      data.map((i) => (id = i.id));
+      removeItem("admin", id, () => {
+        this.setState({ isLoading: false, Data: [] });
+        this.getData();
+        toast(
+          `
+         Deleted Successfully `,
+          {
+            position: "top-center",
+            autoClose: 2000,
+
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
+        callback();
+      });
+    } else {
+      id = data.map((i) => i.id);
+      removeItems("admins", id, () => {
+        this.setState({ isLoading: false });
+        toast(
+          `
+         Deleted Successfully `,
+          {
+            position: "top-center",
+            autoClose: 2000,
+
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
+        this.getData();
+        callback();
+      });
+    }
   };
   render() {
     const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
@@ -170,7 +245,7 @@ class index extends Component {
     const totalPageNumber = Math.ceil(
       this.state.Stuff.length / this.state.pagePerOnce
     );
-
+    // let editableData = ;
     return (
       <div>
         <ToastContainer
@@ -189,6 +264,7 @@ class index extends Component {
           <StuffFilter
             selectedData={this.state.Data}
             isLoading={this.state.isLoading}
+            handelDelete={this.handelDelete}
             handelInputChange={this.handelInputChange}
             handelCreateStuff={this.handelCreateStuff}
             DisplayEditModel={() => this.DisplayEditModel(true)}
@@ -235,7 +311,7 @@ class index extends Component {
                       email={item.email}
                       showModal={() => this.showEditPassword(true)}
                       phone={item.phone}
-                      birthday={item.birthday.slice(0, 4)}
+                      birthday={item.birthday}
                       location={item.location}
                       team={item.type}
                       onChange={(e) => this.checked(e, item)}
@@ -273,7 +349,10 @@ class index extends Component {
               height='60%'
               fun={this.handelEditStuff}
               onCLose={() => this.DisplayEditModel(false)}>
-              <EditStuff handelInputChange={this.handelInputChange} />
+              <EditStuff
+                data={this.state.Data}
+                handelInputChange={this.handelInputChange}
+              />
             </Modal>
           ) : null}
         </div>

@@ -7,7 +7,13 @@ import Header from "../../shared/header";
 import ListItem from "./List_Customer_item.js";
 
 // import { Customers } from "../../fakeData";
-import { loadData, editData, removeItem, removeItems } from "../../API/";
+import {
+  loadData,
+  addData,
+  editData,
+  removeItem,
+  removeItems,
+} from "../../API/";
 import { ToastContainer, toast } from "react-toastify";
 
 import ListHead from "../../shared/List//List_head";
@@ -28,6 +34,12 @@ class index extends Component {
       isLoading: true,
       pageNumber: 0,
       Customers: [],
+      data: {
+        phone: "",
+        name: "",
+        dgree: "",
+        specialty: "",
+      },
     };
   }
   checked = (e, item) => {
@@ -70,8 +82,7 @@ class index extends Component {
     }
   };
 
-  componentDidMount() {
-    if (!localStorage.getItem("step_token")) this.props.history.push("/");
+  getData = () => {
     loadData("users", (errorMsg, data) => {
       if (data) {
         this.setState({ isLoading: false });
@@ -89,6 +100,34 @@ class index extends Component {
         });
       }
     });
+  };
+
+  handelCreateCustomer = (callback) => {
+    this.setState({ isLoading: true });
+    console.log(this.state.data, "uplaoded data");
+    addData("user", this.state.data, () => {
+      this.getData();
+      this.setState({ isLoading: false });
+      toast("Add Successfully", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        progress: undefined,
+      });
+    });
+    callback();
+  };
+  handelInputChange = (event, key) => {
+    let value = event.target.value;
+    let data = this.state.data;
+    data[key] = value;
+    this.setState({ data });
+  };
+  componentDidMount() {
+    if (!localStorage.getItem("step_token")) this.props.history.push("/");
+    this.getData();
   }
 
   prevPage = () => {
@@ -112,6 +151,55 @@ class index extends Component {
     }
   };
 
+  handelDelete = (callback) => {
+    let id;
+    let data = this.state.Data;
+
+    this.setState({ isLoading: true });
+    if (data.length === 1) {
+      data.map((i) => (id = i.id));
+      removeItem("user", id, () => {
+        this.setState({ isLoading: false, Data: [] });
+        this.getData();
+        toast(
+          `
+         Deleted Successfully `,
+          {
+            position: "top-center",
+            autoClose: 2000,
+
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
+        callback();
+      });
+    } else {
+      id = data.map((i) => i.id);
+      removeItems("users", id, () => {
+        this.setState({ isLoading: false, Data: [] });
+        toast(
+          `
+         Deleted Successfully `,
+          {
+            position: "top-center",
+            autoClose: 2000,
+
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
+        this.getData();
+        callback();
+      });
+    }
+  };
   render() {
     const listName = "Customer";
     const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
@@ -141,6 +229,9 @@ class index extends Component {
           <CustomerFilter
             selectedData={this.state.Data}
             isLoading={this.state.isLoading}
+            handelInputChange={this.handelInputChange}
+            handelDelete={this.handelDelete}
+            handelCreateCustomer={this.handelCreateCustomer}
           />
 
           <div className='List_Wrapper'>
