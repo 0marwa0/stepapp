@@ -5,13 +5,15 @@ import Card from "../../shared/Card/Card";
 import NotificationCtrl from "../../shared/NotificationCtrl";
 import { Link } from "react-router-dom";
 import Tost from "../../shared/Tost";
+import { ToastContainer, toast } from "react-toastify";
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = { showTost: false };
   }
   componentDidMount() {
-    if (!this.props.isLogin) this.props.history.push("/");
+    console.log(this.props.isLogin);
+    if (!localStorage.getItem("step_token")) this.props.history.push("/");
   }
   render() {
     // const showTost =
@@ -19,8 +21,17 @@ class index extends Component {
 
     return (
       <div>
-        {/* {showTost} */}
-
+        <ToastContainer
+          position='top-center'
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <div className='container'>
           <div className='cards_container'>
             <Link to='/productlist'>

@@ -20,6 +20,8 @@ import ListItem from "../../shared/List/List_Item";
 import "../../App.css";
 import API from "../../API/index";
 import "./index.css";
+import { ToastContainer, toast } from "react-toastify";
+
 import UploadImage from "././CreateProduct/UploadImage";
 import ListHead from "../../shared/List//List_head";
 import ListType_item from "./ListType_item";
@@ -40,7 +42,7 @@ export default class index extends React.Component {
     currentPage: 1,
     pagePerOnce: 4,
     isLoadingData: true,
-    isLoading: false,
+    isLoading: true,
     pageNumber: 0,
     Products: Products,
     showSideNav: false,
@@ -98,13 +100,13 @@ export default class index extends React.Component {
   DisplayEditModel = (showEditModel) => {
     this.setState({ showEditModel });
   };
-  handleOutsideClick(e) {
-    // if (this.node.contains(e.target)) {
-    //   return;
-    // }
+  // handleOutsideClick(e) {
+  //   // if (this.node.contains(e.target)) {
+  //   //   return;
+  //   // }
 
-    this.DisplaySideNav();
-  }
+  //   this.DisplaySideNav();
+  // }
 
   DisplaySideNav = (showSideNav) => {
     // !this.state.showSideNav
@@ -141,23 +143,57 @@ export default class index extends React.Component {
     }
   };
   componentDidMount() {
-    if (!this.props.isLogin) this.props.history.push("/");
+    if (!localStorage.getItem("step_token")) this.props.history.push("/");
+
     loadData("categories", (errorMsg, data) => {
-      this.setState({ isLoading: false });
-      for (let i = 0; i < data.categories.length; i++) {
-        this.setState({ categories: data.categories[0] });
+      if (data) {
+        this.setState({ isLoading: false });
+        for (let i = 0; i < data.categories.length; i++) {
+          this.setState({ categories: data.categories[0] });
+        }
+      } else {
+        toast("fetch failed  ", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          progress: undefined,
+        });
       }
     });
     loadData("groups", (errorMsg, data) => {
-      this.setState({ isLoading: false });
-      for (let i = 0; i < data.groups.length; i++) {
-        this.setState({ groups: data.groups[0] });
+      if (data) {
+        this.setState({ isLoading: false });
+        for (let i = 0; i < data.groups.length; i++) {
+          this.setState({ groups: data.groups[0] });
+        }
+      } else {
+        toast("fetch failed  ", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          progress: undefined,
+        });
       }
     });
     loadData("subgroups", (errorMsg, data) => {
-      this.setState({ isLoading: false });
-      for (let i = 0; i < data.subgroups.length; i++) {
-        this.setState({ subgroups: data.subgroups[0] });
+      if (data) {
+        this.setState({ isLoading: false });
+        for (let i = 0; i < data.subgroups.length; i++) {
+          this.setState({ subgroups: data.subgroups[0] });
+        }
+      } else {
+        toast("fetch failed  ", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          progress: undefined,
+        });
       }
     });
   }
@@ -170,6 +206,17 @@ export default class index extends React.Component {
     const totalPageNumber = Math.ceil(Products.length / this.state.pagePerOnce);
     return (
       <div>
+        <ToastContainer
+          position='top-center'
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <Header
           slug='Products List'
           DisplaySideNav={() => this.DisplaySideNav(true)}

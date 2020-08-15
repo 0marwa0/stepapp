@@ -24,58 +24,67 @@ class index extends Component {
       isLoading: false,
       isLogin: false,
       errorMsg: "",
-      emailErrorMsg: "",
-      passErrorMsg: "",
+      email: "",
+      password: "",
+      errors: { email: "", password: "" },
     };
   }
 
-  handleChange(event, key) {
+  handleEmailChange = (event) => {
     let value = event.target.value;
-    // if (value.length === 0) {
-    //   this.setState({ emailErrorMsg: "", passErrorMsg: "" });
-    // }
     let data = this.state.data;
-    data[key] = value;
+    this.setState({ email: "" });
+    data["email"] = value;
+    if (data["email"].length == 0) {
+      this.setState({ email: "Please enter your email!" });
+    }
     this.setState({ data });
+  };
 
-    this.setState({ emailErrorMsg: "", passErrorMsg: "" });
-  }
-  onSubmit = () => {
+  handlePasswordChange = (event) => {
+    let value = event.target.value;
     let data = this.state.data;
-    console.log(data.length, "login data length");
-    if (this.state.data.email === "" && this.state.data.email === "") {
-      this.setState({
-        emailErrorMsg: "Please enter your Email!",
-        passErrorMsg: "Please enter your password",
-      });
-    } else {
+    this.setState({ password: "" });
+    data["password"] = value;
+    if (data["password"].length == 0) {
+      this.setState({ password: "Please enter your password!" });
+    }
+    this.setState({ data });
+  };
+
+  handleChange(event, key) {}
+  onSubmit = (e) => {
+    let loginData = this.state.data;
+    e.preventDefault();
+
+    if (this.state.data.email != 0 && this.state.data.password != 0) {
       this.setState({ isLoading: true });
-      this.props.Login(data, (data) => {
+      this.props.Login(loginData, (data) => {
         if (data.status) {
-          toast("Login Successfully");
-          this.setState({ isLoading: false, isLogin: true });
+          this.setState({ isLogin: true });
+          this.setState({ isLoading: false });
+          this.props.history.push("/dashboard");
 
           localStorage.setItem("step_token", data.token);
-          console.log(data);
-          this.props.history.push({
-            pathname: "/dashboard",
-            state: {
-              show: "show",
-            },
-          });
         } else {
           this.setState({ isLoading: false });
           this.errorHandle(data.errMsg);
-          console.log(data.errMsg);
           this.props.history.push("/");
         }
       });
+    } else {
+      this.setState({ email: "Please enter your email!" });
+      this.setState({ password: "Please enter your password!" });
     }
-
-    // this.status.errMsg.err
-    //   ? this.setState({ passErrorMsg: " wrong password" })
-    //   : null;
+    if (localStorage.getItem("step_token"))
+      this.props.history.push("/dashboard");
   };
+  componentDidUpdate(prevProps, prevState) {
+    if (localStorage.getItem("step_token")) {
+      this.props.history.push("/dashboard");
+    }
+  }
+  componentDidMount() {}
   errorHandle = (error) => {
     if (error.email) {
       toast(
@@ -106,7 +115,7 @@ class index extends Component {
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
-
+        draggable: true,
         progress: undefined,
       });
 
@@ -130,33 +139,44 @@ class index extends Component {
               draggable
               pauseOnHover
             />
-            <div className='input_wrapper '>
+            <div
+              className={
+                this.state.email == "" ? "input_wrapper" : "input_error"
+              }>
               <div className='login_input'>
-                {/* <AiOutlineUser className='eye_icon' /> */}
                 <input
                   type='text'
-                  placeholder='Email'
-                  onChange={(e) => this.handleChange(e, "email")}
+                  placeholder='Username'
+                  onChange={(e) => this.handleEmailChange(e)}
+                />
+                <AiOutlineUser
+                  className='login_icon'
+                  color={this.state.email == "" ? "" : "red"}
                 />
               </div>
-              <p className='errorMsg'>{this.state.emailErrorMsg}</p>
+              <p className='errorMsg'>{this.state.email}</p>
             </div>
-
-            <div className='input_wrapper '>
+            <div
+              className={
+                this.state.password == "" ? "input_wrapper" : "input_error"
+              }>
               <div className='login_input'>
-                {/* <BsLock className='eye_icon' /> */}
+                <BsLock
+                  className='login_icon'
+                  color={this.state.password == "" ? "" : "red"}
+                />
                 <input
                   type='password'
                   width='100%'
-                  placeholder='password'
-                  onChange={(e) => this.handleChange(e, "password")}
+                  placeholder='Password'
+                  onChange={(e) => this.handlePasswordChange(e)}
                 />
               </div>
-              <p className='errorMsg'>{this.state.passErrorMsg}</p>
+              <p className='errorMsg'>{this.state.password}</p>
             </div>
 
             <button
-              disabled={this.state.data.length === 0 ? true : false}
+              disabled={this.state.isLoading ? true : false}
               className={
                 this.state.isLoading ? "btn btn_ctrl loading" : "btn btn_ctrl"
               }

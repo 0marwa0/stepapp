@@ -5,9 +5,10 @@ import React, { Component } from "react";
 import Header from "../../shared/header";
 
 import ListItem from "./List_Customer_item.js";
-import { loadData } from "../../API";
 
 // import { Customers } from "../../fakeData";
+import { loadData, editData, removeItem, removeItems } from "../../API/";
+import { ToastContainer, toast } from "react-toastify";
 
 import ListHead from "../../shared/List//List_head";
 import "../../shared/List/index.css";
@@ -70,11 +71,22 @@ class index extends Component {
   };
 
   componentDidMount() {
-    if (!this.props.isLogin) this.props.history.push("/");
+    if (!localStorage.getItem("step_token")) this.props.history.push("/");
     loadData("users", (errorMsg, data) => {
-      this.setState({ isLoading: false });
-      for (let i = 0; i < data.users.length; i++) {
-        this.setState({ Customers: data.users[0] });
+      if (data) {
+        this.setState({ isLoading: false });
+        for (let i = 0; i < data.users.length; i++) {
+          this.setState({ Customers: data.users[0] });
+        }
+      } else {
+        toast("fetch failed  ", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          progress: undefined,
+        });
       }
     });
   }
@@ -113,6 +125,17 @@ class index extends Component {
     );
     return (
       <div>
+        <ToastContainer
+          position='top-center'
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <Header slug='Customer list' />
         <div className='container'>
           <CustomerFilter

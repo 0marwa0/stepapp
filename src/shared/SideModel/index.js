@@ -152,17 +152,14 @@ class index extends React.Component {
                 <input type='text' placeholder='Search for something ...' />
 
                 {this.props.isLoading ? (
-                  <Loader
-                    type='Oval'
-                    color='black'
-                    style={{ opacity: 1 }}
-                    height={15}
-                    width={15}
-                  />
+                  <div className='input_icon'>
+                    <Loader type='Oval' color='black' height={15} width={15} />
+                  </div>
                 ) : (
                   <img
                     src={require("../../shared/Icon/searchIcon.png")}
                     height='13px'
+                    className='input_icon'
                   />
                 )}
               </div>

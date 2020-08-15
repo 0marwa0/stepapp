@@ -16,7 +16,8 @@ import ListFooter from "../../shared/List/List_footer";
 import EditStuff from "./EditStuff";
 import API from "../../API/index";
 import Loader from "react-loader-spinner";
-import { loadData } from "../../API/";
+import { loadData, editData, removeItem, removeItems } from "../../API/";
+import { ToastContainer, toast } from "react-toastify";
 import Stuff from "../../API/middleware/Stuff/index";
 class index extends Component {
   constructor(props) {
@@ -110,14 +111,24 @@ class index extends Component {
     }
   };
   componentDidMount() {
-    if (!this.props.isLogin) this.props.history.push("/");
+    if (!localStorage.getItem("step_token")) this.props.history.push("/");
     loadData("admins", (errorMsg, data) => {
       if (data) {
         this.setState({ isLoading: false });
-      }
-      for (let i = 0; i < data.admins.length; i++) {
-        this.setState({ Stuff: data.admins[0] });
-        console.log(data.admins[0].map((i) => i));
+
+        for (let i = 0; i < data.admins.length; i++) {
+          this.setState({ Stuff: data.admins[0] });
+          console.log(data.admins[0].map((i) => i));
+        }
+      } else {
+        toast("fetch failed", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          progress: undefined,
+        });
       }
     });
   }
@@ -144,7 +155,10 @@ class index extends Component {
     });
   };
   handelEditStuff = () => {
-    Stuff.editStuff(this.state.data);
+    let id = 999;
+    editData("admin", this.state.data, id, (data) => {
+      console.log(data);
+    });
   };
   render() {
     const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
@@ -159,6 +173,17 @@ class index extends Component {
 
     return (
       <div>
+        <ToastContainer
+          position='top-center'
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <Header slug='Stuff list' />
         <div className='container'>
           <StuffFilter

@@ -3,7 +3,7 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-
+import { ToastContainer, toast } from "react-toastify";
 import Navbar from "./Navbar";
 import MainLayoutRoute from "./MainLayoutRout.js";
 import { Switch, Route, Link } from "react-router-dom";
@@ -12,12 +12,12 @@ import Customer from "./view/Customer";
 import Product from "./view/Product";
 import Stuff from "./view/Stuff";
 import Login from "./view/Login/index.js";
-import { render } from "@testing-library/react";
 
 class App extends React.Component {
   state = {
     isLogin: false,
   };
+  componentDidMount() {}
   Login = (data, callback) => {
     let myHeaders = new Headers();
     let raw = JSON.stringify(data);
@@ -34,21 +34,56 @@ class App extends React.Component {
       .then((result) => {
         callback(result);
         if (result.status) {
+          toast("Login Successfully");
           this.setState({ isLogin: true });
         }
+
+        console.log(result, "login success");
       })
-      .catch((error) => console.log("error", error));
+
+      .catch((error) => {
+        console.log(error, "login failed");
+        toast(
+          `
+          ❌
+
+         Login Failed  `,
+          {
+            position: "top-center",
+            autoClose: 2000,
+
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          }
+        );
+      });
   };
   render() {
     const Pages = (props) => {
       const Logout = () => {
+        localStorage.clear("step_token");
         props.history.push("/");
-        this.setState({ isLogin: true });
+        this.setState({ isLogin: false });
+
         console.log("log out");
       };
 
       return (
         <div>
+          <ToastContainer
+            position='top-center'
+            autoClose={2000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
           <Navbar Logout={Logout} />
           <Switch>
             <MainLayoutRoute
@@ -86,6 +121,7 @@ class App extends React.Component {
             exact
             path='/'
             component={Login}
+            isLogin={localStorage.getItem("isLogin")}
             Login={this.Login}
           />
 

@@ -10,6 +10,7 @@ import {
 import { RiFilter2Line, RiErrorWarningLine } from "react-icons/ri";
 import { FaSortDown, FaEdit, FaImage } from "react-icons/fa";
 import { FaThList, FaBuromobelexperte } from "react-icons/fa";
+import { removeItem } from "../../API/index";
 import { FiEdit } from "react-icons/fi";
 import Loader from "react-loader-spinner";
 
@@ -37,6 +38,17 @@ function ListFilter({
     setShowTooltip(false);
     console.log(showTooltip, "on close");
   };
+
+  const onDelete = () => {
+    //   // let id = selectedData.id;
+    //   let id = 88;
+    //   console.log(id);
+    //   closeTooltipModel();
+    //   if (ListName == "stuff") removeItem("stuff", id);
+    // };
+    // if (ListName == "customer") {
+    //   removeItem("customer", id);
+  };
   return (
     <div>
       <div className='List_filter'>
@@ -45,21 +57,23 @@ function ListFilter({
             className={isLoading ? "input_wrapper loading" : "input_wrapper"}>
             <div>
               <input type='text' placeholder='Search for something ...' />
-              {/* {isLoading ? (
-                <Loader
-                  type='Oval'
-                  color='black'
-                  style={{ opacity: 1 }}
-                  height={15}
-                  width={15}
-                />
+              {isLoading ? (
+                <div className='input_icon'>
+                  <Loader
+                    type='Oval'
+                    color='black'
+                    style={{ opacity: 1 }}
+                    height={15}
+                    width={15}
+                  />
+                </div>
               ) : (
-                // <img
-                //   src={require("../../shared/Icon/searchIcon.png")}
-                //   height='13px'
-                //   // className="searchIcon"
-                // />
-              )} */}
+                <img
+                  src={require("../../shared/Icon/searchIcon.png")}
+                  height='13px'
+                  className='input_icon'
+                />
+              )}
             </div>
           </div>
           <div className={isLoading ? "Filter_ctrl loading" : "Filter_ctrl"}>
@@ -95,7 +109,9 @@ function ListFilter({
                             onClick={closeTooltipModel}>
                             No
                           </button>
-                          <button className='btn btn_ctrl'>Yes</button>
+                          <button className='btn btn_ctrl' onClick={onDelete}>
+                            Yes
+                          </button>
                         </span>
                       </div>
                     </div>

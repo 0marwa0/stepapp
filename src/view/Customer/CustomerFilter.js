@@ -5,6 +5,7 @@ import ListFilter from "../../shared/List/List_filter";
 import DeleteCustomer from "./DeleteCustomer_";
 import Modal from "../../shared/Modal/index";
 import CreateCustomer from "./CreateCustomer";
+import { removeItems, editData } from "../../API";
 
 function Index({ selectedData, isLoading }) {
   const [showModel, setModel] = useState(false);
@@ -19,6 +20,13 @@ function Index({ selectedData, isLoading }) {
 
   const DisplayEditModel = (EditModel) => {
     setEditModel(EditModel);
+  };
+  const onDelete = () => {
+    DisplayDeleteModel(false);
+    // removeItem("user", id);
+  };
+  const onEdite = (data) => {
+    // editData("user", id,data);
   };
   return (
     <div>
@@ -62,6 +70,7 @@ function Index({ selectedData, isLoading }) {
           modalTitle='Delete customer '
           width='45%'
           height='50%'
+          fun={onDelete}
           onCLose={() => DisplayDeleteModel(false)}>
           <DeleteCustomer />
         </Modal>

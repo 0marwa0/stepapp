@@ -20,8 +20,8 @@ export const loadData = (query, callback) => {
     .catch((err) => callback(err.message, null));
 };
 
-export const removeItem = (query, callback) => {
-  fetch(`${Config.host}${query}`, {
+export const removeItem = (query, id, callback) => {
+  fetch(`${Config.host}${query}/${id}`, {
     method: "delete",
     headers: {
       token: localStorage.getItem("step_token"),
@@ -81,7 +81,7 @@ export const addData = (query, data, callback) => {
     .catch((err) => callback(err.message, null));
 };
 
-export const editData = (query, data, callback) => {
+export const editData = (query, data, id, callback) => {
   let options = {
     method: "put",
     headers: {
@@ -105,7 +105,7 @@ export const editData = (query, data, callback) => {
     };
   } else {
   }
-  fetch(`${Config.host}${query}`, options)
+  fetch(`${Config.host}${query}/${id}`, options)
     .then((resp) => resp.json())
     .then((jsonData) => callback(null, jsonData))
     .catch((err) => callback(err.message, null));
