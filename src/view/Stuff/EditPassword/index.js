@@ -21,6 +21,7 @@ const EditPassword = ({ handelInputChange }) => {
           <input
             type='password'
             width='100%'
+            placeholder='**********'
             onChange={(e) => handelInputChange(e, "password")}
           />
 
@@ -30,7 +31,14 @@ const EditPassword = ({ handelInputChange }) => {
       <br />
       <div className='input_wrapper '>
         <div>
-          <input type='password' width='100%' />
+          {" "}
+          conform password
+          <br /> <br />
+          <input
+            type='password'
+            width='100%'
+            placeholder='Re write the same password'
+          />
           {/* <FaEye className='eye_icon' /> */}
         </div>
       </div>

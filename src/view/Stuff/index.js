@@ -172,6 +172,37 @@ class index extends Component {
       }
     });
   };
+
+  EditPassword = (callback) => {
+    let id;
+    let data = this.state.Data;
+    this.setState({ isLoading: true });
+    if (data.length === 1) {
+      data.map((i) => (id = i.id));
+    }
+    editData(
+      "admin",
+      this.state.data,
+      id,
+      (errMsg, data) => {
+        this.setState({ isLoading: false, Data: [] });
+
+        this.getData();
+        callback();
+        this.setState({ isLoading: false });
+        if (data.status) {
+          SuccessToast("Edited Successfully");
+        } else {
+          ErrorToast(errMsg);
+        }
+      },
+
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
+  };
+
   handelEditStuff = (callback) => {
     let id;
     let data = this.state.Data;
@@ -253,33 +284,6 @@ class index extends Component {
         }
       );
     }
-  };
-  handelEditPassword = (callback) => {
-    let id;
-    let data = this.state.Data;
-    this.setState({ isLoading: true });
-    if (data.length === 1) {
-      data.map((i) => (id = i.id));
-    }
-
-    editData("admin", this.state.data, id, () => {
-      this.setState({ isLoading: false, Data: [] });
-      toast(
-        `
-      Password changed Successfully `,
-        {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        }
-      );
-      this.getData();
-      callback();
-    });
   };
 
   render() {
@@ -385,7 +389,7 @@ class index extends Component {
               modalTitle='Re-new password'
               width='40%'
               height='55%'
-              fun={this.handelEditPassword}
+              fun={() => this.EditPassword(this.showEditPassword(false))}
               onCLose={() => this.showEditPassword(false)}>
               <EditPassword
                 data={this.state.Data}

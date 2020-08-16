@@ -38,6 +38,7 @@ import {
   addData,
   removeItem,
   removeItems,
+  changeImage,
 } from "../../API/";
 import UploadImage from "././CreateProduct/UploadImage";
 import ListHead from "../../shared/List//List_head";
@@ -96,8 +97,9 @@ export default class index extends React.Component {
       image: "",
       description: "",
       price: 0,
-      subgroup: "",
-      components: "",
+      subgroup: 0,
+      group: "",
+      components: [],
     },
 
     isActive: false,
@@ -368,7 +370,33 @@ export default class index extends React.Component {
       }
     );
   };
+  editImage = (callback) => {
+    let id;
+    let data = this.state.Data;
+    if (data.length === 1) {
+      data.map((i) => (id = i.id));
+      changeImage(
+        "product",
+        this.state.data,
+        id,
+        (errMsg, data) => {
+          this.setState({ isLoading: false, Data: [] });
 
+          callback();
+          this.setState({ isLoading: false });
+          if (data.status) {
+            SuccessToast("Edited Successfully");
+            this.getData();
+          } else {
+            ErrorToast(errMsg);
+          }
+        },
+        (errMsg) => {
+          RejectToast(errMsg);
+        }
+      );
+    }
+  };
   handelDelete = (callback) => {
     let id;
     let data = this.state.Data;
@@ -502,6 +530,7 @@ export default class index extends React.Component {
                                 : "List_item"
                             }
                             itemNumber={i + 1}
+                            key={i}
                             type={item.subgroup["name"]}
                             mostOrder={item.subgroup["group"].name}
                             orderValue={item.subgroup["group"].category["name"]}
@@ -528,6 +557,7 @@ export default class index extends React.Component {
                   return (
                     <ListType_item
                       name={item.name}
+                      key={i}
                       group={item.subgroup["group"].name}
                       category={item.subgroup["group"].category["name"]}
                       price={item.price + "$"}
@@ -588,6 +618,7 @@ export default class index extends React.Component {
               modalTitle='Change image'
               width='50%'
               height='70%'
+              fun={this.editImage}
               // onBack={() => {
               //   DisplayModel(true);
               //   DisplayUploadModel(false);

@@ -4,6 +4,7 @@
 
 import { Config } from "./Config";
 import axios from "axios";
+
 export const loadData = (query, onSuccess, onFailure) => {
   // let data ;
   fetch(`${Config.host}${query}`, {
@@ -122,14 +123,17 @@ export const editData = (query, data, id, onSuccess, onFailure) => {
   fetch(`${Config.host}${query}/${id}`, options)
     .then((resp) => resp.json())
     .then((jsonData) => {
+      console.log(jsonData);
       onSuccess(jsonData.errMsg, jsonData);
     })
+
     .catch((err) => {
+      console.log(err);
       onFailure(err.message);
     });
 };
 
-export const changeImage = (query, data, onSuccess, onFailure) => {
+export const changeImage = (query, data, id, onSuccess, onFailure) => {
   // var formdata = new FormData();
   // formdata.append("image", data.image);
   // let options = {
@@ -148,10 +152,11 @@ export const changeImage = (query, data, onSuccess, onFailure) => {
     body: JSON.stringify(data),
   };
 
-  fetch(`${Config.host}${query}`, options)
+  fetch(`${Config.host}${query}/${id}`, options)
     .then((resp) => resp.json())
     .then((jsonData) => {
       onSuccess(jsonData.errMsg, jsonData);
+      console.log(jsonData, "change image");
     })
     .catch((err) => {
       onFailure(err.message);
