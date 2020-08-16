@@ -16,20 +16,18 @@ class index extends Component {
     if (!localStorage.getItem("step_token")) this.props.history.push("/");
   }
   render() {
-    // const showTost =
-    //   this.props.location.state.show === "show" ? <Tost /> : null;
-
     return (
       <div>
         <ToastContainer
           position='top-center'
           autoClose={2000}
           hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
+          newestOnTop={true}
+          closeButton={false}
+          toastClassName='tostStyle'
           pauseOnFocusLoss
           draggable
+          rtl={false}
           pauseOnHover
         />
         <div className='container'>

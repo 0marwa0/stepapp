@@ -4,7 +4,7 @@
 
 import { Config } from "./Config";
 import axios from "axios";
-export const loadData = (query, callback) => {
+export const loadData = (query, onSuccess, onFailure) => {
   // let data ;
   fetch(`${Config.host}${query}`, {
     headers: {
@@ -13,14 +13,14 @@ export const loadData = (query, callback) => {
   })
     .then((resp) => resp.json())
     .then((jsonData) => {
-      callback(null, jsonData);
-
-      console.log(jsonData);
+      onSuccess(jsonData.errMsg, jsonData);
     })
-    .catch((err) => callback(err.message, null));
+    .catch((err) => {
+      onFailure(err.message);
+    });
 };
 
-export const removeItem = (query, id, callback) => {
+export const removeItem = (query, id, onSuccess, onFailure) => {
   fetch(`${Config.host}${query}/${id}`, {
     method: "delete",
     headers: {
@@ -29,11 +29,15 @@ export const removeItem = (query, id, callback) => {
     },
   })
     .then((resp) => resp.json())
-    .then((jsonData) => callback(null, jsonData))
-    .catch((err) => callback(err.message, null));
+    .then((jsonData) => {
+      onSuccess(jsonData.errMsg, jsonData);
+    })
+    .catch((err) => {
+      onFailure(err.message);
+    });
 };
 
-export const removeItems = (query, ids, callback) => {
+export const removeItems = (query, ids, onSuccess, onFailure) => {
   fetch(`${Config.host}${query}`, {
     method: "delete",
     headers: {
@@ -43,11 +47,15 @@ export const removeItems = (query, ids, callback) => {
     body: JSON.stringify(ids),
   })
     .then((resp) => resp.json())
-    .then((jsonData) => callback(null, jsonData, ids))
-    .catch((err) => callback(err.message, null, ids));
+    .then((jsonData) => {
+      onSuccess(jsonData.errMsg, jsonData);
+    })
+    .catch((err) => {
+      onFailure(err.message);
+    });
 };
 
-export const addData = (query, data, callback) => {
+export const addData = (query, data, onSuccess, onFailure) => {
   let options = {
     method: "post",
     headers: {
@@ -78,13 +86,16 @@ export const addData = (query, data, callback) => {
   fetch(`${Config.host}${query}`, options)
     .then((resp) => resp.json())
     .then((jsonData) => {
-      callback(null, jsonData);
-      console.log(jsonData, "data added");
+      console.log(jsonData.errMsg, jsonData, "on Success");
+      onSuccess(jsonData.errMsg, jsonData);
     })
-    .catch((err) => callback(err.message, null));
+    .catch((err) => {
+      console.log(err, "add error");
+      onFailure(err.message);
+    });
 };
 
-export const editData = (query, data, id, callback) => {
+export const editData = (query, data, id, onSuccess, onFailure) => {
   let options = {
     method: "put",
     headers: {
@@ -111,16 +122,14 @@ export const editData = (query, data, id, callback) => {
   fetch(`${Config.host}${query}/${id}`, options)
     .then((resp) => resp.json())
     .then((jsonData) => {
-      callback(null, jsonData);
-      console.log(jsonData, "on success");
+      onSuccess(jsonData.errMsg, jsonData);
     })
     .catch((err) => {
-      callback(err.message, null);
-      console.log(err, "on failure");
+      onFailure(err.message);
     });
 };
 
-export const changeImage = (query, data, callback) => {
+export const changeImage = (query, data, onSuccess, onFailure) => {
   // var formdata = new FormData();
   // formdata.append("image", data.image);
   // let options = {
@@ -141,6 +150,10 @@ export const changeImage = (query, data, callback) => {
 
   fetch(`${Config.host}${query}`, options)
     .then((resp) => resp.json())
-    .then((jsonData) => callback(null, jsonData))
-    .catch((err) => callback(err.message, null));
+    .then((jsonData) => {
+      onSuccess(jsonData.errMsg, jsonData);
+    })
+    .catch((err) => {
+      onFailure(err.message);
+    });
 };

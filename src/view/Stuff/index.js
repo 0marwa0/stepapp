@@ -18,7 +18,11 @@ import API, { addData } from "../../API/index";
 import Loader from "react-loader-spinner";
 import { loadData, editData, removeItem, removeItems } from "../../API/";
 import { ToastContainer, toast } from "react-toastify";
-
+import {
+  RejectToast,
+  ErrorToast,
+  SuccessToast,
+} from "../../API/ToastErrorHandle";
 import Stuff from "../../API/middleware/Stuff/index";
 class index extends Component {
   constructor(props) {
@@ -120,24 +124,24 @@ class index extends Component {
     }
   };
   getData = () => {
-    loadData("admins", (errorMsg, data) => {
-      if (data) {
-        this.setState({ isLoading: false });
-
-        for (let i = 0; i < data.admins.length; i++) {
-          this.setState({ Stuff: data.admins[0] });
+    this.setState({ isLoading: true });
+    loadData(
+      "admins",
+      (errMsg, data) => {
+        if (data.status) {
+          this.setState({ isLoading: false });
+          console.log(data, "admin");
+          for (let i = 0; i < data.admins.length; i++) {
+            this.setState({ Stuff: data.admins[0] });
+          }
+        } else {
+          RejectToast(errMsg);
         }
-      } else {
-        toast("fetch failed", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-        });
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
       }
-    });
+    );
   };
   componentDidMount() {
     if (!localStorage.getItem("step_token")) this.props.history.push("/");
@@ -157,19 +161,16 @@ class index extends Component {
   };
   handelCreateStuff = (callback) => {
     this.setState({ isLoading: true });
-    addData("admin", this.state.data, () => {
+    addData("admin", this.state.data, (errMsg, data) => {
       this.getData();
+      callback();
       this.setState({ isLoading: false });
-      toast("Add Successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        progress: undefined,
-      });
+      if (data.status) {
+        SuccessToast("Added Successfully");
+      } else {
+        ErrorToast(errMsg);
+      }
     });
-    callback();
   };
   handelEditStuff = (callback) => {
     let id;
@@ -179,24 +180,27 @@ class index extends Component {
       data.map((i) => (id = i.id));
     }
 
-    editData("admin", this.state.editedData, id, () => {
-      this.setState({ isLoading: false, Data: [] });
-      toast(
-        `
-      Edited Successfully `,
-        {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          // draggable: true,
-          // progress: undefined,
+    editData(
+      "admin",
+      this.state.editedData,
+      id,
+      (errMsg, data) => {
+        this.setState({ isLoading: false, Data: [] });
+
+        this.getData();
+        callback();
+        this.setState({ isLoading: false });
+        if (data.status) {
+          SuccessToast("Edited Successfully");
+        } else {
+          ErrorToast(errMsg);
         }
-      );
-      this.getData();
-      callback();
-    });
+      },
+
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
   };
 
   handelDelete = (callback) => {
@@ -206,46 +210,48 @@ class index extends Component {
     this.setState({ isLoading: true });
     if (data.length === 1) {
       data.map((i) => (id = i.id));
-      removeItem("admin", id, () => {
-        this.setState({ isLoading: false, Data: [] });
-        this.getData();
-        toast(
-          `
-         Deleted Successfully `,
-          {
-            position: "top-center",
-            autoClose: 2000,
-
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
+      removeItem(
+        "admin",
+        id,
+        (errMsg, data) => {
+          this.setState({ isLoading: false, Data: [] });
+          this.getData();
+          callback();
+          this.setState({
+            isLoading: false,
+          });
+          if (data.status) {
+            SuccessToast("Deleted Successfully");
+          } else {
+            ErrorToast(errMsg);
           }
-        );
-        callback();
-      });
+        },
+        (errMsg) => {
+          RejectToast(errMsg);
+        }
+      );
     } else {
       id = data.map((i) => i.id);
-      removeItems("admins", { ids: id }, () => {
-        this.setState({ isLoading: false, Data: [] });
-        toast(
-          `
-         Deleted Successfully `,
-          {
-            position: "top-center",
-            autoClose: 2000,
-
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
+      removeItems(
+        "admins",
+        { ids: id },
+        (errMsg, data) => {
+          this.setState({ isLoading: false, Data: [] });
+          this.getData();
+          callback();
+          this.setState({
+            isLoading: false,
+          });
+          if (data.status) {
+            SuccessToast("Deleted Successfully");
+          } else {
+            ErrorToast(errMsg);
           }
-        );
-        this.getData();
-        callback();
-      });
+        },
+        (errMsg) => {
+          RejectToast(errMsg);
+        }
+      );
     }
   };
   handelEditPassword = (callback) => {
@@ -291,13 +297,14 @@ class index extends Component {
       <div>
         <ToastContainer
           position='top-center'
-          autoClose={5000}
+          autoClose={2000}
           hideProgressBar
-          newestOnTop
-          closeOnClick
-          rtl={false}
+          newestOnTop={true}
+          closeButton={false}
+          toastClassName='tostStyle'
           pauseOnFocusLoss
           draggable
+          rtl={false}
           pauseOnHover
         />
         <Header slug='Stuff list' />

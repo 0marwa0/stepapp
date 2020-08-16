@@ -5,7 +5,11 @@ import React, { Component } from "react";
 import Header from "../../shared/header";
 
 import ListItem from "./List_Customer_item.js";
-
+import {
+  RejectToast,
+  ErrorToast,
+  SuccessToast,
+} from "../../API/ToastErrorHandle";
 // import { Customers } from "../../fakeData";
 import {
   loadData,
@@ -83,24 +87,26 @@ class index extends Component {
   };
 
   getData = () => {
-    loadData("users", (errorMsg, data) => {
-      if (data) {
-        this.setState({ isLoading: false });
-        for (let i = 0; i < data.users.length; i++) {
-          this.setState({ Customers: data.users[0] });
+    this.setState({ isLoading: true });
+    loadData(
+      "users",
+      (errMsg, data) => {
+        if (data.status) {
+          this.setState({ isLoading: false });
+          // console.log(data, "users");
+          for (let i = 0; i < data.users.length; i++) {
+            this.setState({ Customers: data.users[0] });
+          }
+        } else {
+          RejectToast(errMsg);
         }
-      } else {
-        toast("fetch failed  ", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          progress: undefined,
-        });
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
       }
-    });
+    );
   };
+
   handelEditStuff = (callback) => {
     let id;
     let data = this.state.Data;
@@ -108,44 +114,48 @@ class index extends Component {
     if (data.length === 1) {
       data.map((i) => (id = i.id));
     }
-    console.log("edited");
-    editData("user", this.state.data, id, () => {
-      console.log(this.state.data, id, "should be edited");
-      this.setState({ isLoading: false, Data: [] });
-      toast(
-        `
-      Edited Successfully `,
-        {
-          position: "top-center",
-          autoClose: 2000,
 
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+    editData(
+      "user",
+      this.state.data,
+      id,
+      (errMsg, data) => {
+        this.setState({ isLoading: false, Data: [] });
+
+        this.getData();
+        callback();
+        this.setState({ isLoading: false });
+        if (data.status) {
+          SuccessToast("Edited Successfully");
+        } else {
+          ErrorToast(errMsg);
         }
-      );
-      this.getData();
-      callback();
-    });
+      },
+
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
   };
   handelCreateCustomer = (callback) => {
     this.setState({ isLoading: true });
-    console.log(this.state.data, "uplaoded data");
-    addData("user", this.state.data, () => {
-      this.getData();
-      this.setState({ isLoading: false });
-      toast("Add Successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        progress: undefined,
-      });
-    });
-    callback();
+    addData(
+      "user",
+      this.state.data,
+      (errMsg, data) => {
+        this.getData();
+        callback();
+        this.setState({ isLoading: false });
+        if (data.status) {
+          SuccessToast("Added Successfully");
+        } else {
+          ErrorToast(errMsg);
+        }
+      },
+      (errMsg) => {
+        ErrorToast(errMsg);
+      }
+    );
   };
   handelInputChange = (event, key) => {
     let value = event.target.value;
@@ -186,47 +196,48 @@ class index extends Component {
     this.setState({ isLoading: true });
     if (data.length === 1) {
       data.map((i) => (id = i.id));
-      removeItem("user", id, () => {
-        this.setState({ isLoading: false, Data: [] });
-        this.getData();
-        toast(
-          `
-         Deleted Successfully `,
-          {
-            position: "top-center",
-            autoClose: 2000,
-
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
+      removeItem(
+        "user",
+        id,
+        (errMsg, data) => {
+          this.setState({ isLoading: false, Data: [] });
+          this.getData();
+          callback();
+          this.setState({
+            isLoading: false,
+          });
+          if (data.status) {
+            SuccessToast("Deleted Successfully");
+          } else {
+            ErrorToast(errMsg);
           }
-        );
-        callback();
-      });
+        },
+        (errMsg) => {
+          RejectToast(errMsg);
+        }
+      );
     } else {
       id = data.map((i) => i.id);
-      console.log(id, "deleted");
-      removeItems("users", { ids: id }, () => {
-        this.setState({ isLoading: false, Data: [] });
-        toast(
-          `
-         Deleted Successfully `,
-          {
-            position: "top-center",
-            autoClose: 2000,
-
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
+      removeItems(
+        "users",
+        { ids: id },
+        (errMsg, data) => {
+          this.setState({ isLoading: false, Data: [] });
+          this.getData();
+          callback();
+          this.setState({
+            isLoading: false,
+          });
+          if (data.status) {
+            SuccessToast("Deleted Successfully");
+          } else {
+            ErrorToast(errMsg);
           }
-        );
-        this.getData();
-        callback();
-      });
+        },
+        (errMsg) => {
+          RejectToast(errMsg);
+        }
+      );
     }
   };
   render() {
@@ -246,11 +257,12 @@ class index extends Component {
           position='top-center'
           autoClose={2000}
           hideProgressBar
-          newestOnTop
-          closeOnClick
-          rtl={false}
+          newestOnTop={true}
+          closeButton={false}
+          toastClassName='tostStyle'
           pauseOnFocusLoss
           draggable
+          rtl={false}
           pauseOnHover
         />
         <Header slug='Customer list' />

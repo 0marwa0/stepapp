@@ -17,13 +17,13 @@ function index({
   fun,
   isMulti,
   onBack,
-  props,
+  size,
 }) {
   const style = { height: height, width: width };
 
   return (
     <div className='Overlay'>
-      <div className='Modal' style={style}>
+      <div className={size === "lg" ? " Modal-lg" : "Modal"} style={style}>
         <div className='Modal_inner'>
           <div
             className={

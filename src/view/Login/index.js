@@ -8,11 +8,13 @@ import { AiOutlineUser, AiOutlineCloseCircle } from "react-icons/ai";
 import Loader from "react-loader-spinner";
 import { BsLock } from "react-icons/bs";
 import { NotificationManager } from "react-notifications";
-import Axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Tost from "../../shared/Tost";
-import { NotifyHandler, NotifyComponent } from "react-notification-component";
+import {
+  RejectToast,
+  ErrorToast,
+  SuccessToast,
+} from "../../API/ToastErrorHandle.js";
 class index extends Component {
   constructor(props) {
     super(props);
@@ -59,69 +61,40 @@ class index extends Component {
 
     if (this.state.data.email != 0 && this.state.data.password != 0) {
       this.setState({ isLoading: true });
-      this.props.Login(loginData, (data) => {
-        if (data.status) {
-          this.setState({ isLogin: true });
-          this.setState({ isLoading: false });
-          this.props.history.push("/dashboard");
+      this.props.Login(
+        loginData,
+        (status, errMsg, data) => {
+          if (data.status) {
+            this.setState({ isLogin: true, isLoading: false });
+            this.props.history.push("/dashboard");
+            console.log(data.status, "status");
 
-          localStorage.setItem("step_token", data.token);
-        } else {
-          this.setState({ isLoading: false });
-          this.errorHandle(data.errMsg);
-          this.props.history.push("/");
+            SuccessToast("Login Successfully");
+          } else {
+            this.setState({ isLoading: false });
+            ErrorToast(data.errMsg);
+            this.props.history.push("/");
+          }
+        },
+        (errMsg) => {
+          RejectToast(errMsg);
         }
-      });
+      );
     } else {
-      this.setState({ email: "Please enter your email!" });
-      this.setState({ password: "Please enter your password!" });
+      if (this.state.data.email.length === 0)
+        this.setState({ email: "Please enter your email!" });
+      if (this.state.data.password.length === 0)
+        this.setState({ password: "Please enter your password!" });
     }
     if (localStorage.getItem("step_token"))
       this.props.history.push("/dashboard");
   };
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     if (localStorage.getItem("step_token")) {
       this.props.history.push("/dashboard");
     }
   }
   componentDidMount() {}
-  errorHandle = (error) => {
-    if (error.email) {
-      toast(
-        ` 
-        ❌
-      
-      Email ${this.state.data.email} is not valid`,
-        {
-          position: "top-center",
-          autoClose: 2000,
-
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        }
-      );
-
-      // this.setState({ emailErrorMsg: "email is not exist" });
-    }
-
-    if (error.err) {
-      toast(` ❌ Wrong credentials`, {
-        position: "top-center",
-        autoClose: 2000,
-        className: "tostStyleError",
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-
-      // this.setState({ passErrorMsg: "Wrong credentials" });
-    }
-  };
 
   render() {
     return (
@@ -132,11 +105,12 @@ class index extends Component {
               position='top-center'
               autoClose={2000}
               hideProgressBar
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
+              newestOnTop={true}
+              closeButton={false}
+              toastClassName='tostStyle'
               pauseOnFocusLoss
               draggable
+              rtl={false}
               pauseOnHover
             />
             <div

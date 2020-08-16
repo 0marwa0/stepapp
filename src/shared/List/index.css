@@ -1,5 +1,15 @@
 /** @format */
-
+@keyframes moveTopItem {
+  0% {
+    transform: translateY(-5);
+  }
+  30% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(-10);
+  }
+}
 .List_Wrapper {
   width: 100%;
 }
@@ -76,9 +86,14 @@
   width: 100%;
   display: grid;
   padding: 15px 0;
+
   /* grid-template-columns: 0.4fr 0.4fr 3fr 40px 1.5fr 1.5fr 1.5fr 0.9fr; */
   /* grid-template-columns: 0.4fr 0.4fr repeat(7, 1fr); */
   border: 1px solid var(--lighter-gray);
+}
+.List_head,
+.List_item {
+  animation: moveTopItem 2s ease-in-out;
 }
 .customerItem {
   display: grid;

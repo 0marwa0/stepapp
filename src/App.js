@@ -18,9 +18,10 @@ class App extends React.Component {
     isLogin: false,
   };
   componentDidMount() {}
-  Login = (data, callback) => {
+  Login = (data, onSuccess, onFailure) => {
     let myHeaders = new Headers();
     let raw = JSON.stringify(data);
+    console.log(raw, "login data");
     myHeaders.append("Content-Type", "application/json");
     let requestOptions = {
       method: "POST",
@@ -32,33 +33,17 @@ class App extends React.Component {
     fetch("https://step-copy.herokuapp.com/dash/v1/login", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        callback(result);
         if (result.status) {
-          toast("Login Successfully");
           this.setState({ isLogin: true });
+          localStorage.setItem("step_token", result.token);
         }
-
+        onSuccess(result.status, result.errMsg, result);
         console.log(result, "login success");
       })
 
       .catch((error) => {
-        console.log(error, "login failed");
-        toast(
-          `
-          ❌
-
-         Login Failed  `,
-          {
-            position: "top-center",
-            autoClose: 2000,
-
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          }
-        );
+        console.log(error.message, "login failed");
+        onFailure(error.message);
       });
   };
   render() {
@@ -73,17 +58,6 @@ class App extends React.Component {
 
       return (
         <div>
-          <ToastContainer
-            position='top-center'
-            autoClose={2000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
           <Navbar Logout={Logout} />
           <Switch>
             <MainLayoutRoute

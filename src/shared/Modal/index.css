@@ -7,10 +7,19 @@
   display: flex;
   flex-direction: column;
   border-radius: 4px 4px 0 0;
+  /* overflow: hidden; */
+  height: auto;
+}
+.Modal-lg {
+  position: absolute;
+  top: 0;
+  left: 25%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px 4px 0 0;
   overflow: hidden;
   height: auto;
 }
-
 .Modal_inner {
   position: relative;
   height: auto;
