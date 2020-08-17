@@ -9,7 +9,14 @@ import Category from "../../API/middleware/Category";
 import SubGroup from "../../API/middleware/SubGroup";
 import { FiTrash } from "react-icons/fi";
 import Loader from "react-loader-spinner";
-
+import { removeItem, loadData } from "../../API/index";
+import {
+  ResponseToast,
+  ResponseToastMsg,
+  RejectToast,
+  ErrorToast,
+  SuccessToast,
+} from "../../API/ToastErrorHandle";
 const options = [
   { value: "categories", label: "Main Category" },
   { value: "groups", label: "Group" },
@@ -18,33 +25,86 @@ const options = [
 class index extends React.Component {
   state = {
     selectValue: { value: "categories", label: " Main Category" },
-    groups: this.props.groups ? this.props.groups : [],
-    subgroups: this.props.subgroups ? this.props.subgroups : [],
-    categories: this.props.categories ? this.props.categories : [],
+    groups: [],
+    subgroups: [],
+    categories: [],
+    isLoading: true,
   };
   onChange = (event) => {
     this.setState({ selectValue: event });
   };
 
   deleteItem = (id, value) => {
+    this.setState({ isLoading: true });
     switch (value) {
       case "categories":
-        Category.deleteCategory(id);
-        this.setState({
-          categories: this.state.categories.filter((item) => item.id !== id),
-        });
+        removeItem(
+          "category",
+          id,
+          (errMsg, data) => {
+            // this.setState({ isLoading: false });
+            this.getCategories();
+            // callback();
+            this.setState({
+              isLoading: false,
+            });
+            if (data.status) {
+              // SuccessToast("Deleted Successfully");
+            } else {
+              ErrorToast(errMsg);
+            }
+          },
+          (errMsg) => {
+            RejectToast(errMsg);
+          }
+        );
+
         break;
       case "groups":
-        Group.deleteGroup(id);
-        this.setState({
-          groups: this.state.groups.filter((item) => item.id !== id),
-        });
+        removeItem(
+          "group",
+          id,
+          (errMsg, data) => {
+            // this.setState({ isLoading: false });
+            this.getGroups();
+            // callback();
+            this.setState({
+              isLoading: false,
+            });
+            if (data.status) {
+              console.log(data, "delete item ipe");
+              // SuccessToast("Deleted Successfully");
+            } else {
+              ErrorToast(errMsg);
+            }
+          },
+          (errMsg) => {
+            RejectToast(errMsg);
+          }
+        );
         break;
       case "subgroups":
-        SubGroup.deleteSubGroup(id);
-        this.setState({
-          subgroups: this.state.subgroups.filter((item) => item.id !== id),
-        });
+        removeItem(
+          "subgroup",
+          id,
+          (errMsg, data) => {
+            // this.setState({ isLoading: false });
+            this.getSubgroups();
+            // callback();
+            this.setState({
+              isLoading: false,
+            });
+            if (data.status) {
+              console.log(data, "delete item ipe");
+              // SuccessToast("Deleted Successfully");
+            } else {
+              ErrorToast(errMsg);
+            }
+          },
+          (errMsg) => {
+            RejectToast(errMsg);
+          }
+        );
         break;
       default:
         break;
@@ -52,41 +112,59 @@ class index extends React.Component {
   };
   Display = (value) => {
     if (value == "categories") {
-      return this.state.categories.map((item) => (
-        <div className='sideNav_item'>
-          <p>{item.name}</p>
-          <FiTrash
-            color='red'
-            style={{ cursor: "pointer" }}
-            onClick={() => this.deleteItem(item.id, value)}
-          />
+      return this.state.isLoading ? (
+        <div className='sideNavLoader'>
+          <Loader type='ThreeDots' color='blue' height={80} width={80} />
         </div>
-      ));
+      ) : (
+        this.state.categories.map((item) => (
+          <div className='sideNav_item'>
+            <p>{item.name}</p>
+            <FiTrash
+              color='red'
+              style={{ cursor: "pointer" }}
+              onClick={() => this.deleteItem(item.id, value)}
+            />
+          </div>
+        ))
+      );
     }
 
     if (value == "groups") {
-      return this.state.groups.map((item) => (
-        <div className='sideNav_item'>
-          <p>{item.name}</p>
-          <FiTrash
-            color='red'
-            style={{ cursor: "pointer" }}
-            onClick={() => this.deleteItem(item.id, value)}
-          />
+      return this.state.isLoading ? (
+        <div className='sideNavLoader'>
+          <Loader type='ThreeDots' color='blue' height={80} width={80} />
         </div>
-      ));
+      ) : (
+        this.state.groups.map((item) => (
+          <div className='sideNav_item'>
+            <p>{item.name}</p>
+            <FiTrash
+              color='red'
+              style={{ cursor: "pointer" }}
+              onClick={() => this.deleteItem(item.id, value)}
+            />
+          </div>
+        ))
+      );
     }
     if (value == "subgroups") {
-      return this.state.subgroups.map((item) => (
-        <div className='sideNav_item'>
-          <p>{item.name}</p>
-          <FiTrash
-            color='red'
-            style={{ cursor: "pointer" }}
-            onClick={() => this.deleteItem(item.id, value)}
-          />
+      return this.state.isLoading ? (
+        <div className='sideNavLoader'>
+          <Loader type='ThreeDots' color='blue' height={80} width={80} />
         </div>
-      ));
+      ) : (
+        this.state.subgroups.map((item) => (
+          <div className='sideNav_item'>
+            <p>{item.name}</p>
+            <FiTrash
+              color='red'
+              style={{ cursor: "pointer" }}
+              onClick={() => this.deleteItem(item.id, value)}
+            />
+          </div>
+        ))
+      );
     }
   };
   handleClose = (e) => {
@@ -95,6 +173,73 @@ class index extends React.Component {
     }
     this.props.DisplaySideNav(false);
   };
+  getGroups = () => {
+    loadData(
+      "groups",
+      (errMsg, data) => {
+        if (data.status) {
+          // console.log(data, "groups");
+          for (let i = 0; i < data.groups.length; i++) {
+            this.setState({ groups: data.groups[0] });
+          }
+        } else {
+          RejectToast(errMsg);
+        }
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
+  };
+
+  getSubgroups = () => {
+    loadData(
+      "subgroups",
+      (errMsg, data) => {
+        if (data.status) {
+          // console.log(data, "subgroups");
+          for (let i = 0; i < data.subgroups.length; i++) {
+            this.setState({ subgroups: data.subgroups[0] });
+          }
+        } else {
+          RejectToast(errMsg);
+        }
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
+  };
+
+  loader = () => (
+    <div className='sideNavLoader'>
+      <Loader type='ThreeDots' color='blue' height={80} width={80} />
+    </div>
+  );
+  getCategories = () => {
+    loadData(
+      "categories",
+      (errMsg, data) => {
+        if (data.status) {
+          // console.log(data, "categories");
+          this.setState({ isLoading: false });
+          for (let i = 0; i < data.categories.length; i++) {
+            this.setState({ categories: data.categories[0] });
+          }
+        } else {
+          RejectToast(errMsg);
+        }
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
+  };
+  componentDidMount() {
+    this.getGroups();
+    this.getSubgroups();
+    this.getCategories();
+  }
   render() {
     let customStyles = {
       menu: (styles) => ({ ...styles, width: "9em", borderRadius: 6 }),

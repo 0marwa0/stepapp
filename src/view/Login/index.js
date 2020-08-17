@@ -69,7 +69,7 @@ class index extends Component {
             this.props.history.push("/dashboard");
             console.log(data.status, "status");
 
-            SuccessToast("Login Successfully");
+            SuccessToast("Login Successful");
           } else {
             this.setState({ isLoading: false });
             ErrorToast(data.errMsg);

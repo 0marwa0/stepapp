@@ -1,5 +1,12 @@
 /** @format */
-
+.sideNavLoader {
+  /* background-color: teal;
+  display: flex;
+  flex-direction: column;
+  justify-items: center; */
+  margin: auto;
+  /* justify-content: center; */
+}
 .SideModal {
   position: absolute;
   top: 0;

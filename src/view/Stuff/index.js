@@ -38,6 +38,7 @@ class index extends Component {
       isLoading: false,
       pageNumber: 0,
       Stuff: [],
+      id: "",
       isLoading: true,
       data: {
         name: "",
@@ -54,7 +55,7 @@ class index extends Component {
         email: "",
         location: "",
         birthday: "",
-        type: "pd",
+        type: "",
       },
     };
   }
@@ -172,21 +173,21 @@ class index extends Component {
       }
     });
   };
-
+  getId = (id) => {
+    this.setState({ id });
+  };
   EditPassword = (callback) => {
-    let id;
-    let data = this.state.Data;
+    let id = this.state.id;
+
     this.setState({ isLoading: true });
-    if (data.length === 1) {
-      data.map((i) => (id = i.id));
-    }
+    console.log(this.state.editedData, id, "change password data");
     editData(
       "admin",
       this.state.data,
       id,
       (errMsg, data) => {
         this.setState({ isLoading: false, Data: [] });
-
+        console.log(data, "edit pasword result");
         this.getData();
         callback();
         this.setState({ isLoading: false });
@@ -241,6 +242,7 @@ class index extends Component {
     this.setState({ isLoading: true });
     if (data.length === 1) {
       data.map((i) => (id = i.id));
+
       removeItem(
         "admin",
         id,
@@ -362,7 +364,10 @@ class index extends Component {
                       }
                       itemNumber={i + 1}
                       email={item.email}
-                      showModal={() => this.showEditPassword(true)}
+                      showModal={() => {
+                        this.showEditPassword(true);
+                        this.getId(item.id);
+                      }}
                       phone={item.phone}
                       birthday={item.birthday.slice(0, 4)}
                       location={item.location}
@@ -389,11 +394,11 @@ class index extends Component {
               modalTitle='Re-new password'
               width='40%'
               height='55%'
-              fun={() => this.EditPassword(this.showEditPassword(false))}
+              fun={this.EditPassword}
               onCLose={() => this.showEditPassword(false)}>
               <EditPassword
                 data={this.state.Data}
-                handelInputChange={this.handelInputChange}
+                handelInputChange={this.handelEditChange}
               />
             </Modal>
           ) : null}

@@ -86,7 +86,9 @@ a {
 .input_wrapper input[type="text"],
 .input_wrapper input[type="password"],
 .input_error input[type="text"],
-.input_error input[type="password"] {
+.input_error input[type="password"],
+.input_error input[type="number"],
+.input_wrapper input[type="number"] {
   font-size: 14px;
   height: 28px;
   border: 1px solid var(--light-gray);
@@ -98,17 +100,25 @@ a {
   padding-right: 25px;
   border-radius: 5px;
 }
+.input_error input[type="number"],
+.input_wrapper input[type="number"] {
+  padding-right: 5px !important;
+}
+
 .input_error input[type="text"],
-.input_error input[type="password"] {
+.input_error input[type="password"],
+.input_error input[type="number"]:focus {
   border: 1px solid red !important;
 }
 
 .input_error input[type="text"]:focus,
-.input_error input[type="password"]:focus {
+.input_error input[type="password"]:focus,
+.input_error input[type="number"]:focus {
   box-shadow: 0 0 1.5px red;
 }
 .input_wrapper input[type="text"]:hover,
-.input_wrapper input[type="password"]:hover {
+.input_wrapper input[type="password"]:hover,
+.input_error input[type="number"]:focus {
   border: 1px solid rgba(81, 203, 238, 1);
 }
 button {
@@ -126,7 +136,8 @@ img {
 } */
 
 .input_wrapper input[type="text"]:focus,
-.input_wrapper input[type="password"]:focus {
+.input_wrapper input[type="password"]:focus,
+.input_wrapper input[type="number"]:focus {
   /* border: none;
   outline: none !important; */
 

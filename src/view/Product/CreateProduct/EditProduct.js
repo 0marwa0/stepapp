@@ -164,7 +164,7 @@ export class EditProduct extends React.Component {
             <p>Price</p>
             <span className='input_border '>
               <input
-                type='text'
+                type='number'
                 width='100%'
                 defaultValue={price}
                 onChange={(e) => this.props.handelInputChange(e, "price")}

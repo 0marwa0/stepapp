@@ -7,22 +7,24 @@ export const ErrorToast = (error) => {
   for (var key in error) {
     message = error[key];
   }
-  toast(
-    ` 
-      ❌
-    
-    ${message}`,
-    {
-      position: "top-center",
-      autoClose: 2000,
+  message.map((msg) =>
+    toast(
+      ` 
+        ❌
+      
+      ${msg}`,
+      {
+        position: "top-center",
+        autoClose: 2000,
 
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
 
-      progress: undefined,
-    }
+        progress: undefined,
+      }
+    )
   );
 };
 export const ResponseToast = (errMsg) => {
@@ -51,7 +53,7 @@ export const SuccessToast = (userMsg) => {
 
 export const RejectToast = (errMsg) => {
   return errMsg
-    ? toast(`  ❌ ${errMsg}`, {
+    ? toast(`  ❌ ${errMsg} `, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: true,

@@ -96,9 +96,8 @@ export default class index extends React.Component {
       name: "",
       image: "",
       description: "",
-      price: 0,
-      subgroup: 0,
-      group: "",
+      price: 1000,
+      subgroup: 2,
       components: [],
     },
 
@@ -239,54 +238,7 @@ export default class index extends React.Component {
   componentDidMount() {
     if (!localStorage.getItem("step_token")) this.props.history.push("/");
     this.getData();
-    loadData(
-      "categories",
-      (errMsg, data) => {
-        if (data.status) {
-          // console.log(data, "categories");
-          for (let i = 0; i < data.categories.length; i++) {
-            this.setState({ categories: data.categories[0] });
-          }
-        } else {
-          RejectToast(errMsg);
-        }
-      },
-      (errMsg) => {
-        RejectToast(errMsg);
-      }
-    );
-    loadData(
-      "groups",
-      (errMsg, data) => {
-        if (data.status) {
-          // console.log(data, "groups");
-          for (let i = 0; i < data.groups.length; i++) {
-            this.setState({ groups: data.groups[0] });
-          }
-        } else {
-          RejectToast(errMsg);
-        }
-      },
-      (errMsg) => {
-        RejectToast(errMsg);
-      }
-    );
-    loadData(
-      "subgroups",
-      (errMsg, data) => {
-        if (data.status) {
-          // console.log(data, "subgroups");
-          for (let i = 0; i < data.subgroups.length; i++) {
-            this.setState({ subgroups: data.subgroups[0] });
-          }
-        } else {
-          RejectToast(errMsg);
-        }
-      },
-      (errMsg) => {
-        RejectToast(errMsg);
-      }
-    );
+
     loadData(
       "components",
       (errMsg, data) => {
@@ -332,6 +284,7 @@ export default class index extends React.Component {
     let data = this.state.data;
     data[key] = value;
     this.setState({ data });
+    // console.log(value, "edited number value");
   };
   handleSelect = (event, key) => {
     let value = event.value;
@@ -347,7 +300,7 @@ export default class index extends React.Component {
     if (data.length === 1) {
       data.map((i) => (id = i.id));
     }
-
+    console.log(id, this.state.data, "product edited data");
     editData(
       "product",
       this.state.data,
