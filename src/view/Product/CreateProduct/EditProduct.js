@@ -235,9 +235,9 @@ export class EditProduct extends React.Component {
               options={options}
               defaultValue=''
               isSearchable={false}
-              // value={this.state.selectedOption}
+              value={this.state.selectedOption}
               styles={selectStyle}
-              // isMulti={true}
+              isMulti={true}
               onChange={(e) => this.props.handleSelect(e, "components")}
               components={{
                 IndicatorSeparator: () => null,

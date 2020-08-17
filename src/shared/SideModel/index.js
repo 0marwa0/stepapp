@@ -8,6 +8,8 @@ import Group from "../../API/middleware/Groups";
 import Category from "../../API/middleware/Category";
 import SubGroup from "../../API/middleware/SubGroup";
 import { FiTrash } from "react-icons/fi";
+import { ToastContainer, toast } from "react-toastify";
+
 import Loader from "react-loader-spinner";
 import { removeItem, loadData } from "../../API/index";
 import {
@@ -49,7 +51,7 @@ class index extends React.Component {
               isLoading: false,
             });
             if (data.status) {
-              // SuccessToast("Deleted Successfully");
+              SuccessToast("Deleted Successfully");
             } else {
               ErrorToast(errMsg);
             }
@@ -73,7 +75,7 @@ class index extends React.Component {
             });
             if (data.status) {
               console.log(data, "delete item ipe");
-              // SuccessToast("Deleted Successfully");
+              SuccessToast("Deleted Successfully");
             } else {
               ErrorToast(errMsg);
             }
@@ -96,7 +98,7 @@ class index extends React.Component {
             });
             if (data.status) {
               console.log(data, "delete item ipe");
-              // SuccessToast("Deleted Successfully");
+              SuccessToast("Deleted Successfully");
             } else {
               ErrorToast(errMsg);
             }
@@ -275,6 +277,18 @@ class index extends React.Component {
 
     return (
       <div onClick={(e) => this.handleClose(e)} className='SideOverlay'>
+        <ToastContainer
+          position='top-center'
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={true}
+          closeButton={false}
+          toastClassName='tostStyle'
+          pauseOnFocusLoss
+          draggable
+          rtl={false}
+          pauseOnHover
+        />
         <div
           className={this.props.isLoading ? "SideModal loading" : "SideModal"}
           ref={(node) => {

@@ -1,29 +1,23 @@
 /** @format */
-
 import React, { Component } from "react";
 import ListFilter from "../../shared/List/List_filter";
 import ListFooter from "../../shared/List/List_footer";
 import Loader from "react-loader-spinner";
-
 import Header from "../../shared/header";
 import "../../shared/List/index.css";
-
 import "../../App.css";
 import "./index.css";
 import ProductFilter from "./ProductFilter";
-
 import "../../shared/List/index.css";
 import CreateProduct from "./CreateProduct";
 import EditProduct from "./CreateProduct/EditProduct";
 import Modal from "../../shared/Modal";
 import { Products } from "../../fakeData/";
-
 import ListItem from "../../shared/List/List_Item";
 import "../../App.css";
 import API from "../../API/index";
 import "./index.css";
 import { ToastContainer, toast } from "react-toastify";
-
 import {
   ResponseToast,
   ResponseToastMsg,
@@ -96,7 +90,7 @@ export default class index extends React.Component {
       name: "",
       image: "",
       description: "",
-      price: 1000,
+      price: 0,
       subgroup: 2,
       components: [],
     },
@@ -187,23 +181,21 @@ export default class index extends React.Component {
   };
   handleImageChange = (event, key) => {
     let value = event.target.files[0];
+
     let imgSrc = URL.createObjectURL(event.target.files[0]);
     let data = this.state.data;
     this.setState({
       Image: imgSrc,
       allowToChange: true,
     });
-    data[
-      key
-    ] = `${event.target.files[0]}/C:/Users/Marwa/Desktop/FoodApp/food_app/src/Images/berries.png`;
-
+    data[key] = value;
+    this.setState({ data });
     // console.log(event.target.files[0]);
     var reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
     reader.onload = function () {
       // data[key] = reader.result;
     };
-    this.setState({ data });
   };
   removeImage = () => {
     this.setState({
@@ -238,7 +230,56 @@ export default class index extends React.Component {
   componentDidMount() {
     if (!localStorage.getItem("step_token")) this.props.history.push("/");
     this.getData();
+    loadData(
+      "groups",
+      (errMsg, data) => {
+        if (data.status) {
+          // console.log(data, "groups");
+          for (let i = 0; i < data.groups.length; i++) {
+            this.setState({ groups: data.groups[0] });
+          }
+        } else {
+          RejectToast(errMsg);
+        }
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
 
+    loadData(
+      "subgroups",
+      (errMsg, data) => {
+        if (data.status) {
+          // console.log(data, "subgroups");
+          for (let i = 0; i < data.subgroups.length; i++) {
+            this.setState({ subgroups: data.subgroups[0] });
+          }
+        } else {
+          RejectToast(errMsg);
+        }
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
+    loadData(
+      "categories",
+      (errMsg, data) => {
+        if (data.status) {
+          // console.log(data, "categories");
+          this.setState({ isLoading: false });
+          for (let i = 0; i < data.categories.length; i++) {
+            this.setState({ categories: data.categories[0] });
+          }
+        } else {
+          RejectToast(errMsg);
+        }
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
     loadData(
       "components",
       (errMsg, data) => {
@@ -258,7 +299,7 @@ export default class index extends React.Component {
   }
 
   handelCreateProduct = (callback) => {
-    // console.log(this.state.data, "product data");
+    console.log(this.state.data, "product data");
     this.setState({ isLoading: true });
 
     addData(
@@ -278,6 +319,20 @@ export default class index extends React.Component {
         RejectToast(errMsg);
       }
     );
+    let data = this.state.data;
+    data["name"] = "";
+    data["components"] = "";
+    data["description"] = "";
+    data["image"] = require("../../shared/Icon/upload.png");
+    data["price"] = "";
+    data["subgroup"] = "";
+    this.setState({ data });
+
+    // this.setState((data.image = ""));
+    // this.setState((data.description = ""));
+    // this.setState((data.subgroup = ""));
+    // this.setState((data.components = ""));
+    // this.setState((data.price = ""));
   };
   handelInputChange = (event, key) => {
     let value = event.target.value;
@@ -286,11 +341,17 @@ export default class index extends React.Component {
     this.setState({ data });
     // console.log(value, "edited number value");
   };
-  handleSelect = (event, key) => {
+  handleSelect = (event, key, query) => {
     let value = event.value;
     let data = this.state.data[key];
+
     data = value;
+    // console.log(
+    //   this.state.query.filter((item) => value == item.name),
+    //   "selected"
+    // );
     this.setState({ data });
+
     console.log(event, data, "selected value");
   };
   handelEditProduct = (callback) => {

@@ -94,7 +94,11 @@ class index extends Component {
       this.props.history.push("/dashboard");
     }
   }
-  componentDidMount() {}
+  componentDidMount() {
+    if (localStorage.getItem("step_token")) {
+      this.props.history.push("/dashboard");
+    }
+  }
 
   render() {
     return (
