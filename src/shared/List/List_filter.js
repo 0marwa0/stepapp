@@ -33,7 +33,6 @@ class ListFilter extends React.Component {
   };
 
   render() {
-    console.log(this.props.selectedData);
     return (
       <div>
         <div className='List_filter'>
