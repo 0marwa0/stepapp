@@ -18,12 +18,17 @@ function index({
   isMulti,
   onBack,
   size,
+  DisableBtn,
 }) {
   const style = { height: height, width: width };
 
   return (
     <div className='Overlay'>
-      <div className={size === "lg" ? " Modal-lg" : "Modal"} style={style}>
+      <div
+        className={
+          size === "lg" ? " Modal-lg" : size === "sm" ? "Modal-sm" : "Modal"
+        }
+        style={style}>
         <div className='Modal_inner'>
           <div
             className={
@@ -51,7 +56,13 @@ function index({
                 // disabled={true}
                 onClick={() => fun(onCLose)}
                 className={
-                  modalType == "Delete" ? "btn DeleteModal_btn" : "btn btn_ctrl"
+                  modalType === "Delete"
+                    ? DisableBtn
+                      ? "btn DeleteModal_btn DisableBtn "
+                      : "btn DeleteModal_btn  "
+                    : DisableBtn
+                    ? "btn btn_ctrl DisableBtn "
+                    : "btn btn_ctrl "
                 }>
                 {modalButton}
               </button>

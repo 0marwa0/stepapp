@@ -7,24 +7,21 @@ export const ErrorToast = (error) => {
   for (var key in error) {
     message = error[key];
   }
-  message.map((msg) =>
-    toast(
-      ` 
+
+  return toast(
+    `
         ❌
-      
-      ${msg}`,
-      {
-        position: "top-center",
-        autoClose: 2000,
+      ${message}`,
+    {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
 
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-
-        progress: undefined,
-      }
-    )
+      progress: undefined,
+    }
   );
 };
 export const ResponseToast = (errMsg) => {

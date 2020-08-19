@@ -91,7 +91,7 @@ export const addData = (query, data, onSuccess, onFailure) => {
       onSuccess(jsonData.errMsg, jsonData);
     })
     .catch((err) => {
-      console.log(err, "add error");
+      // console.log(err, "add error");
       onFailure(err.message);
     });
 };

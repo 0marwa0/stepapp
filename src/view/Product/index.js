@@ -18,11 +18,12 @@ import "../../App.css";
 import API from "../../API/index";
 import "./index.css";
 import { ToastContainer, toast } from "react-toastify";
+
 import {
   ResponseToast,
   ResponseToastMsg,
   RejectToast,
-  // ErrorToast,
+  ErrorToast,
   SuccessToast,
 } from "../../API/ToastErrorHandle";
 // import { Customers } from "../../fakeData";
@@ -41,29 +42,29 @@ import SideNav from "../../shared/SideModel/index.js";
 import Category from "../../API/middleware/Category";
 import SubGroup from "../../API/middleware/SubGroup";
 import Group from "../../API/middleware/Groups";
-const ErrorToast = (error) => {
-  let message;
-  for (var key in error) {
-    message = error[key];
-  }
-  toast(
-    ` 
-      ❌
-    
-    ${message}`,
-    {
-      position: "top-center",
-      autoClose: 2000,
+// const ErrorToast = (error) => {
+//   let message;
+//   for (var key in error) {
+//     message = error[key];
+//   }
+//   toast(
+//     `
+//       ❌
 
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
+//     ${message}`,
+//     {
+//       position: "top-center",
+//       autoClose: 2000,
 
-      progress: undefined,
-    }
-  );
-};
+//       hideProgressBar: true,
+//       closeOnClick: true,
+//       pauseOnHover: true,
+//       draggable: true,
+
+//       progress: undefined,
+//     }
+//   );
+// };
 
 export default class index extends React.Component {
   state = {
@@ -94,7 +95,11 @@ export default class index extends React.Component {
       subgroup: 2,
       components: [],
     },
-
+    categoryId: "",
+    groupId: "",
+    subgroupId: "",
+    selectedGroup: [],
+    selectedSubGroup: [],
     isActive: false,
     Image: require("../../shared/Icon/upload.png"),
     allowToChange: false,
@@ -299,7 +304,7 @@ export default class index extends React.Component {
   }
 
   handelCreateProduct = (callback) => {
-    console.log(this.state.data, "product data");
+    // console.log(this.state.data, "product data");
     this.setState({ isLoading: true });
 
     addData(
@@ -462,6 +467,7 @@ export default class index extends React.Component {
       );
     }
   };
+
   render() {
     const ListName = "product";
     const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
@@ -585,7 +591,7 @@ export default class index extends React.Component {
           {this.state.showModel ? (
             <Modal
               modalButton='Create New Item'
-              modalPurpose='From here you can add this.state.Products to your list'
+              modalPurpose='From here you can add Products to your list'
               modalTitle='Add new Product'
               width='50%'
               height='100%'
@@ -593,8 +599,8 @@ export default class index extends React.Component {
               fun={this.handelCreateProduct}
               onCLose={() => this.DisplayModel(false)}>
               <CreateProduct
-                groups={this.state.groups}
-                subgroups={this.state.subgroups}
+                groups={this.state.selectedGroup}
+                subgroups={this.state.selectedSubGroup}
                 categories={this.state.category}
                 components={this.state.components}
                 handleSelect={this.handleSelect}

@@ -244,7 +244,11 @@ class index extends React.Component {
   }
   render() {
     let customStyles = {
-      menu: (styles) => ({ ...styles, width: "9em", borderRadius: 6 }),
+      menu: (styles) => ({
+        ...styles,
+        width: "9em",
+        borderRadius: 6,
+      }),
 
       option: (provided, state) => ({
         ...provided,
@@ -253,6 +257,17 @@ class index extends React.Component {
             ? "rgb(230, 247, 255)"
             : "var(--lighter-gray)",
         },
+        // "&::before": {
+        //   content: "sfsfsl",
+        //   display: "inline-block",
+        //   width: "30px",
+        //   height: "30px",
+        //   border: "2px solid teal",
+        //   background: "royalblue",
+
+        //   margin: "15px 15px 0 15px",
+        //   color: "teal",
+        // },
         width: "100%",
         // height: "1.5em",
         fontSize: "14px",

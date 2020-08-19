@@ -36,10 +36,30 @@
   overflow: hidden;
   width: 0;
 }
+.stretch_flex111111 {
+  background-color: thistle;
+}
 
+.justifyClass {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr 0.5fr;
+  align-items: center;
+}
 .upload_modal [type="file"] + label {
   border: none;
   color: var(--blue);
   cursor: pointer;
   outline: none;
+}
+.custom_option {
+  color: var(--blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  border-top: 1px solid var(--light-gray);
+}
+.custom_option p {
+  cursor: pointer;
 }

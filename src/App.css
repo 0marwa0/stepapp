@@ -88,7 +88,8 @@ a {
 .input_error input[type="text"],
 .input_error input[type="password"],
 .input_error input[type="number"],
-.input_wrapper input[type="number"] {
+.input_wrapper input[type="number"],
+textarea {
   font-size: 14px;
   height: 28px;
   border: 1px solid var(--light-gray);
@@ -118,6 +119,7 @@ a {
 }
 .input_wrapper input[type="text"]:hover,
 .input_wrapper input[type="password"]:hover,
+textarea:hover,
 .input_error input[type="number"]:focus {
   border: 1px solid rgba(81, 203, 238, 1);
 }
@@ -137,11 +139,16 @@ img {
 
 .input_wrapper input[type="text"]:focus,
 .input_wrapper input[type="password"]:focus,
-.input_wrapper input[type="number"]:focus {
+.input_wrapper input[type="number"]:focus,
+textarea:focus {
   /* border: none;
   outline: none !important; */
 
   box-shadow: 0 0 3px rgba(113, 218, 247, 1);
+}
+textarea {
+  resize: vertical;
+  padding: 10px;
 }
 .input_wrapper input::placeholder {
   color: rgb(201, 198, 198);
