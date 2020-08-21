@@ -4,8 +4,12 @@ import React from "react";
 import { ToastContainer, toast } from "react-toastify";
 export const ErrorToast = (error) => {
   let message;
-  for (var key in error) {
-    message = error[key];
+  if (typeof error === "string") {
+    message = error;
+  } else {
+    for (var key in error) {
+      message = error[key];
+    }
   }
 
   return toast(

@@ -15,7 +15,7 @@ import Modal from "../../shared/Modal";
 import { Products } from "../../fakeData/";
 import ListItem from "../../shared/List/List_Item";
 import "../../App.css";
-import API from "../../API/index";
+import API, { addProduct } from "../../API/index";
 import "./index.css";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -42,29 +42,6 @@ import SideNav from "../../shared/SideModel/index.js";
 import Category from "../../API/middleware/Category";
 import SubGroup from "../../API/middleware/SubGroup";
 import Group from "../../API/middleware/Groups";
-// const ErrorToast = (error) => {
-//   let message;
-//   for (var key in error) {
-//     message = error[key];
-//   }
-//   toast(
-//     `
-//       ❌
-
-//     ${message}`,
-//     {
-//       position: "top-center",
-//       autoClose: 2000,
-
-//       hideProgressBar: true,
-//       closeOnClick: true,
-//       pauseOnHover: true,
-//       draggable: true,
-
-//       progress: undefined,
-//     }
-//   );
-// };
 
 export default class index extends React.Component {
   state = {
@@ -87,22 +64,31 @@ export default class index extends React.Component {
     groups: [],
     subgroups: [],
     components: [],
-    data: {
+    itemName: "",
+    name: "",
+    image: "",
+    description: "",
+    price: 0,
+    subgroup: {},
+    components: [],
+    componentData: {
       name: "",
-      image: "",
       description: "",
       price: 0,
-      subgroup: 2,
-      components: [],
+      size: "",
     },
-    categoryId: "",
-    groupId: "",
-    subgroupId: "",
-    selectedGroup: [],
     selectedSubGroup: [],
+    selectedGroup: [],
+    categoryId: "",
+    subgroupId: "",
+
+    categoryValue: "",
+    groupValue: "",
+    subgroupValue: "",
     isActive: false,
     Image: require("../../shared/Icon/upload.png"),
     allowToChange: false,
+    DisableBtn: true,
   };
 
   checked = (e, item) => {
@@ -193,8 +179,7 @@ export default class index extends React.Component {
       Image: imgSrc,
       allowToChange: true,
     });
-    data[key] = value;
-    this.setState({ data });
+    this.setState({ image: value });
     // console.log(event.target.files[0]);
     var reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
@@ -232,9 +217,7 @@ export default class index extends React.Component {
       }
     );
   };
-  componentDidMount() {
-    if (!localStorage.getItem("step_token")) this.props.history.push("/");
-    this.getData();
+  getGroups = () => {
     loadData(
       "groups",
       (errMsg, data) => {
@@ -251,7 +234,8 @@ export default class index extends React.Component {
         RejectToast(errMsg);
       }
     );
-
+  };
+  getSubGroups = () => {
     loadData(
       "subgroups",
       (errMsg, data) => {
@@ -268,6 +252,8 @@ export default class index extends React.Component {
         RejectToast(errMsg);
       }
     );
+  };
+  getCategories = () => {
     loadData(
       "categories",
       (errMsg, data) => {
@@ -285,6 +271,8 @@ export default class index extends React.Component {
         RejectToast(errMsg);
       }
     );
+  };
+  getComponents = () => {
     loadData(
       "components",
       (errMsg, data) => {
@@ -301,15 +289,21 @@ export default class index extends React.Component {
         RejectToast(errMsg);
       }
     );
+  };
+  componentDidMount() {
+    if (!localStorage.getItem("step_token")) this.props.history.push("/");
+    this.getData();
+    this.getCategories();
+    this.getComponents();
   }
 
   handelCreateProduct = (callback) => {
-    // console.log(this.state.data, "product data");
+    console.log(this.state.data, "product data");
     this.setState({ isLoading: true });
 
-    addData(
+    addProduct(
       "product",
-      this.state.data,
+      this.state.image,
       (errMsg, data) => {
         callback();
         this.setState({ isLoading: false });
@@ -324,44 +318,140 @@ export default class index extends React.Component {
         RejectToast(errMsg);
       }
     );
-    let data = this.state.data;
-    data["name"] = "";
-    data["components"] = "";
-    data["description"] = "";
-    data["image"] = require("../../shared/Icon/upload.png");
-    data["price"] = "";
-    data["subgroup"] = "";
-    this.setState({ data });
-
-    // this.setState((data.image = ""));
-    // this.setState((data.description = ""));
-    // this.setState((data.subgroup = ""));
-    // this.setState((data.components = ""));
-    // this.setState((data.price = ""));
   };
   handelInputChange = (event, key) => {
     let value = event.target.value;
-    let data = this.state.data;
-    data[key] = value;
-    this.setState({ data });
-    // console.log(value, "edited number value");
+    if (key === "name") {
+      this.setState({ name: value });
+    }
+    if (key === "price") {
+      this.setState({ price: value });
+    }
+
+    if (value.length === 0) {
+      this.setState({ DisableBtn: true });
+    } else this.setState({ DisableBtn: false });
   };
-  handleSelect = (event, key, query) => {
-    let value = event.value;
-    let data = this.state.data[key];
 
-    data = value;
-    // console.log(
-    //   this.state.query.filter((item) => value == item.name),
-    //   "selected"
-    // );
-    this.setState({ data });
+  handelSubGroup = (event) => {
+    let category,
+      group,
+      subgroup = "";
+    let catValue = this.state.categoryValue;
+    let groValue = this.state.groupValue;
+    let subValue = event.value;
+    this.state.selectedSubGroup
+      .filter((i) => i.name === subValue)
+      .map((i) => (subgroup = i));
+    this.state.selectedGroup
+      .filter((i) => i.name === groValue)
+      .map((i) => (group = i));
+    this.state.categories
+      .filter((i) => i.name === catValue)
+      .map((i) => (category = i));
 
-    console.log(event, data, "selected value");
+    subgroup.group = group;
+    subgroup.group.category = category;
+    console.log(subgroup, "sub sended");
+    this.setState({ subgroup: subgroup });
+  };
+
+  handelComponent = (event) => {};
+
+  addGroup = (callback) => {
+    let data = { category: this.state.categoryId, name: this.state.itemName };
+    addData(
+      "group",
+      data,
+      (errMsg, data) => {
+        callback();
+
+        if (data.status) {
+          SuccessToast("Added Successfully");
+          let items = this.state.selectedGroup;
+          items.push(data.group);
+          this.setState({ selectedGroup: items });
+          this.setState({ itemName: "" });
+        } else {
+          ErrorToast(errMsg);
+        }
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
+  };
+  addSubGroup = (callback) => {
+    let data = { group: this.state.subgroupId, name: this.state.itemName };
+
+    addData(
+      "subgroup",
+      data,
+      (errMsg, data) => {
+        callback();
+
+        if (data.status) {
+          this.setState({ itemName: "" });
+          SuccessToast("Added Successfully");
+
+          let items = this.state.selectedSubGroup;
+          items.push(data.subgroup);
+          this.setState({ selectedSubGroup: items });
+        } else {
+          ErrorToast(errMsg);
+        }
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
+  };
+  addCategory = (callback) => {
+    let data = { name: this.state.itemName };
+
+    addData(
+      "category",
+      data,
+      (errMsg, data) => {
+        callback();
+
+        if (data.status) {
+          this.setState({ itemName: "" });
+          SuccessToast("Added Successfully");
+          this.getCategories();
+        } else {
+          ErrorToast(errMsg);
+        }
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
+  };
+  addComponent = (callback) => {
+    console.log(this.state.componentData, "compoonet data sended");
+    addData(
+      "component",
+      this.state.componentData,
+      (errMsg, data) => {
+        callback();
+
+        if (data.status) {
+          SuccessToast("Added Successfully");
+          this.getComponents();
+        } else {
+          ErrorToast(errMsg);
+        }
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
   };
   handelEditProduct = (callback) => {
     let id;
     let data = this.state.Data;
+
     this.setState({ isLoading: true });
     if (data.length === 1) {
       data.map((i) => (id = i.id));
@@ -467,7 +557,85 @@ export default class index extends React.Component {
       );
     }
   };
+  handelCategory = (event) => {
+    let name = event.value;
+    let categoryId = "";
+    this.setState({ categoryValue: name });
+    this.state.categories
+      .filter((i) => name === i.name)
+      .map((i) => {
+        categoryId = i.id;
+        this.setState({ categoryId });
+      });
 
+    loadData(
+      `category/groups/${categoryId}`,
+      async (errMsg, data) => {
+        if (data.status) {
+          this.setState({ isLoading: false });
+
+          for (let i = 0; i < data.groups.length; i++) {
+            let res = await data.groups[0];
+            this.setState({ validGroup: true });
+
+            this.setState({ selectedGroup: res });
+          }
+        } else {
+          RejectToast(errMsg);
+        }
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
+  };
+
+  handelGroup = (event) => {
+    let name = event.value;
+    let subgroupId = "";
+    this.setState({ groupValue: name });
+    this.state.selectedGroup
+      .filter((i) => name === i.name)
+      .map((i) => {
+        subgroupId = i.id;
+        this.setState({ subgroupId: i.id });
+      });
+    this.setState({ name, validSupGroup: true });
+    loadData(
+      `group/subs/${subgroupId}`,
+      (errMsg, data) => {
+        if (data.status) {
+          this.setState({ isLoading: false });
+          console.log(data, "selected subgroup");
+          for (let i = 0; i < data.subgroups.length; i++) {
+            this.setState({ selectedSubGroup: data.subgroups[0] });
+          }
+        } else {
+          RejectToast(errMsg);
+        }
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
+      }
+    );
+  };
+  handelNameChange = (e) => {
+    let itemName = e.target.value;
+
+    this.setState({ itemName });
+    if (itemName.length === 0) {
+      this.setState({ DisableBtn: true });
+    } else this.setState({ DisableBtn: false });
+  };
+  handelComponentChange = (e, key) => {
+    let value = e.target.value;
+    let componentData = this.state.componentData;
+    componentData[key] = value;
+    this.setState({ componentData });
+    if (value.length === 0) {
+      this.setState({ DisableBtn: true });
+    } else this.setState({ DisableBtn: false });
+  };
   render() {
     const ListName = "product";
     const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
@@ -476,6 +644,7 @@ export default class index extends React.Component {
       indexOfFirstPage,
       indexOfLastPage
     );
+    let selectedGroup = this.state.selectedSubGroup;
     const totalPageNumber = Math.ceil(
       this.state.Products.length / this.state.pagePerOnce
     );
@@ -512,7 +681,7 @@ export default class index extends React.Component {
             DisplayUploadModel={() => this.DisplayUploadModel(true)}
             DisplayEditModel={() => this.DisplayEditModel(true)}>
             {this.state.list ? (
-              <div>
+              <div className='page_content'>
                 <div className='List_Wrapper'>
                   <ListHead
                     listName='Product'
@@ -562,14 +731,15 @@ export default class index extends React.Component {
                       })}
                     </div>
                   )}
+
+                  <ListFooter
+                    currentPage={this.state.currentPage}
+                    searchResult={this.state.Products.length}
+                    prevPage={this.prevPage}
+                    nextPage={this.nextPage}
+                    totalPageNumber={totalPageNumber}
+                  />
                 </div>
-                <ListFooter
-                  currentPage={this.state.currentPage}
-                  searchResult={this.state.Products.length}
-                  prevPage={this.prevPage}
-                  nextPage={this.nextPage}
-                  totalPageNumber={totalPageNumber}
-                />
               </div>
             ) : (
               <div className='ListType_2_wrapper'>
@@ -596,20 +766,38 @@ export default class index extends React.Component {
               width='50%'
               height='100%'
               size='lg'
+              DisableBtn={this.state.DisableBtn}
               fun={this.handelCreateProduct}
+              //
               onCLose={() => this.DisplayModel(false)}>
               <CreateProduct
-                groups={this.state.selectedGroup}
                 subgroups={this.state.selectedSubGroup}
-                categories={this.state.category}
+                categories={this.state.categories}
                 components={this.state.components}
-                handleSelect={this.handleSelect}
+                handelCategory={this.handelCategory}
+                handelGroup={this.handelGroup}
+                handelChange={this.handelComponentChange}
+                DisableBtn={this.state.DisableBtn}
+                handelSubGroup={this.handelSubGroup}
+                handelComponent={this.handelComponent}
                 handelInputChange={this.handelInputChange}
+                handelNameChange={this.handelNameChange}
+                addGroup={this.addGroup}
+                addCategory={this.addCategory}
+                addSubGroup={this.addSubGroup}
+                addComponent={this.addComponent}
                 Active={this.Active}
+                categoryValue={this.state.categoryValue}
+                groupValue={this.state.groupValue}
+                subgroupValue={this.state.subgroupValue}
+                validGroup={this.state.validGroup}
+                validSupGroup={this.state.validSupGroup}
                 data={this.state.Data}
                 isActive={this.state.isActive}
                 Image={this.state.Image}
                 removeImage={this.removeImage}
+                selectedGroup={this.state.selectedGroup}
+                selectedSubGroup={this.state.selectedSubGroup}
                 handleImageChange={this.handleImageChange}
                 allowToChange={this.state.allowToChange}
               />

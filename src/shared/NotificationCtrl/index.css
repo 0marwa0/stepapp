@@ -1,4 +1,26 @@
 /** @format */
+.loading-home {
+  height: 10px;
+  width: 40px;
+  border-radius: 4px;
+  background-color: #4d7cad;
+  transition: 0.3s;
+  animation: loadingNumber 1s infinite;
+}
+@keyframes loadingNumber {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+}
 
 .Notification_Container {
   display: flex;

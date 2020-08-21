@@ -14,8 +14,9 @@ export const CreateComponent = (props) => {
             <span className='input_border'>
               <input
                 type='text'
+                placeholder='S type calvicle'
                 width='100%'
-                onChange={(e) => props.handelChange(e)}
+                onChange={(e) => props.handelChange(e, "name")}
               />
             </span>
           </div>
@@ -26,8 +27,9 @@ export const CreateComponent = (props) => {
             <span className='input_border '>
               <input
                 type='text'
+                placeholder='S type calvicle'
                 width='100%'
-                onChange={(e) => props.handelChange(e)}
+                onChange={(e) => props.handelChange(e, "size")}
               />
             </span>
           </div>
@@ -39,7 +41,8 @@ export const CreateComponent = (props) => {
           <input
             type='text'
             width='100%'
-            onChange={(e) => props.handelChange(e)}
+            placeholder='$ 1,000'
+            onChange={(e) => props.handelChange(e, "price")}
           />
         </span>
       </div>
@@ -51,7 +54,7 @@ export const CreateComponent = (props) => {
             width='100%'
             rows='4'
             style={{ height: "140px" }}
-            onChange={(e) => props.handelChange(e)}
+            onChange={(e) => props.handelChange(e, "description")}
           />
         </span>
       </div>

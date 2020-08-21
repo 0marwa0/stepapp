@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { IoMdImage } from "react-icons/io";
 import { RiRoadMapLine } from "react-icons/ri";
-import { AiFillLock } from "react-icons/ai";
+import { BsLock } from "react-icons/bs";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 const ListItem = ({
   itemName,
@@ -47,7 +48,7 @@ const ListItem = ({
           {listName == "product" ? (
             <IoMdImage className='Item_Icon' />
           ) : (
-            <AiFillLock className='Item_Icon' onClick={showModal} />
+            <RiLockPasswordLine className='Item_Icon' onClick={showModal} />
           )}
         </div>
       ) : null}

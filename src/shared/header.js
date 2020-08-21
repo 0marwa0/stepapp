@@ -3,7 +3,9 @@
 import React from "react";
 import "./index.css";
 import { FiSettings } from "react-icons/fi";
+
 import { Link } from "react-router-dom";
+
 const Header = ({ slug, DisplaySideNav }) => {
   return (
     <div className='header_wrapper'>
@@ -11,9 +13,12 @@ const Header = ({ slug, DisplaySideNav }) => {
         <div className='header_wrapper_inner'>
           <div>
             <span>
-              <Link to='/dashboard'>Home</Link>
+              <Link to='/dashboard'>
+                {" "}
+                <span>Home</span>{" "}
+              </Link>
             </span>
-            <span className='slash_icon'> \ </span> {slug}
+            <span className='slash_icon'>/</span> {slug}
           </div>
           {slug == "Products List" ? (
             <div className='settingIcon'>

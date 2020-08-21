@@ -1,4 +1,15 @@
 /** @format */
+@keyframes listFade {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
 .ListType_2_wrapper {
   width: 100%;
   display: grid;
@@ -11,8 +22,8 @@
   /* align-items: center; */
   height: 100px;
   padding-right: 10px;
+  animation: listFade 0.6s;
   border-radius: 6px;
-  animation: moveTopItem 2s ease-in-out;
   border: 1px solid var(--light-gray);
 }
 .listType_item p {

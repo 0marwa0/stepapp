@@ -66,29 +66,30 @@ export const addData = (query, data, onSuccess, onFailure) => {
     body: JSON.stringify(data),
   };
 
-  if (query == "product") {
-    var formdata = new FormData();
-    formdata.append("name", data.name);
-    formdata.append("price", data.price);
-    formdata.append("description", data.description);
-    formdata.append("subgroup", data.subgroup);
-    formdata.append("components", data.components);
-    formdata.append("image", data.image);
-    formdata.append("description", data.description);
-    options = {
-      method: "post",
-      body: formdata,
-      headers: {
-        token: localStorage.getItem("step_token"),
-      },
-    };
-  } else {
-  }
+  // if (query === "product") {
+  //   var formdata = new FormData();
+  //   formdata.append("name", data.name);
+  //   formdata.append("price", data.price);
+  //   formdata.append("description", data.description);
+  //   formdata.append("subgroup", data.subgroup);
+  //   formdata.append("components", data.components);
+  //   formdata.append("image", data.image);
+  //   formdata.append("description", data.description);
+  //   options = {
+  //     method: "post",
+  //     body: formdata,
+  //     headers: {
+  //       token: localStorage.getItem("step_token"),
+  //     },
+  //   };
+  // } else {
+  // }
   fetch(`${Config.host}${query}`, options)
     .then((resp) => resp.json())
     .then((jsonData) => {
       console.log(jsonData.errMsg, jsonData, "on Success");
       onSuccess(jsonData.errMsg, jsonData);
+      console.log("data sended", data);
     })
     .catch((err) => {
       // console.log(err, "add error");
@@ -106,20 +107,20 @@ export const editData = (query, data, id, onSuccess, onFailure) => {
     body: JSON.stringify(data),
   };
 
-  if (query == "product") {
-    var formdata = new FormData();
-    formdata.append("name", data.name);
-    formdata.append("price", data.price);
-    formdata.append("components", data.components);
-    options = {
-      method: "put",
-      body: formdata,
-      headers: {
-        token: localStorage.getItem("step_token"),
-      },
-    };
-  } else {
-  }
+  // if (query == "product") {
+  //   var formdata = new FormData();
+  //   formdata.append("name", data.name);
+  //   formdata.append("price", data.price);
+  //   formdata.append("components", data.components);
+  //   options = {
+  //     method: "put",
+  //     body: formdata,
+  //     headers: {
+  //       token: localStorage.getItem("step_token"),
+  //     },
+  //   };
+  // } else {
+  // }
   fetch(`${Config.host}${query}/${id}`, options)
     .then((resp) => resp.json())
     .then((jsonData) => {
@@ -159,6 +160,34 @@ export const changeImage = (query, data, id, onSuccess, onFailure) => {
       console.log(jsonData, "change image");
     })
     .catch((err) => {
+      onFailure(err.message);
+    });
+};
+export const addProduct = (query, data, onSuccess, onFailure) => {
+  var formdata = new FormData();
+
+  formdata.append("name", "fos");
+  formdata.append("price", 5555);
+  formdata.append("description", "sfs");
+  formdata.append("subgroup", {});
+  formdata.append("components", []);
+  formdata.append("image", data);
+  let options = {
+    method: "post",
+    body: formdata,
+    headers: {
+      token: localStorage.getItem("step_token"),
+    },
+  };
+  fetch(`${Config.host}${query}`, options)
+    .then((resp) => resp.json())
+    .then((jsonData) => {
+      console.log(jsonData.errMsg, jsonData, "on Success");
+      onSuccess(jsonData.errMsg, jsonData);
+      console.log(formdata, "prodct data sended");
+    })
+    .catch((err) => {
+      // console.log(err, "add error");
       onFailure(err.message);
     });
 };

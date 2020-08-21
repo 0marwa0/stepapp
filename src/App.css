@@ -5,6 +5,8 @@
   padding: 0;
   box-sizing: border-box;
   word-spacing: 5px;
+  font-weight: 500;
+  font-family: "CircularStd", sans-serif;
 }
 a {
   text-decoration: none;
@@ -13,7 +15,10 @@ a {
 
 .loading {
   opacity: 0.5;
+  color: var(--light-gray) !important;
+  background-color: rgb(236, 234, 234) !important;
   cursor: not-allowed !important;
+  pointer-events: all !important;
 }
 :root {
   --red: #f72f57;
@@ -33,6 +38,7 @@ a {
 .input_wrapper {
   display: grid;
   position: relative;
+
   grid-template-columns: auto;
 }
 .input_wrapper p {
@@ -46,7 +52,8 @@ a {
 .input_icon {
   top: 3px;
   right: 0;
-  margin: 5px;
+
+  margin: 8px 14px;
   font-size: 10px;
   position: absolute;
 }
@@ -74,7 +81,7 @@ a {
   grid-template-columns: auto auto;
 }
 .space_wrapper {
-  padding: 8px 0px;
+  padding: 6px 0px;
 
   padding-left: none;
 }
@@ -94,11 +101,13 @@ textarea {
   height: 28px;
   border: 1px solid var(--light-gray);
   width: 100%;
-  padding-left: 5px;
+  padding-left: 10px;
   color: black !important;
-
+  height: 35px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   outline: none;
-  padding-right: 25px;
+  padding-right: 35px;
   border-radius: 5px;
 }
 .input_error input[type="number"],
@@ -147,7 +156,7 @@ textarea:focus {
   box-shadow: 0 0 3px rgba(113, 218, 247, 1);
 }
 textarea {
-  resize: vertical;
+  resize: none;
   padding: 10px;
 }
 .input_wrapper input::placeholder {
