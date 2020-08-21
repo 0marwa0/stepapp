@@ -157,7 +157,7 @@ export const changeImage = (query, data, id, onSuccess, onFailure) => {
     .then((resp) => resp.json())
     .then((jsonData) => {
       onSuccess(jsonData.errMsg, jsonData);
-      console.log(jsonData, "change image");
+      // console.log(jsonData, "change image");
     })
     .catch((err) => {
       onFailure(err.message);

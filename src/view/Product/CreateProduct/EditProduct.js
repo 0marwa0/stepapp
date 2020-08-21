@@ -6,22 +6,7 @@ import { FaPlus } from "react-icons/fa";
 import Select, { components } from "react-select";
 import { CreateComponent } from "./CreatModel";
 import { ToastContainer, toast } from "react-toastify";
-const ComponentOption = (props) => {
-  const { data, innerRef, innerProps } = props;
-  return data.custom ? (
-    <div
-      className='custom_option'
-      ref={innerRef}
-      {...innerProps}
-      onClick={() => props.selectProps.DisplayAddComponent(true)}>
-      <p>
-        <FaPlus /> New Component
-      </p>
-    </div>
-  ) : (
-    <components.Option {...props} />
-  );
-};
+
 class index extends React.Component {
   state = {
     showAddComponent: false,
@@ -67,12 +52,11 @@ class index extends React.Component {
     };
     let name = this.props.data.map((i) => i.name);
     let price = this.props.data.map((i) => i.price);
-    let components = this.props.data.map((i) =>
-      i.components.map((item) => {
-        return { value: item.name, label: item.name };
-      })
-    );
-    const options = components.concat({ custom: true, isDisabled: true });
+    let components = this.props.components.map((item) => {
+      return { value: item.name, label: item.name };
+    });
+
+    const options = components;
     return (
       <div>
         <ToastContainer
@@ -118,7 +102,7 @@ class index extends React.Component {
           <span className='input_border'>
             <Select
               components={{
-                Option: ComponentOption,
+                // Option: ComponentOption,
                 IndicatorSeparator: () => null,
               }}
               options={options}
@@ -126,24 +110,11 @@ class index extends React.Component {
               styles={selectStyle}
               isMulti={true}
               DisplayAddComponent={this.DisplayAddComponent}
-              //   value={this.state.selectedOption}
-              onChange={(e) => this.props.handleSelect(e, "components")}
+              value={this.state.selectedOption}
+              // onChange={(e) => this.props.handleSelect(e, "components")}
             />
           </span>
         </div>
-        {this.state.showAddComponent ? (
-          <Modal
-            modalButton='Save Component'
-            modalPurpose=''
-            modalTitle='Add New Component'
-            width='50%'
-            height='75%'
-            DisableBtn={this.state.DisableBtn}
-            fun={this.addComponent}
-            onCLose={() => this.DisplayAddComponent(false)}>
-            <CreateComponent handelChange={this.handelComponentChange} />
-          </Modal>
-        ) : null}
       </div>
     );
   }

@@ -347,7 +347,10 @@ export class index extends React.Component {
           </div>
           <div className='input_wrapper space_wrapper'>
             <p>2nd stage category</p>
-            <span className='input_border'>
+            <span
+              className={
+                this.props.validGroup ? "input_border" : "input_border loading"
+              }>
               <Select
                 components={{
                   Option: GroupOption,
@@ -366,7 +369,12 @@ export class index extends React.Component {
           </div>
           <div className='input_wrapper space_wrapper'>
             <p>1st stage category</p>
-            <span className='input_border'>
+            <span
+              className={
+                this.props.validSupGroup
+                  ? "input_border"
+                  : "input_border loading"
+              }>
               <Select
                 components={{
                   Option: SubGroupOption,
@@ -407,6 +415,10 @@ export class index extends React.Component {
           Active={this.props.Active}
           isActive={this.props.isActive}
           Image={this.props.Image}
+          dragEnter={this.props.dragEnter}
+          dragLeave={this.props.dragLeave}
+          dragOver={this.props.dragOver}
+          fileDrop={this.props.fileDrop}
           removeImage={this.props.removeImage}
           handleImageChange={this.props.handleImageChange}
           allowToChange={this.props.allowToChange}

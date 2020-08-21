@@ -188,6 +188,7 @@ export default class index extends React.Component {
     };
   };
   removeImage = () => {
+    this.Active(false);
     this.setState({
       Image: require("../../shared/Icon/upload.png"),
       allowToChange: false,
@@ -448,6 +449,28 @@ export default class index extends React.Component {
       }
     );
   };
+  dragEnter = (e) => {
+    e.preventDefault();
+  };
+  dragLeave = (e) => {
+    e.preventDefault();
+    this.Active(false);
+  };
+  dragOver = (e) => {
+    this.Active(true);
+    e.preventDefault();
+  };
+  fileDrop = (e) => {
+    e.preventDefault();
+    let imgSrc = URL.createObjectURL(e.dataTransfer.files[0]);
+    this.setState({
+      Image: imgSrc,
+      allowToChange: true,
+    });
+    console.log(imgSrc, "imaggggggggggggggggggggggggggg");
+    // console.log(e.dataTransfer.files, "file uploaded");
+  };
+
   handelEditProduct = (callback) => {
     let id;
     let data = this.state.Data;
@@ -795,6 +818,10 @@ export default class index extends React.Component {
                 data={this.state.Data}
                 isActive={this.state.isActive}
                 Image={this.state.Image}
+                dragEnter={this.dragEnter}
+                dragLeave={this.dragLeave}
+                dragOver={this.dragOver}
+                fileDrop={this.fileDrop}
                 removeImage={this.removeImage}
                 selectedGroup={this.state.selectedGroup}
                 selectedSubGroup={this.state.selectedSubGroup}
@@ -814,6 +841,7 @@ export default class index extends React.Component {
               onCLose={() => this.DisplayEditModel(false)}>
               <EditProduct
                 data={this.state.Data}
+                components={this.state.components}
                 handelInputChange={this.handelInputChange}
               />
             </Modal>
@@ -836,6 +864,10 @@ export default class index extends React.Component {
                 Active={this.Active}
                 isActive={this.state.isActive}
                 Image={this.state.Image}
+                dragEnter={this.dragEnter}
+                dragLeave={this.dragLeave}
+                dragOver={this.dragOver}
+                fileDrop={this.fileDrop}
                 removeImage={this.removeImage}
                 handleImageChange={this.handleImageChange}
                 allowToChange={this.state.allowToChange}

@@ -14,8 +14,12 @@ class index extends Component {
       <div>
         <div className='upload_text'>Product photo</div>
         <div
-          onDragOver={() => this.props.Active(true)}
-          onDragLeave={() => this.props.Active(false)}
+          // onDragOver={() => this.props.Active(true)}
+          // onDragLeave={() => this.props.Active(false)}
+          onDragOver={this.props.dragOver}
+          onDragEnter={this.props.dragEnter}
+          onDragLeave={this.props.dragLeave}
+          onDrop={this.props.fileDrop}
           className={
             this.props.isActive ? "upload_modal active" : "upload_modal "
           }>
