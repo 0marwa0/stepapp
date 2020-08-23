@@ -9,6 +9,7 @@ import "../../App.css";
 import "./index.css";
 import ProductFilter from "./ProductFilter";
 import "../../shared/List/index.css";
+import axios from "axios";
 import CreateProduct from "./CreateProduct";
 import EditProduct from "./CreateProduct/EditProduct";
 import Modal from "../../shared/Modal";
@@ -70,7 +71,7 @@ export default class index extends React.Component {
     description: "",
     price: 0,
     subgroup: {},
-    components: [],
+    component: [],
     componentData: {
       name: "",
       description: "",
@@ -89,6 +90,15 @@ export default class index extends React.Component {
     Image: require("../../shared/Icon/upload.png"),
     allowToChange: false,
     DisableBtn: true,
+    DisableMain: true,
+    DisableSub: false,
+    editedData: {
+      name: "",
+      price: 0,
+      components: [],
+    },
+    showLoader1: false,
+    showLoader2: false,
   };
 
   checked = (e, item) => {
@@ -299,26 +309,37 @@ export default class index extends React.Component {
   }
 
   handelCreateProduct = (callback) => {
-    console.log(this.state.data, "product data");
     this.setState({ isLoading: true });
+    let product = {
+      name: this.state.name,
+      price: this.state.price,
+      subgroup: this.state.subgroup,
+      components: this.state.component,
+    };
 
-    addProduct(
-      "product",
-      this.state.image,
-      (errMsg, data) => {
-        callback();
-        this.setState({ isLoading: false });
-        if (data.status) {
-          SuccessToast("Added Successfully");
-          this.getData();
-        } else {
-          ErrorToast(errMsg);
-        }
-      },
-      (errMsg) => {
-        RejectToast(errMsg);
-      }
-    );
+    // addData(
+    //   "product",
+    //   product,
+    //   (errMsg, data) => {
+    //     callback();
+    //     this.setState({ isLoading: false });
+    //     if (data.status) {
+    //       SuccessToast("Added Successfully");
+    //       this.setState({
+    //         image: "",
+    //         allowToChange: false,
+    //         Image: require("../../shared/Icon/upload.png"),
+    //       });
+    //       this.Active(false);
+    //       this.getData();
+    //     } else {
+    //       ErrorToast(errMsg);
+    //     }
+    //   },
+    //   (errMsg) => {
+    //     RejectToast(errMsg);
+    //   }
+    // );
   };
   handelInputChange = (event, key) => {
     let value = event.target.value;
@@ -330,10 +351,15 @@ export default class index extends React.Component {
     }
 
     if (value.length === 0) {
-      this.setState({ DisableBtn: true });
-    } else this.setState({ DisableBtn: false });
+      this.setState({ DisableMain: true });
+    } else this.setState({ DisableMain: false });
   };
-
+  handEditChange = (event, key) => {
+    let value = event.target.value;
+    let editedData = this.state.editedData;
+    editedData[key] = value;
+    this.setState({ editedData });
+  };
   handelSubGroup = (event) => {
     let category,
       group,
@@ -353,13 +379,13 @@ export default class index extends React.Component {
 
     subgroup.group = group;
     subgroup.group.category = category;
-    console.log(subgroup, "sub sended");
     this.setState({ subgroup: subgroup });
   };
 
   handelComponent = (event) => {};
 
   addGroup = (callback) => {
+    this.setState({ showLoader1: true });
     let data = { category: this.state.categoryId, name: this.state.itemName };
     addData(
       "group",
@@ -467,7 +493,6 @@ export default class index extends React.Component {
       Image: imgSrc,
       allowToChange: true,
     });
-    console.log(imgSrc, "imaggggggggggggggggggggggggggg");
     // console.log(e.dataTransfer.files, "file uploaded");
   };
 
@@ -479,14 +504,13 @@ export default class index extends React.Component {
     if (data.length === 1) {
       data.map((i) => (id = i.id));
     }
-    console.log(id, this.state.data, "product edited data");
+    // console.log(id, this.state.editedData, "product edited data");
     editData(
       "product",
-      this.state.data,
+      this.state.editedData,
       id,
       (errMsg, data) => {
         this.setState({ isLoading: false, Data: [] });
-
         callback();
         this.setState({ isLoading: false });
         if (data.status) {
@@ -517,6 +541,12 @@ export default class index extends React.Component {
           callback();
           this.setState({ isLoading: false });
           if (data.status) {
+            this.setState({
+              image: "",
+              allowToChange: false,
+              Image: require("../../shared/Icon/upload.png"),
+            });
+            this.Active(false);
             SuccessToast("Edited Successfully");
             this.getData();
           } else {
@@ -590,16 +620,19 @@ export default class index extends React.Component {
         categoryId = i.id;
         this.setState({ categoryId });
       });
-
+    this.setState({ showLoader1: true, validSupGroup: false });
     loadData(
       `category/groups/${categoryId}`,
-      async (errMsg, data) => {
+      (errMsg, data) => {
         if (data.status) {
           this.setState({ isLoading: false });
 
           for (let i = 0; i < data.groups.length; i++) {
-            let res = await data.groups[0];
-            this.setState({ validGroup: true });
+            let res = data.groups[0];
+            this.setState({
+              validGroup: true,
+              showLoader1: false,
+            });
 
             this.setState({ selectedGroup: res });
           }
@@ -623,12 +656,16 @@ export default class index extends React.Component {
         subgroupId = i.id;
         this.setState({ subgroupId: i.id });
       });
-    this.setState({ name, validSupGroup: true });
+    this.setState({ name, showLoader2: true });
     loadData(
       `group/subs/${subgroupId}`,
       (errMsg, data) => {
         if (data.status) {
-          this.setState({ isLoading: false });
+          this.setState({
+            isLoading: false,
+            showLoader2: false,
+            validSupGroup: true,
+          });
           console.log(data, "selected subgroup");
           for (let i = 0; i < data.subgroups.length; i++) {
             this.setState({ selectedSubGroup: data.subgroups[0] });
@@ -659,6 +696,10 @@ export default class index extends React.Component {
       this.setState({ DisableBtn: true });
     } else this.setState({ DisableBtn: false });
   };
+  DisplayCreateModel = () => {
+    this.DisplayModel(false);
+    this.setState({ validSupGroup: false, validGroup: false, subgroup: {} });
+  };
   render() {
     const ListName = "product";
     const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
@@ -672,6 +713,7 @@ export default class index extends React.Component {
       this.state.Products.length / this.state.pagePerOnce
     );
     // console.log(CurrentProducts, "current product");
+
     return (
       <div>
         <ToastContainer
@@ -786,13 +828,13 @@ export default class index extends React.Component {
               modalButton='Create New Item'
               modalPurpose='From here you can add Products to your list'
               modalTitle='Add new Product'
-              width='50%'
+              width='55%'
               height='100%'
               size='lg'
-              DisableBtn={this.state.DisableBtn}
+              DisableBtn={this.state.DisableMain}
               fun={this.handelCreateProduct}
               //
-              onCLose={() => this.DisplayModel(false)}>
+              onCLose={this.DisplayCreateModel}>
               <CreateProduct
                 subgroups={this.state.selectedSubGroup}
                 categories={this.state.categories}
@@ -801,11 +843,16 @@ export default class index extends React.Component {
                 handelGroup={this.handelGroup}
                 handelChange={this.handelComponentChange}
                 DisableBtn={this.state.DisableBtn}
+                DisableMain={this.state.DisableMain}
+                DisableSub={this.state.DisableSub}
                 handelSubGroup={this.handelSubGroup}
                 handelComponent={this.handelComponent}
                 handelInputChange={this.handelInputChange}
                 handelNameChange={this.handelNameChange}
                 addGroup={this.addGroup}
+                showLoader1={this.state.showLoader1}
+                showLoader2={this.state.showLoader2}
+                groupValue='sfos'
                 addCategory={this.addCategory}
                 addSubGroup={this.addSubGroup}
                 addComponent={this.addComponent}
@@ -842,7 +889,7 @@ export default class index extends React.Component {
               <EditProduct
                 data={this.state.Data}
                 components={this.state.components}
-                handelInputChange={this.handelInputChange}
+                handEditChange={this.handEditChange}
               />
             </Modal>
           ) : null}

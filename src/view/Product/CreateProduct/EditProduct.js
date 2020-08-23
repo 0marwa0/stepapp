@@ -80,7 +80,7 @@ class index extends React.Component {
                 width='100%'
                 placeholder='S type calvicle'
                 defaultValue={name}
-                onChange={(e) => this.props.handelInputChange(e, "name")}
+                onChange={(e) => this.props.handEditChange(e, "name")}
               />
             </span>
           </div>
@@ -92,7 +92,7 @@ class index extends React.Component {
                 placeholder='$ 1,000'
                 width='100%'
                 defaultValue={price}
-                onChange={(e) => this.props.handelInputChange(e, "price")}
+                onChange={(e) => this.props.handEditChange(e, "price")}
               />
             </span>
           </div>

@@ -4,9 +4,7 @@ import React from "react";
 import Select from "react-select";
 import "./index.css";
 import "../../App.css";
-import Group from "../../API/middleware/Groups";
-import Category from "../../API/middleware/Category";
-import SubGroup from "../../API/middleware/SubGroup";
+
 import { FiTrash } from "react-icons/fi";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -19,23 +17,37 @@ import {
   ErrorToast,
   SuccessToast,
 } from "../../API/ToastErrorHandle";
-const options = [
+import { RiErrorWarningLine } from "react-icons/ri";
+
+const SideOptions = [
   { value: "categories", label: "Main Category" },
   { value: "groups", label: "Group" },
   { value: "subgroups", label: "Sub Group" },
 ];
+
 class index extends React.Component {
-  state = {
-    selectValue: { value: "categories", label: " Main Category" },
-    groups: [],
-    subgroups: [],
-    categories: [],
-    isLoading: true,
-  };
+  constructor() {
+    super();
+    this.ToolNode = React.createRef();
+
+    this.state = {
+      selectValue: { value: "categories", label: " Main Category" },
+      groups: [],
+      subgroups: [],
+      categories: [],
+      isLoading: true,
+      showTooltip: false,
+      itemId: "",
+      itemView: "",
+    };
+  }
+
   onChange = (event) => {
     this.setState({ selectValue: event });
   };
-
+  showTooltipModel = (showTooltip) => {
+    this.setState({ showTooltip });
+  };
   deleteItem = (id, value) => {
     this.setState({ isLoading: true });
     switch (value) {
@@ -125,8 +137,41 @@ class index extends React.Component {
             <FiTrash
               color='red'
               style={{ cursor: "pointer" }}
-              onClick={() => this.deleteItem(item.id, value)}
+              onClick={() =>
+                this.setState({
+                  itemId: item.id,
+                  itemView: value,
+                  showTooltip: true,
+                })
+              }
             />
+            {this.state.showTooltip && item.id === this.state.itemId ? (
+              <div class='tooltip_container_nav'>
+                <div
+                  class='tooltip'
+                  Ref={(ToolNode) => (this.ToolNode = ToolNode)}>
+                  <div className='tooltip_content'>
+                    <span>
+                      <RiErrorWarningLine className='warning_icon' />
+                      Are you sure to delete this item ?
+                    </span>
+
+                    <span>
+                      <button
+                        className='btn btn_Edit'
+                        onClick={() => this.showTooltipModel(false)}>
+                        No
+                      </button>
+                      <button
+                        className='btn btn_ctrl'
+                        onClick={() => this.deleteItem(item.id, value)}>
+                        Yes
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ) : null}
           </div>
         ))
       );
@@ -144,8 +189,41 @@ class index extends React.Component {
             <FiTrash
               color='red'
               style={{ cursor: "pointer" }}
-              onClick={() => this.deleteItem(item.id, value)}
+              onClick={() =>
+                this.setState({
+                  itemId: item.id,
+                  itemView: value,
+                  showTooltip: true,
+                })
+              }
             />
+            {this.state.showTooltip && item.id === this.state.itemId ? (
+              <div class='tooltip_container_nav'>
+                <div
+                  class='tooltip'
+                  Ref={(ToolNode) => (this.ToolNode = ToolNode)}>
+                  <div className='tooltip_content'>
+                    <span>
+                      <RiErrorWarningLine className='warning_icon' />
+                      Are you sure to delete this item ?
+                    </span>
+
+                    <span>
+                      <button
+                        className='btn btn_Edit'
+                        onClick={() => this.showTooltipModel(false)}>
+                        No
+                      </button>
+                      <button
+                        className='btn btn_ctrl'
+                        onClick={() => this.deleteItem(item.id, value)}>
+                        Yes
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ) : null}
           </div>
         ))
       );
@@ -162,18 +240,58 @@ class index extends React.Component {
             <FiTrash
               color='red'
               style={{ cursor: "pointer" }}
-              onClick={() => this.deleteItem(item.id, value)}
+              onClick={() =>
+                this.setState({
+                  itemId: item.id,
+                  itemView: value,
+                  showTooltip: true,
+                })
+              }
             />
+
+            {this.state.showTooltip && item.id === this.state.itemId ? (
+              <div class='tooltip_container_nav'>
+                <div class='tooltip'>
+                  <div className='tooltip_content'>
+                    <span>
+                      <RiErrorWarningLine className='warning_icon' />
+                      Are you sure to delete this item ?
+                    </span>
+
+                    <span>
+                      <button
+                        className='btn btn_Edit'
+                        onClick={() => this.showTooltipModel(false)}>
+                        No
+                      </button>
+                      <button
+                        className='btn btn_ctrl'
+                        onClick={() => this.deleteItem(item.id, value)}>
+                        Yes
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ) : null}
           </div>
         ))
       );
     }
   };
   handleClose = (e) => {
-    if (this.node.contains(e.target)) {
+    if (this.nods.contains(e.target)) {
       return;
     }
     this.props.DisplaySideNav(false);
+    console.log(this.nods, "out overlay");
+  };
+  handleToolClose = (e) => {
+    // if (this.ToolNode.contains(e.target)) {
+    //   return;
+    // }
+    // this.showTooltipModel(false);
+    console.log(this.ToolNode, "out side the tool");
   };
   getGroups = () => {
     loadData(
@@ -306,12 +424,13 @@ class index extends React.Component {
         />
         <div
           className={this.props.isLoading ? "SideModal loading" : "SideModal"}
-          ref={(node) => {
-            this.node = node;
-          }}>
+          ref={(nods) => {
+            this.nods = nods;
+          }}
+          onClick={(e) => this.handleToolClose(e)}>
           <div className='Modal_inner_header'>
             <Select
-              options={options}
+              options={SideOptions}
               defaultValue='Main Group'
               value={this.state.selectValue}
               styles={customStyles}

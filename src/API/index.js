@@ -66,24 +66,28 @@ export const addData = (query, data, onSuccess, onFailure) => {
     body: JSON.stringify(data),
   };
 
-  // if (query === "product") {
-  //   var formdata = new FormData();
-  //   formdata.append("name", data.name);
-  //   formdata.append("price", data.price);
-  //   formdata.append("description", data.description);
-  //   formdata.append("subgroup", data.subgroup);
-  //   formdata.append("components", data.components);
-  //   formdata.append("image", data.image);
-  //   formdata.append("description", data.description);
-  //   options = {
-  //     method: "post",
-  //     body: formdata,
-  //     headers: {
-  //       token: localStorage.getItem("step_token"),
-  //     },
-  //   };
-  // } else {
-  // }
+  if (query === "product") {
+    var formdata = new FormData();
+    formdata.append("name", data.name);
+    formdata.append("price", data.price);
+    formdata.append("description", data.description);
+    formdata.append("subgroup", data.subgroup);
+    formdata.append("components", [[{ name: "test one" }]]);
+    formdata.append("image", data.image);
+    formdata.append("description", data.description);
+    let options = {
+      method: "post",
+      body: formdata,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        token: localStorage.getItem("step_token"),
+      },
+    };
+  } else {
+  }
+  let marwa = new FormData();
+  marwa.append("name", "it work");
+  console.log(data, formdata, marwa, "befor and after");
   fetch(`${Config.host}${query}`, options)
     .then((resp) => resp.json())
     .then((jsonData) => {
@@ -107,7 +111,7 @@ export const editData = (query, data, id, onSuccess, onFailure) => {
     body: JSON.stringify(data),
   };
 
-  // if (query == "product") {
+  // if (query === "product") {
   //   var formdata = new FormData();
   //   formdata.append("name", data.name);
   //   formdata.append("price", data.price);

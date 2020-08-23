@@ -68,14 +68,16 @@ class ListFilter extends React.Component {
               }>
               <RiFilter2Line
                 style={{
-                  fontSize: "11px",
+                  margin: "0 4px",
+
+                  fontSize: "15px",
                 }}
               />
               <p> Filter</p>
               <FaSortDown
                 style={{
                   fontSize: "8px",
-                  margin: "0 2px",
+                  margin: "0 4px",
                   color: "var(--light-gray)",
                 }}
               />

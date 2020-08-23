@@ -7,6 +7,8 @@ import "./index.css";
 import Select, { components } from "react-select";
 import { loadData, addData } from "../../../API";
 import { ToastContainer, toast } from "react-toastify";
+import Loader from "react-loader-spinner";
+
 import {
   CreateComponent,
   CreateCategory,
@@ -30,8 +32,9 @@ const ComponentOption = (props) => {
       {...innerProps}
       onClick={() => props.selectProps.DisplayAddComponent(true)}>
       <p>
-        <FaPlus /> New Component
+        <FaPlus size='7' style={{ margin: " auto" }} />
       </p>
+      <p>New Component</p>
     </div>
   ) : (
     <components.Option {...props} />
@@ -46,8 +49,9 @@ const CategoryOption = (props) => {
       {...innerProps}
       onClick={() => props.selectProps.DisplayAddCategory(true)}>
       <p>
-        <FaPlus /> New Category
+        <FaPlus size='7' style={{ margin: " auto" }} />
       </p>
+      <p>New Category</p>
     </div>
   ) : (
     <components.Option {...props} />
@@ -63,8 +67,9 @@ const GroupOption = (props) => {
       {...innerProps}
       onClick={() => props.selectProps.DisplayAddGroup(true)}>
       <p>
-        <FaPlus /> New Group
+        <FaPlus size='7' style={{ margin: " auto" }} />
       </p>
+      <p>New Group</p>
     </div>
   ) : (
     <components.Option {...props} />
@@ -79,8 +84,9 @@ const SubGroupOption = (props) => {
       {...innerProps}
       onClick={() => props.selectProps.DisplayAddSubGroup(true)}>
       <p>
-        <FaPlus /> New SubGroup
+        <FaPlus size='7' style={{ margin: " auto" }} />
       </p>
+      <p>New Subgroup</p>
     </div>
   ) : (
     <components.Option {...props} />
@@ -99,6 +105,7 @@ export class index extends React.Component {
     name: { name: "" },
 
     DisableBtn: true,
+    DisableMain: true,
   };
 
   DisplayAddCategory = (showAddCategory) => {
@@ -180,7 +187,53 @@ export class index extends React.Component {
   }
   render() {
     const { selectedOption } = this.state;
+    let selectStyleSub = {
+      menu: (styles) => ({
+        ...styles,
+        width: "100%",
+        borderRadius: 6,
+        height: "auto",
+      }),
 
+      option: (provided, state) => ({
+        ...provided,
+        "&:hover": {
+          backgroundColor: state.isSelected
+            ? "rgb(230, 247, 255)"
+            : "var(--lighter-gray)",
+        },
+        width: "100%",
+        // height: "1.5em",
+        fontSize: "14px",
+        color: "black",
+        backgroundColor: state.isSelected ? "rgb(230, 247, 255)" : "",
+
+        padding: 10,
+      }),
+      control: () => ({
+        width: "100%",
+        display: "flex",
+        height: "37px",
+        cursor: "pointer",
+        fontSize: "14px",
+
+        borderRadius: "4px",
+        "&:focus": { boxShadow: " 0 0 3px rgba(113, 218, 247, 1)" },
+        border: "1px solid var(--light-gray)",
+      }),
+      singleValue: (provided, state) => {
+        const opacity = state.isDisabled ? 0.5 : 1;
+        const transition = "all 300ms";
+
+        return { ...provided, opacity, transition };
+      },
+      dropdownIndicator: (base, state) => {
+        let changes = {
+          opacity: this.props.showLoader2 ? "0" : "1",
+        };
+        return Object.assign(base, changes);
+      },
+    };
     let selectStyle = {
       menu: (styles) => ({
         ...styles,
@@ -207,10 +260,12 @@ export class index extends React.Component {
       control: () => ({
         width: "100%",
         display: "flex",
-        height: "30px",
+        height: "37px",
         cursor: "pointer",
         fontSize: "14px",
-        borderRadius: "3px",
+
+        borderRadius: "4px",
+
         "&:focus": { boxShadow: " 0 0 3px rgba(113, 218, 247, 1)" },
         border: "1px solid var(--light-gray)",
       }),
@@ -221,12 +276,73 @@ export class index extends React.Component {
         return { ...provided, opacity, transition };
       },
     };
+    let selectStyleGroup = {
+      menu: (styles) => ({
+        ...styles,
+        width: "100%",
+        borderRadius: 6,
+        height: "auto",
+      }),
 
-    // let name = this.props.data.map((i) => i.name);
-    // let price = this.props.data.map((i) => i.price);
-    let categories = this.props.categories.map((item) => {
-      return { value: item.name, label: item.name };
-    });
+      option: (provided, state) => ({
+        ...provided,
+        "&:hover": {
+          backgroundColor: state.isSelected
+            ? "rgb(230, 247, 255)"
+            : "var(--lighter-gray)",
+        },
+        width: "100%",
+        // height: "1.5em",
+        fontSize: "14px",
+        color: "black",
+        backgroundColor: state.isSelected ? "rgb(230, 247, 255)" : "",
+
+        padding: 10,
+      }),
+      control: () => ({
+        width: "100%",
+        display: "flex",
+        height: "37px",
+        cursor: "pointer",
+        fontSize: "14px",
+        borderRadius: "4px",
+        "&::focus": { boxShadow: " 0 0 3px rgba(113, 218, 247, 1)" },
+        "&:hover": { boxShadow: " 0 0 3px rgba(113, 218, 247, 1)" },
+        border: "1px solid var(--light-gray)",
+      }),
+      singleValue: (provided, state) => {
+        const opacity = state.isDisabled ? 0.5 : 1;
+        const transition = "all 300ms";
+
+        return { ...provided, opacity, transition };
+      },
+      dropdownIndicator: (base, state) => {
+        let changes = {
+          opacity: this.props.showLoader1 ? "0" : "1",
+        };
+        return Object.assign(base, changes);
+      },
+    };
+    let categories = [];
+
+    this.props.categories.length != 0
+      ? (categories = this.props.categories.map((item) => {
+          return { value: item.name, label: item.name };
+        }))
+      : (categories = [
+          {
+            value: "",
+            label: (
+              <p className='no_data'>
+                <img
+                  src={require("../../../shared/Icon/no_data_found.png")}
+                  style={{ width: "100%", height: "150px" }}
+                />
+              </p>
+            ),
+            isDisabled: true,
+          },
+        ]);
     let categoriesOptions = categories.concat({
       custom: true,
       isDisabled: true,
@@ -243,7 +359,7 @@ export class index extends React.Component {
             label: (
               <p className='no_data'>
                 <img
-                  src={require("../../../shared/Icon/noData.png")}
+                  src={require("../../../shared/Icon/no_data_found.png")}
                   style={{ width: "100%", height: "150px" }}
                 />
               </p>
@@ -268,7 +384,7 @@ export class index extends React.Component {
             label: (
               <p className='no_data'>
                 <img
-                  src={require("../../../shared/Icon/noData.png")}
+                  src={require("../../../shared/Icon/no_data_found.png")}
                   style={{ width: "100%", height: "150px" }}
                 />
               </p>
@@ -351,20 +467,33 @@ export class index extends React.Component {
               className={
                 this.props.validGroup ? "input_border" : "input_border loading"
               }>
-              <Select
-                components={{
-                  Option: GroupOption,
-                  IndicatorSeparator: () => null,
-                }}
-                options={groupsOptions}
-                isDisabled={this.props.validGroup ? false : true}
-                isSearchable={false}
-                styles={selectStyle}
-                data={this.state.selectedGroup}
-                DisplayAddGroup={this.DisplayAddGroup}
-                value={this.state.selectedOption}
-                onChange={this.props.handelGroup}
-              />
+              <div className='loader_input'>
+                <Select
+                  components={{
+                    Option: GroupOption,
+                    IndicatorSeparator: () => null,
+                  }}
+                  options={groupsOptions}
+                  isDisabled={this.props.validGroup ? false : true}
+                  isSearchable={false}
+                  styles={selectStyleGroup}
+                  placeholder='Select a person'
+                  data={this.state.selectedGroup}
+                  DisplayAddGroup={this.DisplayAddGroup}
+                  value={this.state.selectedOption}
+                  onChange={this.props.handelGroup}
+                />
+                {this.props.showLoader1 ? (
+                  <Loader
+                    className='loader_icon'
+                    type='Oval'
+                    color='black'
+                    style={{ opacity: 1 }}
+                    height={15}
+                    width={15}
+                  />
+                ) : null}
+              </div>
             </span>
           </div>
           <div className='input_wrapper space_wrapper'>
@@ -375,20 +504,35 @@ export class index extends React.Component {
                   ? "input_border"
                   : "input_border loading"
               }>
-              <Select
-                components={{
-                  Option: SubGroupOption,
-                  IndicatorSeparator: () => null,
-                }}
-                options={subgroupsOptions}
-                isDisabled={this.props.validSupGroup ? false : true}
-                isSearchable={false}
-                styles={selectStyle}
-                data={this.state.selectedSubGroup}
-                DisplayAddSubGroup={this.DisplayAddSubGroup}
-                value={this.state.selectedOption}
-                onChange={(e) => this.props.handelSubGroup(e)}
-              />
+              <span className={this.props.DisableSub ? "" : ""}>
+                <div className='loader_input'>
+                  <Select
+                    components={{
+                      Option: SubGroupOption,
+                      IndicatorSeparator: () => null,
+                    }}
+                    options={subgroupsOptions}
+                    isDisabled={this.props.validSupGroup ? false : true}
+                    isSearchable={false}
+                    styles={selectStyleSub}
+                    data={this.state.selectedSubGroup}
+                    DisplayAddSubGroup={this.DisplayAddSubGroup}
+                    value={this.state.selectedOption}
+                    onChange={(e) => this.props.handelSubGroup(e)}
+                  />
+
+                  {this.props.showLoader2 ? (
+                    <Loader
+                      className='loader_icon'
+                      type='Oval'
+                      color='black'
+                      style={{ opacity: 1 }}
+                      height={15}
+                      width={15}
+                    />
+                  ) : null}
+                </div>
+              </span>
             </span>
           </div>
         </div>{" "}

@@ -44,12 +44,12 @@
   color: black;
   width: max-content;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   border-radius: 5px;
   color: var(--gray);
   display: flex;
   align-items: center;
-  padding: 0.4em 0.5em;
+  padding: 0.7em 0.5em;
   align-items: center;
   margin-left: 5px;
   justify-content: center;
@@ -363,7 +363,7 @@ label:hover:before {
 .tooltip_container {
   position: relative;
 
-  background-color: teal;
+  /* background-color: teal; */
 }
 
 .tooltip_container .tooltip {
