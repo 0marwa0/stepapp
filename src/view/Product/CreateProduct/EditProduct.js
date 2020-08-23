@@ -40,7 +40,6 @@ class index extends React.Component {
         height: "37px",
         cursor: "pointer",
         fontSize: "14px",
-
         borderRadius: "4px",
         border: "1px solid var(--light-gray) !important",
         // This line disable the blue border
@@ -135,7 +134,7 @@ class index extends React.Component {
               isMulti={true}
               DisplayAddComponent={this.DisplayAddComponent}
               value={this.state.selectedOption}
-              // onChange={(e) => this.props.handleSelect(e, "components")}
+              onChange={(e) => this.props.handelEditComponent(e)}
             />
           </span>
         </div>

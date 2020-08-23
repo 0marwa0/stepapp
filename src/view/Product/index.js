@@ -383,7 +383,15 @@ export default class index extends React.Component {
     this.setState({ subgroup: subgroup, isSubgroupSelected: true });
   };
 
-  handelComponent = (event) => {};
+  handelComponent = (event) => {
+    this.setState({ component: event });
+  };
+  handelEditComponent = (event) => {
+    let editData = this.state.editedData;
+
+    editData["components"] = event;
+    this.setState({ editData });
+  };
 
   addGroup = (callback) => {
     this.setState({ showLoader1: true });
@@ -854,6 +862,7 @@ export default class index extends React.Component {
                 handelComponent={this.handelComponent}
                 handelInputChange={this.handelInputChange}
                 handelNameChange={this.handelNameChange}
+                handelEditComponent={this.handelEditComponent}
                 addGroup={this.addGroup}
                 showLoader1={this.state.showLoader1}
                 showLoader2={this.state.showLoader2}
