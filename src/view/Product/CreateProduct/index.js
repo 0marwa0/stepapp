@@ -480,7 +480,12 @@ export class index extends React.Component {
                   placeholder='Select a person'
                   data={this.state.selectedGroup}
                   DisplayAddGroup={this.DisplayAddGroup}
-                  value={this.state.selectedOption}
+                  defaultValue={this.state.selectedOption}
+                  value={
+                    this.props.isGroupSelected
+                      ? this.state.selectedOption
+                      : null
+                  }
                   onChange={this.props.handelGroup}
                 />
                 {this.props.showLoader1 ? (
@@ -517,7 +522,11 @@ export class index extends React.Component {
                     styles={selectStyleSub}
                     data={this.state.selectedSubGroup}
                     DisplayAddSubGroup={this.DisplayAddSubGroup}
-                    value={this.state.selectedOption}
+                    value={
+                      this.props.isSubgroupSelected
+                        ? this.state.selectedOption
+                        : null
+                    }
                     onChange={(e) => this.props.handelSubGroup(e)}
                   />
 

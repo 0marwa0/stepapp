@@ -82,7 +82,6 @@ export default class index extends React.Component {
     selectedGroup: [],
     categoryId: "",
     subgroupId: "",
-
     categoryValue: "",
     groupValue: "",
     subgroupValue: "",
@@ -99,6 +98,8 @@ export default class index extends React.Component {
     },
     showLoader1: false,
     showLoader2: false,
+    isGroupSelected: true,
+    isSubgroupSelected: true,
   };
 
   checked = (e, item) => {
@@ -379,7 +380,7 @@ export default class index extends React.Component {
 
     subgroup.group = group;
     subgroup.group.category = category;
-    this.setState({ subgroup: subgroup });
+    this.setState({ subgroup: subgroup, isSubgroupSelected: true });
   };
 
   handelComponent = (event) => {};
@@ -613,7 +614,7 @@ export default class index extends React.Component {
   handelCategory = (event) => {
     let name = event.value;
     let categoryId = "";
-    this.setState({ categoryValue: name });
+    this.setState({ categoryValue: name, isGroupSelected: false });
     this.state.categories
       .filter((i) => name === i.name)
       .map((i) => {
@@ -649,7 +650,11 @@ export default class index extends React.Component {
   handelGroup = (event) => {
     let name = event.value;
     let subgroupId = "";
-    this.setState({ groupValue: name });
+    this.setState({
+      groupValue: name,
+      isGroupSelected: true,
+      isSubgroupSelected: false,
+    });
     this.state.selectedGroup
       .filter((i) => name === i.name)
       .map((i) => {
@@ -852,7 +857,8 @@ export default class index extends React.Component {
                 addGroup={this.addGroup}
                 showLoader1={this.state.showLoader1}
                 showLoader2={this.state.showLoader2}
-                groupValue='sfos'
+                isGroupSelected={this.state.isGroupSelected}
+                isSubgroupSelected={this.state.isSubgroupSelected}
                 addCategory={this.addCategory}
                 addSubGroup={this.addSubGroup}
                 addComponent={this.addComponent}
