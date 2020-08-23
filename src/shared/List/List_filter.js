@@ -45,13 +45,7 @@ class ListFilter extends React.Component {
                 <input type='text' placeholder='Search for something ...' />
                 {this.props.isLoading ? (
                   <div className='input_icon'>
-                    <Loader
-                      type='Oval'
-                      color='black'
-                      style={{ opacity: 1 }}
-                      height={15}
-                      width={15}
-                    />
+                    <Loader type='Oval' color='black' height={15} width={15} />
                   </div>
                 ) : (
                   <img

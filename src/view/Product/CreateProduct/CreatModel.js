@@ -1,5 +1,6 @@
 /** @format */
 import { ToastContainer, toast } from "react-toastify";
+import { AiOutlineLock } from "react-icons/ai";
 
 import React from "react";
 import "./index.css";
@@ -38,6 +39,7 @@ export const CreateComponent = (props) => {
       <div className='input_wrapper space_wrapper'>
         <p>price</p>
         <span className='input_border '>
+          {" "}
           <input
             type='text'
             width='100%'

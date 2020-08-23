@@ -28,8 +28,6 @@ const SideOptions = [
 class index extends React.Component {
   constructor() {
     super();
-    this.ToolNode = React.createRef();
-
     this.state = {
       selectValue: { value: "categories", label: " Main Category" },
       groups: [],
@@ -146,10 +144,8 @@ class index extends React.Component {
               }
             />
             {this.state.showTooltip && item.id === this.state.itemId ? (
-              <div class='tooltip_container_nav'>
-                <div
-                  class='tooltip'
-                  Ref={(ToolNode) => (this.ToolNode = ToolNode)}>
+              <div className='tooltip_container_nav' id='tool'>
+                <div className='tooltip'>
                   <div className='tooltip_content'>
                     <span>
                       <RiErrorWarningLine className='warning_icon' />
@@ -201,7 +197,7 @@ class index extends React.Component {
               <div class='tooltip_container_nav'>
                 <div
                   class='tooltip'
-                  Ref={(ToolNode) => (this.ToolNode = ToolNode)}>
+                  ref={(ToolNode) => (this.ToolNode = ToolNode)}>
                   <div className='tooltip_content'>
                     <span>
                       <RiErrorWarningLine className='warning_icon' />
@@ -284,15 +280,9 @@ class index extends React.Component {
       return;
     }
     this.props.DisplaySideNav(false);
-    console.log(this.nods, "out overlay");
+    // console.log(this.nods, "out overlay");
   };
-  handleToolClose = (e) => {
-    // if (this.ToolNode.contains(e.target)) {
-    //   return;
-    // }
-    // this.showTooltipModel(false);
-    console.log(this.ToolNode, "out side the tool");
-  };
+
   getGroups = () => {
     loadData(
       "groups",
@@ -426,8 +416,7 @@ class index extends React.Component {
           className={this.props.isLoading ? "SideModal loading" : "SideModal"}
           ref={(nods) => {
             this.nods = nods;
-          }}
-          onClick={(e) => this.handleToolClose(e)}>
+          }}>
           <div className='Modal_inner_header'>
             <Select
               options={SideOptions}

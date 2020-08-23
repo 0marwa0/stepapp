@@ -37,7 +37,7 @@ const ListItem = ({
           onChange={onChange}
           value={checkboxValue}
         />
-        <label for={id}></label>
+        <label htmlFor={id}></label>
       </div>
       <div>{itemNumber}</div>
 

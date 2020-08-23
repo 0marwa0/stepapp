@@ -116,7 +116,6 @@ textarea {
 .input_error input[type="number"],
 .input_wrapper input[type="number"] {
   padding-right: 5px !important;
-  -moz-appearance: text;
 }
 
 .input_error input[type="text"],
@@ -133,7 +132,7 @@ textarea {
 .input_wrapper input[type="text"]:hover,
 .input_wrapper input[type="password"]:hover,
 textarea:hover,
-.input_error input[type="number"]:focus {
+.input_wrapper input[type="number"]:hover {
   border: 1px solid rgba(81, 203, 238, 1);
 }
 button {
@@ -207,6 +206,30 @@ textarea {
   align-items: center;
   justify-content: center;
 }
+/****number input *****/
+.input_number {
+  position: relative;
+  cursor: text;
+}
+.input_arrows {
+  position: absolute;
+  top: 2px;
+  right: 0;
+
+  /* pointer-events: all; */
+}
+.input_arrows span {
+  border-left: 1px solid rgba(113, 218, 247, 1);
+  display: flex;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  margin-right: 3px;
+  padding: 2.5px 5px;
+  cursor: pointer;
+  color: rgba(113, 218, 247, 1);
+}
+
 @media only screen and (max-width: 1220px) {
   * {
     word-spacing: 0;

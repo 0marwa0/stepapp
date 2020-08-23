@@ -3,7 +3,7 @@
 import React from "react";
 import "./index.css";
 import Select from "react-select";
-import { AiOutlineLock } from "react-icons/ai";
+
 const options = [
   { value: "pd", label: "pd" },
   { value: "admin", label: "admin" },
@@ -16,7 +16,7 @@ class index extends React.Component {
   };
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
+    // console.log(`Option selected:`, selectedOption);
   };
   render() {
     let selectStyle = {
@@ -37,15 +37,25 @@ class index extends React.Component {
 
         padding: 10,
       }),
-      control: () => ({
+      control: (base, state) => ({
+        ...base,
         width: "100%",
         display: "flex",
-        height: "30px",
+        height: "37px",
         cursor: "pointer",
         fontSize: "14px",
-        borderRadius: "3px",
-        "&:focus": { boxShadow: " 0 0 3px rgba(113, 218, 247, 1)" },
-        border: "1px solid var(--light-gray)",
+
+        borderRadius: "4px",
+        border: "1px solid var(--light-gray) !important",
+        // This line disable the blue border
+        boxShadow: state.isFocused
+          ? "0 0 3px rgba(113, 218, 247, 1) !important"
+          : "",
+        "&:hover": {
+          border: state.isFocused
+            ? "0 0 3px rgba(113, 218, 247, 1) !important"
+            : "",
+        },
       }),
       singleValue: (provided, state) => {
         const opacity = state.isDisabled ? 0.5 : 1;

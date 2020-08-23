@@ -32,14 +32,25 @@ class index extends React.Component {
 
         padding: 10,
       }),
-      control: () => ({
+      control: (base, state) => ({
+        ...base,
         width: "100%",
         display: "flex",
-        height: "30px",
+        height: "37px",
         cursor: "pointer",
         fontSize: "14px",
-        borderRadius: "3px",
-        border: "1px solid var(--light-gray)",
+
+        borderRadius: "4px",
+        border: "1px solid var(--light-gray) !important",
+        // This line disable the blue border
+        boxShadow: state.isFocused
+          ? "0 0 3px rgba(113, 218, 247, 1) !important"
+          : "",
+        "&:hover": {
+          border: state.isFocused
+            ? "0 0 3px rgba(113, 218, 247, 1) !important"
+            : "",
+        },
       }),
       singleValue: (provided, state) => {
         const opacity = state.isDisabled ? 0.5 : 1;

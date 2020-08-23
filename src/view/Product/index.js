@@ -457,7 +457,7 @@ export default class index extends React.Component {
     );
   };
   addComponent = (callback) => {
-    console.log(this.state.componentData, "compoonet data sended");
+    // console.log(this.state.componentData, "compoonet data sended");
     addData(
       "component",
       this.state.componentData,
@@ -671,7 +671,7 @@ export default class index extends React.Component {
             showLoader2: false,
             validSupGroup: true,
           });
-          console.log(data, "selected subgroup");
+          // console.log(data, "selected subgroup");
           for (let i = 0; i < data.subgroups.length; i++) {
             this.setState({ selectedSubGroup: data.subgroups[0] });
           }

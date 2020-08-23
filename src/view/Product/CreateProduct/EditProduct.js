@@ -1,7 +1,7 @@
 /** @format */
 import React from "react";
 import Modal from "../../../shared/Modal";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaMinus } from "react-icons/fa";
 
 import Select, { components } from "react-select";
 import { CreateComponent } from "./CreatModel";
@@ -33,15 +33,25 @@ class index extends React.Component {
 
         padding: 10,
       }),
-      control: () => ({
+      control: (base, state) => ({
+        ...base,
         width: "100%",
         display: "flex",
-        height: "30px",
+        height: "37px",
         cursor: "pointer",
         fontSize: "14px",
-        borderRadius: "3px",
-        "&:focus": { boxShadow: " 0 0 3px rgba(113, 218, 247, 1)" },
-        border: "1px solid var(--light-gray)",
+
+        borderRadius: "4px",
+        border: "1px solid var(--light-gray) !important",
+        // This line disable the blue border
+        boxShadow: state.isFocused
+          ? "0 0 3px rgba(113, 218, 247, 1) !important"
+          : "",
+        "&:hover": {
+          border: state.isFocused
+            ? "0 0 3px rgba(113, 218, 247, 1) !important"
+            : "",
+        },
       }),
       singleValue: (provided, state) => {
         const opacity = state.isDisabled ? 0.5 : 1;
@@ -86,14 +96,28 @@ class index extends React.Component {
           </div>
           <div className='input_wrapper space_wrapper'>
             <p>Price</p>
+
             <span className='input_border '>
-              <input
-                type='number'
-                placeholder='$ 1,000'
-                width='100%'
-                defaultValue={price}
-                onChange={(e) => this.props.handEditChange(e, "price")}
-              />
+              <div className='input_number'>
+                {" "}
+                <input
+                  type='number'
+                  min='0'
+                  placeholder='$ 1,000'
+                  width='100%'
+                  onChange={(e) => this.props.handEditChange(e, "price")}
+                />
+                <span style={{ pointerEvents: "none" }}>
+                  <div className='input_arrows'>
+                    <span>
+                      <FaPlus size='10' />
+                    </span>
+                    <span>
+                      <FaMinus size='10' />
+                    </span>
+                  </div>
+                </span>
+              </div>
             </span>
           </div>
         </div>{" "}

@@ -131,7 +131,7 @@ class index extends Component {
       (errMsg, data) => {
         if (data.status) {
           this.setState({ isLoading: false });
-          console.log(data, "admin");
+          // console.log(data, "admin");
           for (let i = 0; i < data.admins.length; i++) {
             this.setState({ Stuff: data.admins[0] });
           }
@@ -180,14 +180,14 @@ class index extends Component {
     let id = this.state.id;
 
     this.setState({ isLoading: true });
-    console.log(this.state.editedData, id, "change password data");
+    // console.log(this.state.editedData, id, "change password data");
     editData(
       "admin",
       this.state.data,
       id,
       (errMsg, data) => {
         this.setState({ isLoading: false, Data: [] });
-        console.log(data, "edit pasword result");
+        // console.log(data, "edit pasword result");
         this.getData();
         callback();
         this.setState({ isLoading: false });
