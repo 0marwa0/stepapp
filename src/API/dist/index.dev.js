@@ -98,8 +98,7 @@ var addData = function addData(query, data, onSuccess, onFailure) {
     return resp.json();
   }).then(function (jsonData) {
     // console.log(jsonData.errMsg, jsonData, "on Success");
-    onSuccess(jsonData.errMsg, jsonData);
-    console.log("data sended", data);
+    onSuccess(jsonData.errMsg, jsonData); // console.log("data sended", data);
   })["catch"](function (err) {
     // console.log(err, "add error");
     onFailure(err.message);
@@ -111,7 +110,6 @@ exports.addData = addData;
 var editData = function editData(query, data, id, onSuccess, onFailure) {
   if (data.price) {
     data.price = Number(data.price);
-    console.log("don convert it");
   }
 
   var options = {
@@ -121,8 +119,8 @@ var editData = function editData(query, data, id, onSuccess, onFailure) {
       token: localStorage.getItem("step_token")
     },
     body: JSON.stringify(data)
-  };
-  console.log(data, "editable data"); // if (query === "product") {
+  }; // console.log(data, "editable data");
+  // if (query === "product") {
   //   var formdata = new FormData();
   //   formdata.append("name", data.name);
   //   formdata.append("price", data.price);
@@ -140,7 +138,7 @@ var editData = function editData(query, data, id, onSuccess, onFailure) {
   fetch("".concat(_Config.Config.host).concat(query, "/").concat(id), options).then(function (resp) {
     return resp.json();
   }).then(function (jsonData) {
-    console.log(jsonData);
+    // console.log(jsonData);
     onSuccess(jsonData.errMsg, jsonData);
   })["catch"](function (err) {
     console.log(err);

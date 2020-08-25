@@ -40,15 +40,15 @@ class index extends Component {
       Stuff: [],
       id: "",
       isLoading: true,
-      data: {
-        name: "",
-        phone: "",
-        email: "",
-        password: "",
-        location: "",
-        birthday: "",
-        type: "pd",
-      },
+
+      name: "",
+      phone: "",
+      email: "",
+      nameError: false,
+      location: "",
+      birthday: "",
+      type: "pd",
+
       editedData: {
         name: "",
         phone: "",
@@ -57,6 +57,10 @@ class index extends Component {
         birthday: "",
         type: "",
       },
+      password: "",
+      rePassword: "",
+      passwordError: "",
+      isMatch: true,
     };
   }
   showEditPassword = (showEditPassword) => {
@@ -150,9 +154,32 @@ class index extends Component {
   }
   handelInputChange = (event, key) => {
     let value = event.target.value;
-    let data = this.state.data;
-    data[key] = value;
-    this.setState({ data });
+    switch (key) {
+      case "name":
+        this.setState({ name: value });
+
+        break;
+      case "phone":
+        this.setState({ phone: value });
+
+        break;
+
+      case "email":
+        this.setState({ email: value });
+
+        break;
+      case "birthday":
+        this.setState({ birthday: value });
+
+        break;
+      case "location":
+        this.setState({ location: value });
+
+        break;
+
+      default:
+        break;
+    }
   };
   handelEditChange = (event, key) => {
     let value = event.target.value;
@@ -160,53 +187,103 @@ class index extends Component {
     editedData[key] = value;
     this.setState({ editedData });
   };
+  isValid = (data) => {
+    let result = true;
+    for (let key in data) {
+      if (data[key] === "") {
+        result = false;
+      }
+    }
+    return result;
+  };
   handelCreateStuff = (callback) => {
     this.setState({ isLoading: true });
-    addData("admin", this.state.data, (errMsg, data) => {
-      this.getData();
-      callback();
-      this.setState({ isLoading: false });
-      if (data.status) {
-        SuccessToast("Added Successfully");
+    let data = {
+      name: this.state.name,
+      phone: this.state.phone,
+      email: this.state.email,
+      location: this.state.location,
+      birthday: this.state.birthday,
+      type: this.state.type,
+      password: this.state.password,
+    };
+    if (this.isValid(data)) {
+      if (this.passwordMatch()) {
+        addData("admin", data, (errMsg, data) => {
+          this.getData();
+
+          this.setState({ isLoading: false });
+          if (data.status) {
+            callback();
+            SuccessToast("Added Successfully");
+          } else {
+            ErrorToast(errMsg);
+            this.setState({ isLoading: false });
+          }
+        });
       } else {
-        ErrorToast(errMsg);
+        this.setState({
+          passwordError: "Password doesn't match",
+          isMatch: false,
+          isLoading: false,
+        });
       }
-    });
+    } else {
+      ErrorToast("Empty field");
+      this.setState({ isLoading: false });
+    }
   };
   getId = (id) => {
     this.setState({ id });
+  };
+  passwordMatch = () => {
+    let password = this.state.password;
+    let rePassword = this.state.rePassword;
+    return password === rePassword;
   };
   EditPassword = (callback) => {
     let id = this.state.id;
 
     this.setState({ isLoading: true });
-    // console.log(this.state.editedData, id, "change password data");
-    editData(
-      "admin",
-      this.state.data,
-      id,
-      (errMsg, data) => {
-        this.setState({ isLoading: false, Data: [] });
-        // console.log(data, "edit pasword result");
-        this.getData();
-        callback();
-        this.setState({ isLoading: false });
-        if (data.status) {
-          SuccessToast("Edited Successfully");
-        } else {
-          ErrorToast(errMsg);
-        }
-      },
+    if (this.passwordMatch()) {
+      editData(
+        "admin",
+        { password: this.state.password },
+        id,
+        (errMsg, data) => {
+          this.setState({ isLoading: false, Data: [], password: "" });
+          this.getData();
+          callback();
+          this.setState({ isLoading: false });
+          if (data.status) {
+            SuccessToast("Edited Successfully");
+          } else {
+            ErrorToast(errMsg);
+            this.setState({ isLoading: false });
+          }
+        },
 
-      (errMsg) => {
-        RejectToast(errMsg);
-      }
-    );
+        (errMsg) => {
+          RejectToast(errMsg);
+        }
+      );
+    } else {
+      this.setState({
+        passwordError: "Password doesn't match",
+        isMatch: false,
+      });
+    }
   };
 
   handelEditStuff = (callback) => {
     let id;
     let data = this.state.Data;
+    let editableData = this.state.editedData;
+    for (let key in editableData) {
+      if (editableData[key] === "") {
+        delete editableData[key];
+      }
+    }
     this.setState({ isLoading: true });
     if (data.length === 1) {
       data.map((i) => (id = i.id));
@@ -214,18 +291,20 @@ class index extends Component {
 
     editData(
       "admin",
-      this.state.editedData,
+      editableData,
       id,
       (errMsg, data) => {
         this.setState({ isLoading: false, Data: [] });
 
         this.getData();
         callback();
+
         this.setState({ isLoading: false });
         if (data.status) {
           SuccessToast("Edited Successfully");
         } else {
           ErrorToast(errMsg);
+          this.setState({ isLoading: false });
         }
       },
 
@@ -234,7 +313,12 @@ class index extends Component {
       }
     );
   };
-
+  handelPassword = (event, key) => {
+    if (key === "password")
+      this.setState({ password: event.target.value, isMatch: true });
+    if (key == "rePassword")
+      this.setState({ rePassword: event.target.value, isMatch: true });
+  };
   handelDelete = (callback) => {
     let id;
     let data = this.state.Data;
@@ -261,6 +345,9 @@ class index extends Component {
         },
         (errMsg) => {
           RejectToast(errMsg);
+          this.setState({
+            isLoading: false,
+          });
         }
       );
     } else {
@@ -286,6 +373,14 @@ class index extends Component {
         }
       );
     }
+  };
+  closeCreateModal = () => {
+    this.setState({ isLoading: false });
+  };
+  handelSelect = (event) => {
+    let value = event.label;
+
+    this.setState({ type: value, stuffType: { value: value, label: value } });
   };
 
   render() {
@@ -321,6 +416,13 @@ class index extends Component {
             handelDelete={this.handelDelete}
             handelInputChange={this.handelInputChange}
             handelCreateStuff={this.handelCreateStuff}
+            closeCreateModal={this.closeCreateModal}
+            handelSelect={this.handelSelect}
+            errorMsg={this.state.passwordError}
+            isMatch={this.state.isMatch}
+            nameError={this.state.nameError}
+            handelPassword={this.handelPassword}
+            stuffType={this.state.stuffType}
             DisplayEditModel={() => this.DisplayEditModel(true)}
           />
           <div className='List_Wrapper'>
@@ -393,12 +495,19 @@ class index extends Component {
               modalPurpose=' '
               modalTitle='Re-new password'
               width='40%'
-              height='55%'
+              height='60%'
               fun={this.EditPassword}
-              onCLose={() => this.showEditPassword(false)}>
+              size='sm'
+              onCLose={() => {
+                this.showEditPassword(false);
+                this.setState({ isLoading: false });
+              }}>
               <EditPassword
                 data={this.state.Data}
-                handelInputChange={this.handelEditChange}
+                errorMsg={this.state.passwordError}
+                isMatch={this.state.isMatch}
+                nameError={this.state.nameError}
+                handelPassword={this.handelPassword}
               />
             </Modal>
           ) : null}
@@ -407,10 +516,13 @@ class index extends Component {
               modalButton='Save edit'
               modalPurpose=' '
               modalTitle='Edit team member'
-              width='50%'
-              height='60%'
+              width='55%'
+              height='65%'
               fun={this.handelEditStuff}
-              onCLose={() => this.DisplayEditModel(false)}>
+              onCLose={() => {
+                this.DisplayEditModel(false);
+                this.setState({ isLoading: false });
+              }}>
               <EditStuff
                 data={this.state.Data}
                 handelInputChange={this.handelEditChange}

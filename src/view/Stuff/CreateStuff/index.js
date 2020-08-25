@@ -3,7 +3,7 @@
 import React from "react";
 import "./index.css";
 import Select from "react-select";
-
+import { ToastContainer, toast } from "react-toastify";
 const options = [
   { value: "pd", label: "pd" },
   { value: "admin", label: "admin" },
@@ -12,7 +12,7 @@ const options = [
 
 class index extends React.Component {
   state = {
-    selectedOption: { value: "pd", label: "pd" },
+    selectedOption: this.props.stuffType,
   };
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
@@ -67,8 +67,20 @@ class index extends React.Component {
     const { selectedOption } = this.state;
     return (
       <div>
+        <ToastContainer
+          position='top-center'
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={true}
+          closeButton={false}
+          toastClassName='tostStyle'
+          pauseOnFocusLoss
+          draggable
+          rtl={false}
+          pauseOnHover
+        />
         <div className='two_col_flex paddingTop'>
-          <div className='input_wrapper space_wrapper'>
+          <div className={"input_wrapper space_wrapper"}>
             <p>Employee name</p>
             <span className='input_border'>
               <input
@@ -113,7 +125,7 @@ class index extends React.Component {
                 isSearchable={false}
                 value={this.state.selectedOption}
                 styles={selectStyle}
-                onChange={this.handleChange}
+                onChange={this.props.handelSelect}
                 components={{
                   IndicatorSeparator: () => null,
                 }}
@@ -142,24 +154,38 @@ class index extends React.Component {
           </div>
         </div>{" "}
         <div className='two_col_flex paddingTop'>
-          <div className='input_wrapper space_wrapper'>
+          <div
+            className={
+              this.props.isMatch
+                ? "input_wrapper space_wrapper"
+                : "space_wrapper input_error"
+            }>
+            {" "}
             <p>password</p>
             <span className='input_border'>
               <input
                 type='password'
-                onChange={(e) => this.props.handelInputChange(e, "password")}
+                onChange={(e) => this.props.handelPassword(e, "password")}
                 width='200px'
                 // placeholder='******'
               />
             </span>
           </div>
-          <div className='input_wrapper space_wrapper'>
+          <div
+            className={
+              this.props.isMatch
+                ? "input_wrapper space_wrapper"
+                : "space_wrapper input_error"
+            }>
             <p>Confirm password</p>
             <span className='input_border'>
               <input
-                type='text'
-                // placeholder='Re-write the same password'
+                type='password'
+                width='100%'
+                onChange={(e) => this.props.handelPassword(e, "rePassword")}
+                placeholder='Re write the same password'
               />
+              <p className='errorMsg'>{this.props.errorMsg}</p>
             </span>
           </div>
         </div>

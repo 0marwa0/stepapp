@@ -95,7 +95,7 @@
 }
 .stuffItem {
   display: grid;
-  grid-template-columns: 0.4fr 0.4fr 1fr 0.6fr repeat(5, 1fr);
+  grid-template-columns: 0.4fr 0.4fr 1fr 0.6fr 1.5fr 1.5fr repeat(3, 1fr);
 }
 .productItem {
   display: grid;
@@ -105,9 +105,10 @@
   color: var(--gray);
   background-color: white;
   font-size: 14px;
+  cursor: pointer;
 }
 .List_item:hover {
-  background-color: rgb(229, 239, 243);
+  background-color: var(--lighter-gray);
 }
 /* .List_head > div {
   border: 1px solid red;
@@ -117,7 +118,7 @@
 } */
 
 .selected_Item {
-  background-color: rgb(229, 239, 243) !important;
+  background-color: rgb(220, 244, 255) !important;
 }
 .List_head :nth-of-type(2) {
 }

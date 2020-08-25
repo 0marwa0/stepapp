@@ -65,7 +65,7 @@ class index extends React.Component {
     let location = this.props.data.map((i) => i.location);
     let type = this.props.data.map((i) => i.type);
     let birthday = this.props.data.map((i) => i.birthday);
-
+    console.log(this.props.data, "suffe old onse");
     return (
       <div>
         <div className='two_col_flex paddingTop'>
@@ -111,7 +111,7 @@ class index extends React.Component {
                 options={options}
                 defaultValue=''
                 isSearchable={false}
-                defaultValue=''
+                defaultValue={[{ label: type, value: type }]}
                 styles={selectStyle}
                 // onChange={(e) => this.props.handelInputChange(e, "type")}
                 components={{

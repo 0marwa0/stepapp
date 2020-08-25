@@ -7,7 +7,8 @@ function Index({ handelInputChange, data }) {
   let name = data.map((i) => i.name);
   let phone = data.map((i) => i.phone);
   let location = data.map((i) => i.location);
-  let speciality = data.map((i) => i.speciality);
+  let specialty = data.map((i) => i.specialty);
+  console.log(data, "what sap");
   return (
     <div>
       <div className='two_col_flex paddingTop'>
@@ -43,22 +44,25 @@ function Index({ handelInputChange, data }) {
               type='text'
               width='200px'
               defaultValue={location}
-              onChange={(e) => handelInputChange(e, "location")}
+              // onChange={(e) => handelInputChange(e, "location")}
             />
           </span>
         </div>
         <div className='input_wrapper space_wrapper'>
           <p>Hostpital</p>
           <span className='input_border'>
-            <input type='text' onChange={(e) => handelInputChange(e, "his")} />
+            <input
+              type='text'
+              // onChange={(e) => handelInputChange(e, "his")}
+            />
           </span>
         </div>
         <div className='input_wrapper space_wrapper'>
-          <p>Speciality</p>
+          <p>Specialty</p>
           <span className='input_border'>
             <input
               type='text'
-              defaultValue={speciality}
+              defaultValue={specialty}
               onChange={(e) => handelInputChange(e, "specialty")}
             />
           </span>

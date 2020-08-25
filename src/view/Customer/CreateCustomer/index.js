@@ -32,25 +32,17 @@ function Index({ handelInputChange }) {
       </div>
       <div className='two_col_flex paddingTop'>
         <div className='input_wrapper space_wrapper'>
-          <p>Location</p>
+          <p>degree</p>
           <span className='input_border'>
             <input
               type='text'
               width='200px'
-              onChange={(e) => handelInputChange(e, "type")}
+              onChange={(e) => handelInputChange(e, "dgree")}
               // placeholder='Autafia'
             />
           </span>
         </div>
-        <div className='input_wrapper space_wrapper'>
-          <p>Hostpital</p>
-          <span className='input_border'>
-            <input
-              type='text'
-              //  placeholder='Hospital'
-            />
-          </span>
-        </div>
+
         <div className='input_wrapper space_wrapper'>
           <p>Speciality</p>
           <span className='input_border'>

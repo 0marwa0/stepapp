@@ -90,7 +90,7 @@ export const addData = (query, data, onSuccess, onFailure) => {
     .then((jsonData) => {
       // console.log(jsonData.errMsg, jsonData, "on Success");
       onSuccess(jsonData.errMsg, jsonData);
-      console.log("data sended", data);
+      // console.log("data sended", data);
     })
     .catch((err) => {
       // console.log(err, "add error");
@@ -101,7 +101,6 @@ export const addData = (query, data, onSuccess, onFailure) => {
 export const editData = (query, data, id, onSuccess, onFailure) => {
   if (data.price) {
     data.price = Number(data.price);
-    console.log("don convert it");
   }
 
   let options = {
@@ -112,7 +111,7 @@ export const editData = (query, data, id, onSuccess, onFailure) => {
     },
     body: JSON.stringify(data),
   };
-  console.log(data, "editable data");
+  // console.log(data, "editable data");
   // if (query === "product") {
   //   var formdata = new FormData();
   //   formdata.append("name", data.name);
@@ -130,7 +129,7 @@ export const editData = (query, data, id, onSuccess, onFailure) => {
   fetch(`${Config.host}${query}/${id}`, options)
     .then((resp) => resp.json())
     .then((jsonData) => {
-      console.log(jsonData);
+      // console.log(jsonData);
       onSuccess(jsonData.errMsg, jsonData);
     })
 

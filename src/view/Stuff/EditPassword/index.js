@@ -5,7 +5,7 @@ import "./index.css";
 import "../../../App.css";
 import { FaEye } from "react-icons/fa";
 
-const EditPassword = ({ handelInputChange }) => {
+function EditPassword(props) {
   return (
     <div className='edit_model'>
       <p className='alert_text'>
@@ -16,20 +16,17 @@ const EditPassword = ({ handelInputChange }) => {
         The password could be any combination of letters ,numbers and symbols
       </p>
       <br />
-      <div className='input_wrapper '>
+      <div className={props.isMatch ? "input_wrapper" : "input_error"}>
         <div>
           <input
             type='password'
             width='100%'
-            placeholder='**********'
-            onChange={(e) => handelInputChange(e, "password")}
+            onChange={(e) => props.handelPassword(e, "password")}
           />
-
-          {/* <FaEye className='eye_icon' /> */}
         </div>
       </div>
       <br />
-      <div className='input_wrapper '>
+      <div className={props.isMatch ? "input_wrapper" : "input_error"}>
         <div>
           {" "}
           conform password
@@ -37,13 +34,15 @@ const EditPassword = ({ handelInputChange }) => {
           <input
             type='password'
             width='100%'
+            onChange={(e) => props.handelPassword(e, "rePassword")}
             placeholder='Re write the same password'
           />
+          <p className='errorMsg'>{props.errorMsg}</p>
           {/* <FaEye className='eye_icon' /> */}
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default EditPassword;

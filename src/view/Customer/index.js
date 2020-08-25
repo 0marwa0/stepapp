@@ -106,18 +106,32 @@ class index extends Component {
       }
     );
   };
-
+  isValid = (data) => {
+    let result = true;
+    for (let key in data) {
+      if (data[key] === "") {
+        result = false;
+      }
+    }
+    return result;
+  };
   handelEditStuff = (callback) => {
     let id;
     let data = this.state.Data;
+    let editedData = this.state.data;
     this.setState({ isLoading: true });
     if (data.length === 1) {
       data.map((i) => (id = i.id));
     }
+    for (let key in editedData) {
+      if (editedData[key] === "") {
+        delete editedData[key];
+      }
+    }
 
     editData(
       "user",
-      this.state.data,
+      editedData,
       id,
       (errMsg, data) => {
         this.setState({ isLoading: false, Data: [] });
@@ -129,33 +143,43 @@ class index extends Component {
           SuccessToast("Edited Successfully");
         } else {
           ErrorToast(errMsg);
+          this.setState({ isLoading: false });
         }
       },
 
       (errMsg) => {
         RejectToast(errMsg);
+        this.setState({ isLoading: false });
       }
     );
   };
   handelCreateCustomer = (callback) => {
     this.setState({ isLoading: true });
-    addData(
-      "user",
-      this.state.data,
-      (errMsg, data) => {
-        this.getData();
-        callback();
-        this.setState({ isLoading: false });
-        if (data.status) {
-          SuccessToast("Added Successfully");
-        } else {
+    let data = this.state.data;
+    if (this.isValid(data)) {
+      addData(
+        "user",
+        data,
+        (errMsg, data) => {
+          this.getData();
+          callback();
+          this.setState({ isLoading: false });
+          if (data.status) {
+            SuccessToast("Added Successfully");
+          } else {
+            ErrorToast(errMsg);
+            this.setState({ isLoading: false });
+          }
+        },
+        (errMsg) => {
           ErrorToast(errMsg);
+          this.setState({ isLoading: false });
         }
-      },
-      (errMsg) => {
-        ErrorToast(errMsg);
-      }
-    );
+      );
+    } else {
+      ErrorToast("Empty field");
+      this.setState({ isLoading: false });
+    }
   };
   handelInputChange = (event, key) => {
     let value = event.target.value;
@@ -240,6 +264,16 @@ class index extends Component {
       );
     }
   };
+  whenClose = () => {
+    let data = this.state.data;
+    for (let key in data) {
+      if (data[key] === "") {
+        data[key] = "";
+      }
+    }
+    this.setState({ data });
+    console.log("state is clear");
+  };
   render() {
     const listName = "Customer";
     const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
@@ -273,6 +307,7 @@ class index extends Component {
             isLoading={this.state.isLoading}
             handelInputChange={this.handelInputChange}
             handelDelete={this.handelDelete}
+            whenClose={this.whenClose}
             handelCreateCustomer={this.handelCreateCustomer}
           />
 

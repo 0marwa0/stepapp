@@ -3,9 +3,10 @@
 import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { IoMdImage } from "react-icons/io";
+import { FiPhoneCall } from "react-icons/fi";
 import { RiRoadMapLine } from "react-icons/ri";
 import { AiFillLock } from "react-icons/ai";
+import "./index.css";
 
 const ListItem = ({
   itemName,
@@ -49,7 +50,10 @@ const ListItem = ({
 
       <span>{email}</span>
 
-      <div>{phone}</div>
+      <div>
+        <FiPhoneCall className='stuff_icon' />
+        {phone}
+      </div>
       <div>{birthday}</div>
       <div>{team}</div>
       <div>{location}</div>

@@ -10,8 +10,15 @@ function Index({
   DisplayEditModel,
   handelInputChange,
   handelCreateStuff,
+  handelPassword,
+  handelSelect,
   isLoading,
+  isMatch,
+  errorMsg,
   handelDelete,
+  nameError,
+  closeCreateModal,
+  stuffType,
 }) {
   const [showModel, setModel] = useState(false);
 
@@ -38,8 +45,19 @@ function Index({
           width='60%'
           height='75%'
           fun={handelCreateStuff}
-          onCLose={() => DisplayModel(false)}>
-          <CreateStuff handelInputChange={handelInputChange} />
+          onCLose={() => {
+            DisplayModel(false);
+            closeCreateModal();
+          }}>
+          <CreateStuff
+            handelInputChange={handelInputChange}
+            handelPassword={handelPassword}
+            handelSelect={handelSelect}
+            nameError={nameError}
+            stuffType={stuffType}
+            errorMsg={errorMsg}
+            isMatch={isMatch}
+          />
         </Modal>
       ) : null}
     </div>

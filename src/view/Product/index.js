@@ -71,7 +71,7 @@ export default class index extends React.Component {
     image: "",
     description: "",
     price: 0,
-    subgroup: {},
+    subgroup: 0,
     component: [],
     componentData: {
       name: "",
@@ -311,7 +311,15 @@ export default class index extends React.Component {
     this.getCategories();
     this.getComponents();
   }
-
+  isValid = (data) => {
+    let result = true;
+    for (let key in data) {
+      if (data[key] === "") {
+        result = false;
+      }
+    }
+    return result;
+  };
   handelCreateProduct = (callback) => {
     this.setState({ isLoading: true });
     let product = {
@@ -322,32 +330,39 @@ export default class index extends React.Component {
       image: this.state.image,
     };
     this.setState({ ShowProgress: true });
-    console.log(product, "sended data");
-    addData(
-      "product",
-      product,
-      (errMsg, data) => {
-        callback();
-        this.setState({ isLoading: false });
-        if (data.status) {
-          SuccessToast("Added Successfully");
-          this.setState({
-            image: "",
-            allowToChange: false,
-            ShowProgress: false,
-            Image: require("../../shared/Icon/upload.png"),
-          });
-          this.Active(false);
-          this.getData();
-        } else {
-          ErrorToast(errMsg);
+    // console.log(product, "sended data");
+
+    if (this.isValid(product)) {
+      addData(
+        "product",
+        product,
+        (errMsg, data) => {
+          this.setState({ isLoading: false });
+          if (data.status) {
+            callback();
+            SuccessToast("Added Successfully");
+            this.setState({
+              image: "",
+              allowToChange: false,
+              ShowProgress: false,
+              Image: require("../../shared/Icon/upload.png"),
+            });
+            this.Active(false);
+            this.setState({ isLoading: false });
+          } else {
+            ErrorToast(errMsg);
+            this.setState({ isLoading: false });
+          }
+        },
+        (errMsg) => {
+          RejectToast(errMsg);
+          this.setState({ isLoading: false });
         }
-      },
-      (errMsg) => {
-        RejectToast(errMsg);
-        this.getData();
-      }
-    );
+      );
+    } else {
+      ErrorToast("Empty field");
+      this.setState({ isLoading: false });
+    }
   };
   handelInputChange = (event, key) => {
     let value = event.target.value;
@@ -547,10 +562,16 @@ export default class index extends React.Component {
   handelEditProduct = (callback) => {
     let id;
     let data = this.state.Data;
-
+    let editedData = this.state.editedData;
     this.setState({ isLoading: true });
     if (data.length === 1) {
       data.map((i) => (id = i.id));
+    }
+
+    for (let key in editedData) {
+      if (editedData[key] === "") {
+        delete editedData[key];
+      }
     }
     console.log(id, this.state.editedData, "product edited data");
     editData(
@@ -566,11 +587,13 @@ export default class index extends React.Component {
           this.getData();
         } else {
           ErrorToast(errMsg);
+          this.setState({ isLoading: false });
         }
       },
 
       (errMsg) => {
         RejectToast(errMsg);
+        this.setState({ isLoading: false });
       }
     );
   };
