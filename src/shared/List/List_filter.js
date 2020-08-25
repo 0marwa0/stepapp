@@ -143,6 +143,7 @@ class ListFilter extends React.Component {
                       ? "btn_ctrl btn loading"
                       : "btn_ctrl btn"
                   }
+                  disabled={this.props.isLoading ? true : false}
                   onClick={this.props.showModal}>
                   <span>
                     <FontAwesomeIcon icon={faPlus} className='plus_icon' />
