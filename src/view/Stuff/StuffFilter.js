@@ -44,7 +44,7 @@ function Index({
           modalPurpose='From here you can create new accounts'
           modalTitle='Add new team member'
           width='60%'
-          height='65%'
+          height='73%'
           fun={handelCreateStuff}
           onCLose={() => {
             DisplayModel(false);

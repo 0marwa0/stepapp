@@ -76,6 +76,7 @@
 .List_item {
   width: 100%;
   display: grid;
+  height: 60px;
   padding: 15px 0;
   font-weight: 500;
   border: 1px solid var(--lighter-gray);
@@ -160,6 +161,23 @@
   display: flex;
   align-items: center;
   background-color: var(--light-blue);
+}
+.mostOrder_ctrl {
+  width: max-content;
+  height: 20px;
+  font-size: 11px;
+  text-align: center;
+  padding: 12px !important;
+  color: var(--gray);
+  border-radius: 5px;
+  display: flex;
+  background-color: white;
+  align-items: center;
+  border: 1px solid var(--light-gray);
+}
+.mostOrder_ctrl:hover {
+  color: var(--blue);
+  border: 1px solid var(--blue);
 }
 .sort_icon_holder {
   display: grid;

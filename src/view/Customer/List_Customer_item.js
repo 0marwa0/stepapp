@@ -2,11 +2,12 @@
 
 import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import Modal from "../../shared/Modal/index";
 import { IoMdImage } from "react-icons/io";
-import { RiRoadMapLine } from "react-icons/ri";
+import { FiPhoneCall } from "react-icons/fi";
 import { AiFillLock } from "react-icons/ai";
-
+import { useState } from "react";
+import MostOrder from "./MostOrder";
 const ListItem = ({
   itemName,
 
@@ -26,7 +27,10 @@ const ListItem = ({
   style,
 }) => {
   let id = `test${itemNumber}`;
-
+  const [showOrder, setShowModelOrder] = useState(false);
+  const showModelOrder = (show) => {
+    setShowModelOrder(show);
+  };
   return (
     <div className={`${className}${" "} ${style}`}>
       <div>
@@ -43,14 +47,33 @@ const ListItem = ({
 
       <div>{itemName}</div>
 
-      <span>{phone}</span>
-
+      <div>
+        <FiPhoneCall className='stuff_icon' />
+        {phone}
+      </div>
       <div>{specialty}</div>
       <div>{degree}</div>
-      <div>{mostOrder}</div>
+      <div className='mostOrder_ctrl' onClick={() => showModelOrder(true)}>
+        {mostOrder} Orders
+      </div>
       <div className='order_ctrl'>{orderValue}</div>
 
       <div className='rate_ctrl'>{ratingRate}</div>
+      {showOrder ? (
+        <Modal
+          modalPurpose=''
+          modalTitle='Most Order Kit'
+          width='60%'
+          height='40%'
+          container={true}
+          show={true}
+          //  fun={}
+          onCLose={() => {
+            showModelOrder(false);
+          }}>
+          <MostOrder />
+        </Modal>
+      ) : null}
     </div>
   );
 };

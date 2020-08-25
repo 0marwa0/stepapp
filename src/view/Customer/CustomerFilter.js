@@ -53,7 +53,7 @@ function Index({
           modalPurpose='From here you can create new accounts'
           modalTitle='Add new customer'
           width='50%'
-          height='51%'
+          height='60%'
           size='sm'
           fun={handelCreateCustomer}
           onCLose={() => {
@@ -69,7 +69,7 @@ function Index({
           modalPurpose=''
           modalTitle='Edit customer'
           width='60%'
-          height='52%'
+          height='60%'
           fun={handelEditStuff}
           onCLose={() => {
             DisplayEditModel(false);

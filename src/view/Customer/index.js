@@ -354,7 +354,9 @@ class index extends Component {
                       phone={item.phone}
                       mostOrder={item.needOtp == null ? 0 : item.needOtp}
                       orderValue={item.orderValue == null ? 0 : item.orderValue}
-                      ratingRate={item.ratingRate == null ? 0 : item.ratingRate}
+                      ratingRate={
+                        item.ratingRate == null ? "Empty" : item.ratingRate
+                      }
                       onChange={(e) => this.checked(e, item)}
                       checked={this.isSelected(item.id) ? true : ""}
                     />

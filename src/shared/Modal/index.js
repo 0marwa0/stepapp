@@ -19,6 +19,8 @@ function index({
   onBack,
   size,
   DisableBtn,
+  show,
+  container,
 }) {
   const style = { height: height, width: width };
 
@@ -41,7 +43,7 @@ function index({
               onClick={onCLose}
             />
           </div>
-          <div className='Modal_contaner'>{children}</div>
+          <div className={container ? "" : "Modal_contaner"}>{children}</div>
           <div className='Modal_footer'>
             <p>{modalPurpose}</p>
             {isMulti ? (
@@ -52,20 +54,22 @@ function index({
               </div>
             ) : null}
             <div>
-              <button
-                // disabled={true}
-                onClick={() => fun(onCLose)}
-                className={
-                  modalType === "Delete"
-                    ? DisableBtn
-                      ? "btn DeleteModal_btn DisableBtn "
-                      : "btn DeleteModal_btn  "
-                    : DisableBtn
-                    ? "btn btn_ctrl DisableBtn "
-                    : "btn btn_ctrl "
-                }>
-                {modalButton}
-              </button>
+              {show ? null : (
+                <button
+                  // disabled={true}
+                  onClick={() => fun(onCLose)}
+                  className={
+                    modalType === "Delete"
+                      ? DisableBtn
+                        ? "btn DeleteModal_btn DisableBtn "
+                        : "btn DeleteModal_btn  "
+                      : DisableBtn
+                      ? "btn btn_ctrl DisableBtn "
+                      : "btn btn_ctrl "
+                  }>
+                  {modalButton}
+                </button>
+              )}
             </div>
           </div>
         </div>

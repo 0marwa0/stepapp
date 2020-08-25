@@ -542,7 +542,7 @@ class index extends Component {
               modalPurpose=' '
               modalTitle='Edit team member'
               width='55%'
-              height='53%'
+              height='60%'
               fun={this.handelEditStuff}
               onCLose={() => {
                 this.DisplayEditModel(false);

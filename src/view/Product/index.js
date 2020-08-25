@@ -979,7 +979,8 @@ export default class index extends React.Component {
               modalPurpose=''
               modalTitle='Edit product'
               width='50%'
-              height='50%'
+              height='46%'
+              size='sm'
               fun={this.handelEditProduct}
               onCLose={() => {
                 this.DisplayEditModel(false);
