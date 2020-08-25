@@ -10,7 +10,11 @@ import Select, { components } from "react-select";
 import { loadData, addData } from "../../../API";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "react-loader-spinner";
-
+import {
+  progressBarFetch,
+  setOriginalFetch,
+  ProgressBar,
+} from "react-fetch-progressbar";
 import {
   CreateComponent,
   CreateCategory,
@@ -180,6 +184,7 @@ export class index extends React.Component {
   };
   componentDidMount() {
     this.getCategories();
+    setOriginalFetch(window.fetch);
   }
 
   componentDidUpdate(prevProps) {
@@ -618,6 +623,10 @@ export class index extends React.Component {
           handleImageChange={this.props.handleImageChange}
           allowToChange={this.props.allowToChange}
         />
+        {/* {this.props.ShowProgress ? (
+          <Line percent='10' strokeWidth='4' strokeColor='#D3D3D3' />
+        ) : null} */}
+        <ProgressBar />
         {this.state.showAddComponent ? (
           <Modal
             modalButton='Save Component'

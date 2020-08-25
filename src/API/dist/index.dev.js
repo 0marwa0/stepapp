@@ -83,28 +83,21 @@ var addData = function addData(query, data, onSuccess, onFailure) {
     formdata.append("price", data.price);
     formdata.append("description", data.description);
     formdata.append("subgroup", data.subgroup);
-    formdata.append("components", [[{
-      name: "test one"
-    }]]);
+    formdata.append("components", data.components);
     formdata.append("image", data.image);
-    formdata.append("description", data.description);
-    var _options = {
+    options = {
       method: "post",
       body: formdata,
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
         token: localStorage.getItem("step_token")
       }
     };
   } else {}
 
-  var marwa = new FormData();
-  marwa.append("name", "it work");
-  console.log(data, formdata, marwa, "befor and after");
   fetch("".concat(_Config.Config.host).concat(query), options).then(function (resp) {
     return resp.json();
   }).then(function (jsonData) {
-    console.log(jsonData.errMsg, jsonData, "on Success");
+    // console.log(jsonData.errMsg, jsonData, "on Success");
     onSuccess(jsonData.errMsg, jsonData);
     console.log("data sended", data);
   })["catch"](function (err) {
@@ -116,6 +109,11 @@ var addData = function addData(query, data, onSuccess, onFailure) {
 exports.addData = addData;
 
 var editData = function editData(query, data, id, onSuccess, onFailure) {
+  if (data.price) {
+    data.price = Number(data.price);
+    console.log("don convert it");
+  }
+
   var options = {
     method: "put",
     headers: {
@@ -123,7 +121,8 @@ var editData = function editData(query, data, id, onSuccess, onFailure) {
       token: localStorage.getItem("step_token")
     },
     body: JSON.stringify(data)
-  }; // if (query === "product") {
+  };
+  console.log(data, "editable data"); // if (query === "product") {
   //   var formdata = new FormData();
   //   formdata.append("name", data.name);
   //   formdata.append("price", data.price);
@@ -181,28 +180,26 @@ var changeImage = function changeImage(query, data, id, onSuccess, onFailure) {
 exports.changeImage = changeImage;
 
 var addProduct = function addProduct(query, data, onSuccess, onFailure) {
+  var myHeaders = new Headers();
+  myHeaders.append("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjEsInR5cGUiOiJhZG1pbiIsImlhdCI6MTU5NTYyNzUwMX0.JWR_qBXWzXyDCQ1tOQBZnMawnSACrd0OdYhrMcbRPJc");
   var formdata = new FormData();
-  formdata.append("name", "fos");
-  formdata.append("price", 5555);
-  formdata.append("description", "sfs");
-  formdata.append("subgroup", {});
+  formdata.append("name", "");
+  formdata.append("image", data.image);
+  formdata.append("description", "description test");
+  formdata.append("price", 55);
+  formdata.append("subgroup", 51);
   formdata.append("components", []);
-  formdata.append("image", data);
-  var options = {
-    method: "post",
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
     body: formdata,
-    headers: {
-      token: localStorage.getItem("step_token")
-    }
+    redirect: "follow"
   };
-  fetch("".concat(_Config.Config.host).concat(query), options).then(function (resp) {
+  fetch("https://step-copy.herokuapp.com/dash/v1/product", requestOptions).then(function (resp) {
     return resp.json();
   }).then(function (jsonData) {
-    console.log(jsonData.errMsg, jsonData, "on Success");
     onSuccess(jsonData.errMsg, jsonData);
-    console.log(formdata, "prodct data sended");
   })["catch"](function (err) {
-    // console.log(err, "add error");
     onFailure(err.message);
   });
 };

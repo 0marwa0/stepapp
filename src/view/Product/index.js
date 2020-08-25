@@ -18,6 +18,7 @@ import ListItem from "../../shared/List/List_Item";
 import "../../App.css";
 import API, { addProduct } from "../../API/index";
 import "./index.css";
+
 import { ToastContainer, toast } from "react-toastify";
 
 import {
@@ -66,7 +67,7 @@ export default class index extends React.Component {
     subgroups: [],
     components: [],
     itemName: "",
-    name: "",
+    ProductName: "",
     image: "",
     description: "",
     price: 0,
@@ -100,6 +101,7 @@ export default class index extends React.Component {
     showLoader2: false,
     isGroupSelected: true,
     isSubgroupSelected: true,
+    ShowProgress: false,
   };
 
   checked = (e, item) => {
@@ -197,6 +199,7 @@ export default class index extends React.Component {
     reader.onload = function () {
       // data[key] = reader.result;
     };
+    // console.log(this.state.image, "image uploaded to the state");
   };
   removeImage = () => {
     this.Active(false);
@@ -312,40 +315,44 @@ export default class index extends React.Component {
   handelCreateProduct = (callback) => {
     this.setState({ isLoading: true });
     let product = {
-      name: this.state.name,
+      name: this.state.ProductName,
       price: this.state.price,
       subgroup: this.state.subgroup,
       components: this.state.component,
+      image: this.state.image,
     };
-
-    // addData(
-    //   "product",
-    //   product,
-    //   (errMsg, data) => {
-    //     callback();
-    //     this.setState({ isLoading: false });
-    //     if (data.status) {
-    //       SuccessToast("Added Successfully");
-    //       this.setState({
-    //         image: "",
-    //         allowToChange: false,
-    //         Image: require("../../shared/Icon/upload.png"),
-    //       });
-    //       this.Active(false);
-    //       this.getData();
-    //     } else {
-    //       ErrorToast(errMsg);
-    //     }
-    //   },
-    //   (errMsg) => {
-    //     RejectToast(errMsg);
-    //   }
-    // );
+    this.setState({ ShowProgress: true });
+    console.log(product, "sended data");
+    addData(
+      "product",
+      product,
+      (errMsg, data) => {
+        callback();
+        this.setState({ isLoading: false });
+        if (data.status) {
+          SuccessToast("Added Successfully");
+          this.setState({
+            image: "",
+            allowToChange: false,
+            ShowProgress: false,
+            Image: require("../../shared/Icon/upload.png"),
+          });
+          this.Active(false);
+          this.getData();
+        } else {
+          ErrorToast(errMsg);
+        }
+      },
+      (errMsg) => {
+        RejectToast(errMsg);
+        this.getData();
+      }
+    );
   };
   handelInputChange = (event, key) => {
     let value = event.target.value;
     if (key === "name") {
-      this.setState({ name: value });
+      this.setState({ ProductName: value });
     }
     if (key === "price") {
       this.setState({ price: value });
@@ -355,12 +362,18 @@ export default class index extends React.Component {
       this.setState({ DisableMain: true });
     } else this.setState({ DisableMain: false });
   };
+
   handEditChange = (event, key) => {
-    let value = event.target.value;
     let editedData = this.state.editedData;
+    let value = event.target.value;
+    if (key === "price") {
+      editedData.price = Number(value);
+    }
+
     editedData[key] = value;
     this.setState({ editedData });
   };
+
   handelSubGroup = (event) => {
     let category,
       group,
@@ -380,16 +393,41 @@ export default class index extends React.Component {
 
     subgroup.group = group;
     subgroup.group.category = category;
-    this.setState({ subgroup: subgroup, isSubgroupSelected: true });
+    this.setState({ subgroup: subgroup.id, isSubgroupSelected: true });
   };
 
   handelComponent = (event) => {
-    this.setState({ component: event });
+    let names = [];
+    let ids = [];
+    let components = this.state.components;
+
+    if (event) {
+      event.map((i) => names.push(i.label));
+    }
+    if (names) {
+      components.map((i) =>
+        names.includes(i.name) ? ids.push(i.id) : (ids = ids)
+      );
+    }
+
+    this.setState({ component: ids });
   };
   handelEditComponent = (event) => {
     let editData = this.state.editedData;
+    let names = [];
+    let ids = [];
+    let components = this.state.components;
 
-    editData["components"] = event;
+    if (event) {
+      event.map((i) => names.push(i.label));
+    }
+    if (names) {
+      components.map((i) =>
+        names.includes(i.name) ? ids.push(i.id) : (ids = ids)
+      );
+    }
+
+    editData["components"] = ids;
     this.setState({ editData });
   };
 
@@ -501,8 +539,9 @@ export default class index extends React.Component {
     this.setState({
       Image: imgSrc,
       allowToChange: true,
+      image: e.dataTransfer.files[0],
     });
-    // console.log(e.dataTransfer.files, "file uploaded");
+    // console.log(e.dataTransfer.files[0], "file uploaded");
   };
 
   handelEditProduct = (callback) => {
@@ -513,7 +552,7 @@ export default class index extends React.Component {
     if (data.length === 1) {
       data.map((i) => (id = i.id));
     }
-    // console.log(id, this.state.editedData, "product edited data");
+    console.log(id, this.state.editedData, "product edited data");
     editData(
       "product",
       this.state.editedData,
@@ -711,7 +750,15 @@ export default class index extends React.Component {
   };
   DisplayCreateModel = () => {
     this.DisplayModel(false);
-    this.setState({ validSupGroup: false, validGroup: false, subgroup: {} });
+    this.setState({
+      validSupGroup: false,
+      validGroup: false,
+      subgroup: 0,
+      name: "",
+      price: 0,
+      description: "",
+      Component: [],
+    });
   };
   render() {
     const ListName = "product";
@@ -862,7 +909,6 @@ export default class index extends React.Component {
                 handelComponent={this.handelComponent}
                 handelInputChange={this.handelInputChange}
                 handelNameChange={this.handelNameChange}
-                handelEditComponent={this.handelEditComponent}
                 addGroup={this.addGroup}
                 showLoader1={this.state.showLoader1}
                 showLoader2={this.state.showLoader2}
@@ -889,6 +935,7 @@ export default class index extends React.Component {
                 selectedSubGroup={this.state.selectedSubGroup}
                 handleImageChange={this.handleImageChange}
                 allowToChange={this.state.allowToChange}
+                ShowProgress={this.state.ShowProgress}
               />
             </Modal>
           ) : null}
@@ -898,13 +945,14 @@ export default class index extends React.Component {
               modalPurpose=''
               modalTitle='Edit product'
               width='50%'
-              height='55%'
+              height='50%'
               fun={this.handelEditProduct}
               onCLose={() => this.DisplayEditModel(false)}>
               <EditProduct
                 data={this.state.Data}
                 components={this.state.components}
                 handEditChange={this.handEditChange}
+                handelEditComponent={this.handelEditComponent}
               />
             </Modal>
           ) : null}

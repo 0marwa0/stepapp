@@ -72,26 +72,23 @@ export const addData = (query, data, onSuccess, onFailure) => {
     formdata.append("price", data.price);
     formdata.append("description", data.description);
     formdata.append("subgroup", data.subgroup);
-    formdata.append("components", [[{ name: "test one" }]]);
+    formdata.append("components", data.components);
     formdata.append("image", data.image);
-    formdata.append("description", data.description);
-    let options = {
+
+    options = {
       method: "post",
       body: formdata,
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
         token: localStorage.getItem("step_token"),
       },
     };
   } else {
   }
-  let marwa = new FormData();
-  marwa.append("name", "it work");
-  console.log(data, formdata, marwa, "befor and after");
+
   fetch(`${Config.host}${query}`, options)
     .then((resp) => resp.json())
     .then((jsonData) => {
-      console.log(jsonData.errMsg, jsonData, "on Success");
+      // console.log(jsonData.errMsg, jsonData, "on Success");
       onSuccess(jsonData.errMsg, jsonData);
       console.log("data sended", data);
     })
@@ -102,6 +99,11 @@ export const addData = (query, data, onSuccess, onFailure) => {
 };
 
 export const editData = (query, data, id, onSuccess, onFailure) => {
+  if (data.price) {
+    data.price = Number(data.price);
+    console.log("don convert it");
+  }
+
   let options = {
     method: "put",
     headers: {
@@ -110,7 +112,7 @@ export const editData = (query, data, id, onSuccess, onFailure) => {
     },
     body: JSON.stringify(data),
   };
-
+  console.log(data, "editable data");
   // if (query === "product") {
   //   var formdata = new FormData();
   //   formdata.append("name", data.name);
@@ -168,30 +170,33 @@ export const changeImage = (query, data, id, onSuccess, onFailure) => {
     });
 };
 export const addProduct = (query, data, onSuccess, onFailure) => {
-  var formdata = new FormData();
+  var myHeaders = new Headers();
+  myHeaders.append(
+    "token",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjEsInR5cGUiOiJhZG1pbiIsImlhdCI6MTU5NTYyNzUwMX0.JWR_qBXWzXyDCQ1tOQBZnMawnSACrd0OdYhrMcbRPJc"
+  );
 
-  formdata.append("name", "fos");
-  formdata.append("price", 5555);
-  formdata.append("description", "sfs");
-  formdata.append("subgroup", {});
+  var formdata = new FormData();
+  formdata.append("name", "");
+  formdata.append("image", data.image);
+  formdata.append("description", "description test");
+  formdata.append("price", 55);
+  formdata.append("subgroup", 51);
   formdata.append("components", []);
-  formdata.append("image", data);
-  let options = {
-    method: "post",
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
     body: formdata,
-    headers: {
-      token: localStorage.getItem("step_token"),
-    },
+    redirect: "follow",
   };
-  fetch(`${Config.host}${query}`, options)
+
+  fetch("https://step-copy.herokuapp.com/dash/v1/product", requestOptions)
     .then((resp) => resp.json())
     .then((jsonData) => {
-      console.log(jsonData.errMsg, jsonData, "on Success");
       onSuccess(jsonData.errMsg, jsonData);
-      console.log(formdata, "prodct data sended");
     })
     .catch((err) => {
-      // console.log(err, "add error");
       onFailure(err.message);
     });
 };

@@ -10,6 +10,8 @@ import { ToastContainer, toast } from "react-toastify";
 class index extends React.Component {
   state = {
     showAddComponent: false,
+
+    // price: this.props.data.map((i) => i.price) || 0,
   };
   DisplayAddComponent = (showAddComponent) => {
     this.setState({ showAddComponent });
@@ -61,11 +63,21 @@ class index extends React.Component {
     };
     let name = this.props.data.map((i) => i.name);
     let price = this.props.data.map((i) => i.price);
-    let components = this.props.components.map((item) => {
+    let components = this.props.data.map((i) => i.components) || [];
+    let value;
+    for (let i = 0; i < components.length; i++) {
+      value = components[0];
+    }
+    let defaultComponents = this.props.components.map((item) => {
       return { value: item.name, label: item.name };
     });
 
-    const options = components;
+    let componentsValue = value
+      ? value.map((item) => {
+          return { value: item.name, label: item.name };
+        })
+      : [];
+    const options = defaultComponents;
     return (
       <div>
         <ToastContainer
@@ -98,12 +110,12 @@ class index extends React.Component {
 
             <span className='input_border '>
               <div className='input_number'>
-                {" "}
                 <input
                   type='number'
                   min='0'
                   placeholder='$ 1,000'
                   width='100%'
+                  defaultValue={price}
                   onChange={(e) => this.props.handEditChange(e, "price")}
                 />
                 <span style={{ pointerEvents: "none" }}>
@@ -129,11 +141,12 @@ class index extends React.Component {
                 IndicatorSeparator: () => null,
               }}
               options={options}
+              escapeClearsValue={components}
               isSearchable={false}
               styles={selectStyle}
               isMulti={true}
+              defaultValue={componentsValue}
               DisplayAddComponent={this.DisplayAddComponent}
-              value={this.state.selectedOption}
               onChange={(e) => this.props.handelEditComponent(e)}
             />
           </span>
