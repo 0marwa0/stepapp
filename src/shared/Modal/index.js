@@ -21,6 +21,7 @@ function index({
   DisableBtn,
   show,
   container,
+  footer,
 }) {
   const style = { height: height, width: width };
 
@@ -44,34 +45,39 @@ function index({
             />
           </div>
           <div className={container ? "" : "Modal_contaner"}>{children}</div>
-          <div className='Modal_footer'>
-            <p>{modalPurpose}</p>
-            {isMulti ? (
+
+          {footer ? (
+            ""
+          ) : (
+            <div className='Modal_footer'>
+              <p>{modalPurpose}</p>
+              {isMulti ? (
+                <div>
+                  <button className='next_btn btn' onClick={onBack}>
+                    back
+                  </button>
+                </div>
+              ) : null}
               <div>
-                <button className='next_btn btn' onClick={onBack}>
-                  back
-                </button>
+                {show ? null : (
+                  <button
+                    // disabled={true}
+                    onClick={() => fun(onCLose)}
+                    className={
+                      modalType === "Delete"
+                        ? DisableBtn
+                          ? "btn DeleteModal_btn DisableBtn "
+                          : "btn DeleteModal_btn  "
+                        : DisableBtn
+                        ? "btn btn_ctrl DisableBtn "
+                        : "btn btn_ctrl "
+                    }>
+                    {modalButton}
+                  </button>
+                )}
               </div>
-            ) : null}
-            <div>
-              {show ? null : (
-                <button
-                  // disabled={true}
-                  onClick={() => fun(onCLose)}
-                  className={
-                    modalType === "Delete"
-                      ? DisableBtn
-                        ? "btn DeleteModal_btn DisableBtn "
-                        : "btn DeleteModal_btn  "
-                      : DisableBtn
-                      ? "btn btn_ctrl DisableBtn "
-                      : "btn btn_ctrl "
-                  }>
-                  {modalButton}
-                </button>
-              )}
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

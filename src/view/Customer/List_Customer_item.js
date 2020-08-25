@@ -66,6 +66,7 @@ const ListItem = ({
           width='60%'
           height='40%'
           container={true}
+          footer={true}
           show={true}
           //  fun={}
           onCLose={() => {
