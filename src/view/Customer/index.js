@@ -267,12 +267,10 @@ class index extends Component {
   whenClose = () => {
     let data = this.state.data;
     for (let key in data) {
-      if (data[key] === "") {
-        data[key] = "";
-      }
+      data[key] = "";
     }
     this.setState({ data });
-    console.log("state is clear");
+    // console.log("state is clear", this.state.data);
   };
   render() {
     const listName = "Customer";

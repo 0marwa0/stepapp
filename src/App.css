@@ -39,7 +39,7 @@ a {
 .input_wrapper {
   display: grid;
   position: relative;
-
+  /* background-color: rebeccapurple; */
   grid-template-columns: auto;
 }
 .input_wrapper p {
@@ -79,13 +79,20 @@ a {
 
 .two_col_flex {
   display: grid;
-  grid-gap: 25px;
-  grid-template-columns: auto auto;
+  grid-gap: 30px;
+  row-gap: 10px;
+  grid-template-columns: 3fr 3fr;
 }
-.space_wrapper {
-  padding: 10px 0px;
+/* .two_col_flex {
+  display: grid;
+  grid-gap: 5px;
 
-  padding-left: none;
+  grid-template-columns: 3fr 3fr;
+} */
+
+.space_wrapper {
+  /* padding: 10px 0px; */
+  padding-top: 10px;
 }
 .warp_flex {
   display: grid;
@@ -185,10 +192,10 @@ textarea {
   border: 1px solid var(--light-gray);
   cursor: pointer !important;
 
-  padding: 0.5em 0.7em;
+  padding: 0.6em 0.7em;
   font-size: 14px;
   background-color: white;
-  border-radius: 5px;
+  border-radius: 7px;
   color: rgb(83, 80, 80);
 }
 .btn:hover {

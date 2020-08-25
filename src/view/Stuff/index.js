@@ -382,7 +382,30 @@ class index extends Component {
 
     this.setState({ type: value, stuffType: { value: value, label: value } });
   };
+  whenClose = () => {
+    this.setState({
+      name: "",
+      phone: "",
+      email: "",
+      nameError: false,
+      location: "",
+      birthday: "",
+      type: "pd",
 
+      editedData: {
+        name: "",
+        phone: "",
+        email: "",
+        location: "",
+        birthday: "",
+        type: "",
+      },
+      password: "",
+      rePassword: "",
+      passwordError: "",
+      isMatch: true,
+    });
+  };
   render() {
     const indexOfLastPage = this.state.currentPage * this.state.pagePerOnce;
     const indexOfFirstPage = indexOfLastPage - this.state.pagePerOnce;
@@ -423,6 +446,7 @@ class index extends Component {
             nameError={this.state.nameError}
             handelPassword={this.handelPassword}
             stuffType={this.state.stuffType}
+            whenClose={this.whenClose}
             DisplayEditModel={() => this.DisplayEditModel(true)}
           />
           <div className='List_Wrapper'>
@@ -501,6 +525,7 @@ class index extends Component {
               onCLose={() => {
                 this.showEditPassword(false);
                 this.setState({ isLoading: false });
+                this.whenClose();
               }}>
               <EditPassword
                 data={this.state.Data}
@@ -517,11 +542,12 @@ class index extends Component {
               modalPurpose=' '
               modalTitle='Edit team member'
               width='55%'
-              height='65%'
+              height='53%'
               fun={this.handelEditStuff}
               onCLose={() => {
                 this.DisplayEditModel(false);
                 this.setState({ isLoading: false });
+                this.whenClose();
               }}>
               <EditStuff
                 data={this.state.Data}

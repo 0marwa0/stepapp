@@ -19,6 +19,7 @@ function Index({
   nameError,
   closeCreateModal,
   stuffType,
+  whenClose,
 }) {
   const [showModel, setModel] = useState(false);
 
@@ -43,11 +44,12 @@ function Index({
           modalPurpose='From here you can create new accounts'
           modalTitle='Add new team member'
           width='60%'
-          height='75%'
+          height='65%'
           fun={handelCreateStuff}
           onCLose={() => {
             DisplayModel(false);
             closeCreateModal();
+            whenClose();
           }}>
           <CreateStuff
             handelInputChange={handelInputChange}

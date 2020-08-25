@@ -6,7 +6,7 @@
   left: 20%;
   display: flex;
   flex-direction: column;
-  border-radius: 4px;
+  border-radius: 20px;
   /* overflow: hidden; */
 
   background-color: white;
@@ -17,7 +17,7 @@
   left: 23%;
   display: flex;
   flex-direction: column;
-  border-radius: 4px;
+  border-radius: 20px;
   height: 100vh;
   background-color: white;
 }
@@ -29,11 +29,11 @@
 }
 .Modal-sm {
   position: absolute;
-  top: 22%;
-  left: 30%;
+  top: 25%;
+  left: 28%;
   display: flex;
   flex-direction: column;
-  border-radius: 4px;
+  border-radius: 20px;
 
   background-color: white;
 }
@@ -42,7 +42,7 @@
 
   background-color: white;
   width: 100%;
-  border-radius: 4px;
+  border-radius: 20px;
   height: 1000px !important;
 }
 .next_btn {
@@ -62,7 +62,7 @@
   align-items: center;
 
   grid-template-columns: 3fr auto;
-  border-radius: 4px 4px 0 0;
+  border-radius: 20px 20px 0 0;
 }
 .Modal_header span,
 .DeleteModal_header span {
@@ -102,7 +102,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  border-radius: 0 0 4px 4px;
+  border-radius: 0 0 20px 20px;
   height: 3.5rem;
   background-color: white;
   right: 0;

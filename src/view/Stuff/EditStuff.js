@@ -52,6 +52,7 @@ class index extends React.Component {
             : "",
         },
       }),
+
       singleValue: (provided, state) => {
         const opacity = state.isDisabled ? 0.5 : 1;
         const transition = "all 300ms";

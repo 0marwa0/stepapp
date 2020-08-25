@@ -57,6 +57,12 @@ class index extends React.Component {
             : "",
         },
       }),
+      placeholder: (defaultStyles) => {
+        return {
+          ...defaultStyles,
+          color: "rgb(201, 198, 198)",
+        };
+      },
       singleValue: (provided, state) => {
         const opacity = state.isDisabled ? 0.5 : 1;
         const transition = "all 300ms";
@@ -86,6 +92,7 @@ class index extends React.Component {
               <input
                 type='text'
                 width='100%'
+                placeholder='Mohammed'
                 onChange={(e) => this.props.handelInputChange(e, "name")}
                 // placeholder='name'
               />
@@ -97,17 +104,19 @@ class index extends React.Component {
               <input
                 type='text'
                 width='100%'
+                placeholder='0778956136'
                 onChange={(e) => this.props.handelInputChange(e, "phone")}
                 // placeholder='0780123567'
               />
             </span>
           </div>
-        </div>
-        <div className='two_col_flex paddingTop'>
+          {/* </div>
+        <div className='two_col_flex paddingTop'> */}
           <div className='input_wrapper space_wrapper'>
             <p>E-mail</p>
             <span className='input_border'>
               <input
+                placeholder='Mohammed@gmail.com'
                 type='text'
                 onChange={(e) => this.props.handelInputChange(e, "email")}
                 width='200px'
@@ -121,6 +130,7 @@ class index extends React.Component {
             <span className='input_border'>
               <Select
                 options={options}
+                placeholder='Admin'
                 defaultValue=''
                 isSearchable={false}
                 value={this.state.selectedOption}
@@ -138,7 +148,7 @@ class index extends React.Component {
               <input
                 type='text'
                 onChange={(e) => this.props.handelInputChange(e, "birthday")}
-                // placeholder='1999'
+                placeholder='1999'
               />
             </span>
           </div>{" "}
@@ -147,13 +157,12 @@ class index extends React.Component {
             <span className='input_border'>
               <input
                 type='text'
+                placeholder='Babylon'
                 onChange={(e) => this.props.handelInputChange(e, "location")}
                 // placeholder='lorem'
               />
             </span>
           </div>
-        </div>{" "}
-        <div className='two_col_flex paddingTop'>
           <div
             className={
               this.props.isMatch
@@ -167,8 +176,9 @@ class index extends React.Component {
                 type='password'
                 onChange={(e) => this.props.handelPassword(e, "password")}
                 width='200px'
-                // placeholder='******'
+                placeholder='******'
               />
+              <p className='errorMsg'></p>
             </span>
           </div>
           <div

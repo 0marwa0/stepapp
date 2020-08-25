@@ -773,15 +773,26 @@ export default class index extends React.Component {
   };
   DisplayCreateModel = () => {
     this.DisplayModel(false);
+    this.whenClose();
+  };
+
+  whenClose = () => {
     this.setState({
+      ProductName: "",
+      image: "",
+      description: "",
+      price: 0,
+      subgroup: 0,
+      component: [],
       validSupGroup: false,
       validGroup: false,
-      subgroup: 0,
-      name: "",
-      price: 0,
-      description: "",
-      Component: [],
     });
+    let data = this.state.editedData;
+    for (let key in data) {
+      data[key] = "";
+    }
+    this.setState({ data });
+    // console.log("state is clear", this.state.data);
   };
   render() {
     const ListName = "product";
@@ -970,7 +981,10 @@ export default class index extends React.Component {
               width='50%'
               height='50%'
               fun={this.handelEditProduct}
-              onCLose={() => this.DisplayEditModel(false)}>
+              onCLose={() => {
+                this.DisplayEditModel(false);
+                this.whenClose();
+              }}>
               <EditProduct
                 data={this.state.Data}
                 components={this.state.components}
