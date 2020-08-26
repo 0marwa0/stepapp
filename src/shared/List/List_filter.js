@@ -109,6 +109,8 @@ class ListFilter extends React.Component {
                     onClick={
                       this.props.ListName != "customer"
                         ? () => this.showTooltipModel(true)
+                        : this.props.selectedData.length > 1
+                        ? () => this.showTooltipModel(true)
                         : this.props.DeleteModal
                     }>
                     Delete {this.props.selectedData.length} item

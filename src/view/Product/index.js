@@ -604,7 +604,7 @@ export default class index extends React.Component {
       data.map((i) => (id = i.id));
       changeImage(
         "product",
-        this.state.data,
+        this.state.image,
         id,
         (errMsg, data) => {
           this.setState({ isLoading: false, Data: [] });
@@ -1007,7 +1007,10 @@ export default class index extends React.Component {
               //   DisplayModel(true);
               //   DisplayUploadModel(false);
               // }}
-              onCLose={() => this.DisplayUploadModel(false)}>
+              onCLose={() => {
+                this.DisplayUploadModel(false);
+                this.whenClose();
+              }}>
               <UploadImage
                 Active={this.Active}
                 isActive={this.state.isActive}

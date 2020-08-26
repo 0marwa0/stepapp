@@ -60,7 +60,7 @@ export const addData = (query, data, onSuccess, onFailure) => {
    if (data.price) {
     data.price = Number(data.price);
   }
-  console.log(data,"product data sended ");
+  // console.log(data,"product data sended ");
   let options = {
     method: "post",
     headers: {

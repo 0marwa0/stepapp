@@ -15,6 +15,8 @@ function Index({
   handelInputChange,
   handelEditStuff,
   whenClose,
+  handelNameCheck,
+  isMatch,
 }) {
   const [showModel, setModel] = useState(false);
   const DisplayModel = (show) => {
@@ -89,11 +91,12 @@ function Index({
           modalTitle='Delete customer '
           width='45%'
           height='50%'
+          size='sm'
           fun={() => {
             handelDelete(() => DisplayDeleteModel(false));
           }}
           onCLose={() => DisplayDeleteModel(false)}>
-          <DeleteCustomer />
+          <DeleteCustomer handelNameCheck={handelNameCheck} isMatch={isMatch} />
         </Modal>
       ) : null}
     </div>

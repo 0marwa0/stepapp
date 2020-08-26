@@ -101,6 +101,8 @@ class App extends React.Component {
 
           <MainLayoutRoute component={Pages} />
         </Switch>
+      
+
       </div>
     );
   }

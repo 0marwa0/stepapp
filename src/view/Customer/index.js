@@ -30,6 +30,8 @@ class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      enteredName: "",
+      isMatch: true,
       ShowDeleteModal: false,
       Data: [],
       checkedAll: false,
@@ -213,33 +215,55 @@ class index extends Component {
     }
   };
 
+  NameCheck = (name) => {
+    let enteredName = this.state.enteredName;
+    if (name === enteredName) return true;
+    else return false;
+  };
+  handelNameCheck = (event) => {
+    let value = event.target.value;
+    this.setState({ enteredName: value, isMatch: true });
+  };
   handelDelete = (callback) => {
     let id;
     let data = this.state.Data;
-
+    let name;
     this.setState({ isLoading: true });
     if (data.length === 1) {
       data.map((i) => (id = i.id));
-      removeItem(
-        "user",
-        id,
-        (errMsg, data) => {
-          this.setState({ isLoading: false, Data: [] });
-          this.getData();
-          callback();
-          this.setState({
-            isLoading: false,
-          });
-          if (data.status) {
-            SuccessToast("Deleted Successfully");
-          } else {
-            ErrorToast(errMsg);
+      data.map((i) => (name = i.name));
+      if (this.NameCheck(name)) {
+        removeItem(
+          "user",
+          id,
+          (errMsg, data) => {
+            this.setState({ isLoading: false, Data: [] });
+            this.getData();
+            callback();
+            this.setState({
+              isLoading: false,
+            });
+            if (data.status) {
+              SuccessToast("Deleted Successfully");
+            } else {
+              ErrorToast(errMsg);
+              this.setState({
+                isLoading: false,
+              });
+            }
+          },
+          (errMsg) => {
+            RejectToast(errMsg);
+            this.setState({
+              isLoading: false,
+            });
           }
-        },
-        (errMsg) => {
-          RejectToast(errMsg);
-        }
-      );
+        );
+      } else {
+        this.whenClose();
+        this.setState({ isMatch: false, isLoading: false });
+        RejectToast("Name doesn't match");
+      }
     } else {
       id = data.map((i) => i.id);
       removeItems(
@@ -269,7 +293,7 @@ class index extends Component {
     for (let key in data) {
       data[key] = "";
     }
-    this.setState({ data });
+    this.setState({ data, enteredName: "", isMatch: true });
     // console.log("state is clear", this.state.data);
   };
   render() {
@@ -306,6 +330,8 @@ class index extends Component {
             handelInputChange={this.handelInputChange}
             handelDelete={this.handelDelete}
             whenClose={this.whenClose}
+            handelNameCheck={this.handelNameCheck}
+            isMatch={this.state.isMatch}
             handelCreateCustomer={this.handelCreateCustomer}
           />
 
