@@ -314,10 +314,11 @@ class index extends Component {
     );
   };
   handelPassword = (event, key) => {
+
     if (key === "password")
-      this.setState({ password: event.target.value, isMatch: true });
+      this.setState({ password: event.target.value, isMatch: true ,passwordError:""});
     if (key == "rePassword")
-      this.setState({ rePassword: event.target.value, isMatch: true });
+      this.setState({ rePassword: event.target.value, isMatch: true ,passwordError:""});
   };
   handelDelete = (callback) => {
     let id;
